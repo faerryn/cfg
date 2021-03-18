@@ -9,7 +9,7 @@ SETUVAR fish_color_cwd:green
 SETUVAR fish_color_cwd_root:red
 SETUVAR fish_color_end:magenta
 SETUVAR fish_color_error:red
-SETUVAR fish_color_escape:blue
+SETUVAR fish_color_escape:yellow
 SETUVAR fish_color_history_current:\x2d\x2dbold
 SETUVAR fish_color_host:normal
 SETUVAR fish_color_host_remote:yellow
