@@ -22,7 +22,7 @@ export RUSTUP_HOME="${XDG_DATA_HOME}"/rustup
 export CARGO_HOME="${XDG_DATA_HOME}"/cargo
 RUSTFLAGS='-C linker=clang'
 for ldflag in ${LDFLAGS}; do
-	RUSTFLAGS="${RUSTFLAGS} -C ${ldflag}"
+	RUSTFLAGS="${RUSTFLAGS} -C link-arg=${ldflag}"
 done
 export RUSTFLAGS
 

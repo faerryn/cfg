@@ -31,6 +31,9 @@ case "$(file -bL --mime-type "${1}")" in
 	application/pdf)
 		PROGRAM=katarakt
 		;;
+	application/vnd.openxmlformats-officedocument.*)
+		PROGRAM=libreoffice
+		;;
 	application/x-shockwave-flash)
 		PROGRAM=ruffle
 		;;
