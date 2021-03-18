@@ -58,6 +58,3 @@
 [submodule "neovim/.config/nvim/pack/plugins/opt/nvim-treesitter-textobjects"]
 	path = neovim/.config/nvim/pack/plugins/opt/nvim-treesitter-textobjects
 	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git
-[submodule "neovim/.config/nvim/pack/plugins/opt/nvim-compe"]
-	path = neovim/.config/nvim/pack/plugins/opt/nvim-compe
-	url = https://github.com/hrsh7th/nvim-compe.git
