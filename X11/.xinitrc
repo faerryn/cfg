@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -euf
-unset TERM
 
 WALLPAPER="${XDG_CONFIG_HOME}"/wallpaper
 
