@@ -1,9 +1,0 @@
-[options]
-background = #282828
-suppress_default_binds = true
-
-[binds]
-q = quit
-n = next
-p = prev
-a = upscaling next
