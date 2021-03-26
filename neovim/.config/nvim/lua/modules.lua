@@ -14,7 +14,6 @@ local modules = {
 
 	'align',
 	'comments',
-	'surround',
 
 	'git',
 	'telescope',

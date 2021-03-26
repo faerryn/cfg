@@ -41,9 +41,6 @@
 [submodule "neovim/.config/nvim/pack/pack/opt/nvim-lspconfig"]
 	path = neovim/.config/nvim/pack/plugins/opt/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
-[submodule "neovim/.config/nvim/pack/pack/opt/vim-sandwich"]
-	path = neovim/.config/nvim/pack/plugins/opt/vim-sandwich
-	url = https://github.com/machakann/vim-sandwich.git
 [submodule "neovim/.config/nvim/pack/pack/opt/telescope-fzy-native.nvim"]
 	path = neovim/.config/nvim/pack/plugins/opt/telescope-fzy-native.nvim
 	url = https://github.com/nvim-telescope/telescope-fzy-native.nvim.git
