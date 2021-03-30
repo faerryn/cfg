@@ -3,7 +3,7 @@ super + shift + Return
 	st
 
 # program launcher
-super + d
+super + p
 	dmenu_run -i
 
 # volume control
@@ -35,9 +35,6 @@ super + shift + f
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l,n,p}
 	bspc node -{f,s} {west,south,north,east}
-
-super + {n,p}
-	bspc node -f {next,prev}
 
 # focus the node in the given desktop
 super + {_,shift +}{1-4}
