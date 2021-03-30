@@ -1,0 +1,27 @@
+# terminal emulator
+super + shift + Return
+	st
+
+# program launcher
+super + p
+	dmenu_run
+
+# quit/restart bspwm
+super + shift + q
+	bspc quit
+
+# close and kill
+super + shift + c
+	bspc node -c
+
+# switch to the monocle layout
+super + m
+	bspc desktop -l monocle
+
+# switch to the tiled layout
+super + t
+	bspc desktop -l tiled
+
+# focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
