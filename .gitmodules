@@ -52,3 +52,6 @@
 [submodule "neovim/.config/nvim/pack/plugins/opt/nvim-treesitter-textobjects"]
 	path = neovim/.config/nvim/pack/plugins/opt/nvim-treesitter-textobjects
 	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git
+[submodule "neovim/.config/nvim/pack/plugins/opt/gruvbox"]
+	path = neovim/.config/nvim/pack/plugins/opt/gruvbox
+	url = https://github.com/gruvbox-community/gruvbox.git

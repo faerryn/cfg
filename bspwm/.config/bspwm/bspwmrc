@@ -10,3 +10,11 @@ bspc config window_gap           8
 bspc config split_ratio          0.50
 bspc config borderless_monocle   false
 bspc config gapless_monocle      false
+
+# deamons
+WALLPAPER="${XDG_CONFIG_HOME}"/wallpaper
+
+picom &
+pgrep redshift || redshift &
+
+echo "${WALLPAPER}" | entr -n hsetroot -cover "${WALLPAPER}" &
