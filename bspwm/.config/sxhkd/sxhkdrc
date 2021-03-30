@@ -4,7 +4,7 @@ super + shift + Return
 
 # program launcher
 super + d
-	dmenu_run
+	dmenu_run -i
 
 # volume control
 XF86Audio{Raise,Lower}Volume
@@ -42,7 +42,10 @@ super + shift + f
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l,n,p}
-	bspc node -{f,s} {west,south,north,east,next,prev}
+	bspc node -{f,s} {west,south,north,east}
+
+super + {n,p}
+	bspc node -f {next,prev}
 
 # focus the node in the given desktop
 super + {_,shift +}{1-4}
