@@ -17,9 +17,15 @@ bspc config gapless_monocle      false
 
 # general wm settings
 
-WALLPAPER="${XDG_CONFIG_HOME}"/wallpaper
+XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
+[ -f "${XRESOURCES}" ] && xrdb -merge "${XRESOURCES}"
 
 pgrep -x picom || picom &
 pgrep -x redshift || redshift &
 
-echo "${WALLPAPER}" | entr -n hsetroot -cover "${WALLPAPER}" &
+WALLRC="${XDG_CONFIG_HOME}"/wallrc
+if [ ! -f "${WALLRC}" ]; then
+	echo "hsetroot" > "${WALLRC}"
+	chmod +x "${WALLRC}"
+fi
+echo "${WALLRC}" | entr -n "${WALLRC}" &

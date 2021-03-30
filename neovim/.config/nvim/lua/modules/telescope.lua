@@ -7,6 +7,8 @@ return { setup = function()
 		mappings = { i = {
 			['<C-w>c'] = require'telescope.actions'.close,
 			['<esc>'] = require'telescope.actions'.close,
+			['<C-Y>'] = require'telescope.actions'.move_selection_previous,
+			['<C-E>'] = require'telescope.actions'.move_selection_next,
 		} },
 		file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
 	} }
