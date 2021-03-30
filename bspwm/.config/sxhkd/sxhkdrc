@@ -36,6 +36,10 @@ super + m
 super + t
 	bspc desktop -l tiled
 
+# toggle the node's fullscreen state
+super + shift + f
+	bspc node -t ~fullscreen
+
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l,n,p}
 	bspc node -{f,s} {west,south,north,east,next,prev}
