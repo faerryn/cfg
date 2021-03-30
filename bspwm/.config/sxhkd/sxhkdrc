@@ -28,14 +28,6 @@ super + shift + q
 super + shift + c
 	bspc node -c
 
-# switch to the monocle layout
-super + m
-	bspc desktop -l monocle
-
-# switch to the tiled layout
-super + t
-	bspc desktop -l tiled
-
 # toggle the node's fullscreen state
 super + shift + f
 	bspc node -t ~fullscreen
