@@ -55,3 +55,6 @@
 [submodule "neovim/.config/nvim/pack/plugins/opt/gruvbox"]
 	path = neovim/.config/nvim/pack/plugins/opt/gruvbox
 	url = https://github.com/gruvbox-community/gruvbox.git
+[submodule "neovim/.config/nvim/pack/plugins/opt/vim-sxhkdrc"]
+	path = neovim/.config/nvim/pack/plugins/opt/vim-sxhkdrc
+	url = https://github.com/baskerville/vim-sxhkdrc
