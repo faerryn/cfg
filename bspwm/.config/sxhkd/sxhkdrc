@@ -8,10 +8,10 @@ super + p
 
 # volume control
 XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume @DEFAULT_SINK@ {+,-}5
+	pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
 
 shift + XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume @DEFAULT_SINK@ {100,0}
+	pactl set-sink-volume @DEFAULT_SINK@ {100,0}%
 
 # brightness control
 XF86MonBrightness{Up,Down}
