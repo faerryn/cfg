@@ -1,6 +1,10 @@
 #! /bin/sh
 
-pgrep -x sxhkd > /dev/null || sxhkd &
+set -euf
+
+# bspwm specific settings
+
+pgrep -x sxhkd || sxhkd &
 
 bspc monitor -d 1 2 3 4
 
@@ -11,10 +15,11 @@ bspc config split_ratio          0.50
 bspc config borderless_monocle   false
 bspc config gapless_monocle      false
 
-# deamons
+# general wm settings
+
 WALLPAPER="${XDG_CONFIG_HOME}"/wallpaper
 
-picom &
-pgrep redshift || redshift &
+pgrep -x picom || picom &
+pgrep -x redshift || redshift &
 
 echo "${WALLPAPER}" | entr -n hsetroot -cover "${WALLPAPER}" &
