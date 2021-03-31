@@ -1,2 +1,3 @@
 rofi.theme: /usr/share/rofi/themes/gruvbox-dark.rasi
 rofi.disable-history: true
+rofi.sort: true
