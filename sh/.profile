@@ -10,21 +10,9 @@ export XDG_DATA_DIRS=/usr/local/share:/usr/share:"${XDG_DATA_DIRS}"
 export EDITOR=nvim
 export VISUAL="${EDITOR}"
 
-# C/C++
-export CC=clang
-export CFLAGS=
-export CXX=clang++
-export CXXFLAGS='-stdlib=libc++'
-export LDFLAGS='-fuse-ld=lld -rtlib=compiler-rt'
-
 # Rust
 export RUSTUP_HOME="${XDG_DATA_HOME}"/rustup
 export CARGO_HOME="${XDG_DATA_HOME}"/cargo
-RUSTFLAGS='-C linker=clang'
-for ldflag in ${LDFLAGS}; do
-	RUSTFLAGS="${RUSTFLAGS} -C link-arg=${ldflag}"
-done
-export RUSTFLAGS
 
 # Misc
 export GRADLE_USER_HOME="${XDG_DATA_HOME}"/gradle

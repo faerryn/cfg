@@ -27,8 +27,5 @@ pgrep -x picom || picom &
 pgrep -x redshift || redshift &
 
 WALLRC="${XDG_CONFIG_HOME}"/wallrc
-if [ ! -f "${WALLRC}" ]; then
-	echo "hsetroot" > "${WALLRC}"
-	chmod +x "${WALLRC}"
-fi
+[ -f "${WALLRC}" ] || cp "${WALLRC}.def" "${WALLRC}"
 echo "${WALLRC}" | entr -n "${WALLRC}" &

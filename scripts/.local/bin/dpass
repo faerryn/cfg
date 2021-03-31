@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -euf
-
-PASSDIR="${HOME}"/pass
-
-cd "${PASSDIR}"
-FILE="$(ls | dmenu ${@})"
-cat "${FILE}" | dmenu ${@} | exec clipcopy

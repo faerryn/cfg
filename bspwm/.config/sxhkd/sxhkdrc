@@ -4,7 +4,7 @@ super + shift + Return
 
 # program launcher
 super + p
-	dmenu_run -i
+	rofi -show run
 
 # volume control
 XF86Audio{Raise,Lower}Volume
