@@ -1,28 +1,23 @@
 local modules = {
-	'core',
-	'unimpaired',
-	'netrw',
-	'shell',
-	'filetypes',
+	require'modules.core',
+	require'modules.unimpaired',
+	require'modules.netrw',
+	require'modules.shell',
 
-	'colorscheme',
-	'statusline',
-	'colorizer',
-	'treesitter',
+	require'modules.colorscheme',
+	require'modules.statusline',
+	require'modules.colorizer',
+	require'modules.treesitter',
 
-	'align',
-	'comments',
+	require'modules.align',
+	require'modules.comments',
 
-	'git',
-	'telescope',
+	require'modules.git',
+	require'modules.telescope',
 }
 
 return { setup = function()
-	for _, name in ipairs(modules) do
-		local module = require('modules.'..name)
-		local status, err = pcall(module.setup)
-		if not status then
-			print(string.format("error in module %s:\n%s", name, err))
-		end
+	for _, module in ipairs(modules) do
+		module.setup()
 	end
 end }
