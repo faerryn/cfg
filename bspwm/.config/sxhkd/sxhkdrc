@@ -3,8 +3,8 @@ super + shift + Return
 	st
 
 # program launcher
-super + p
-	rofi -show run
+super + {_,shift + }p
+	rofi -show {drun,run}
 
 # volume control
 XF86Audio{Raise,Lower}Volume

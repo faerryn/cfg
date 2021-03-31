@@ -1,0 +1,5 @@
+configuration {
+	disable-history: true;
+	sort: true;
+	theme: "/usr/share/rofi/themes/gruvbox-dark.rasi";
+}
