@@ -15,7 +15,6 @@ local modules = {
 
 	'git',
 	'telescope',
-	'undotree',
 }
 
 return { setup = function()
