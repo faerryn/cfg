@@ -8,9 +8,7 @@ local modules = {
 	'colorscheme',
 	'statusline',
 	'colorizer',
-
 	'treesitter',
-	'lsp',
 
 	'align',
 	'comments',

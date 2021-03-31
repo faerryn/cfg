@@ -35,9 +35,6 @@
 [submodule "neovim/.config/nvim/pack/pack/opt/undotree"]
 	path = neovim/.config/nvim/pack/plugins/opt/undotree
 	url = https://github.com/mbbill/undotree.git
-[submodule "neovim/.config/nvim/pack/pack/opt/nvim-lspconfig"]
-	path = neovim/.config/nvim/pack/plugins/opt/nvim-lspconfig
-	url = https://github.com/neovim/nvim-lspconfig.git
 [submodule "neovim/.config/nvim/pack/pack/opt/telescope-fzy-native.nvim"]
 	path = neovim/.config/nvim/pack/plugins/opt/telescope-fzy-native.nvim
 	url = https://github.com/nvim-telescope/telescope-fzy-native.nvim.git
