@@ -1,3 +1,3 @@
 function diff
-	comand diff --color=auto $argv
+	command diff --color=auto $argv
 end

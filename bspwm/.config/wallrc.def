@@ -1,5 +1,0 @@
-#!/bin/sh
-
-set -euf
-
-hsetroot -solid '#282828'
