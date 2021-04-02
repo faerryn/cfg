@@ -6,6 +6,10 @@ super + shift + Return
 super + p
 	rofi -show run
 
+# window switcher
+super + w
+	rofi -show window
+
 # volume control
 XF86Audio{Raise,Lower}Volume
 	pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
