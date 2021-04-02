@@ -40,6 +40,10 @@ super + shift + f
 super + {_,shift + }{h,j,k,l,n,p}
 	bspc node -{f,s} {west,south,north,east}
 
+# focus the node for the given path jump
+super + {a,s,comma,period}
+	bspc node -f @{parent,brother,first,second}
+
 # focus the node in the given desktop
 super + {_,shift +}{1-4}
 	bspc {desktop -f,node -d} {1-4}
