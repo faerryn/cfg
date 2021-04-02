@@ -1,6 +1,7 @@
 local modules = {
 	require'modules.core',
 	require'modules.unimpaired',
+	require'modules.filetypes',
 	require'modules.netrw',
 	require'modules.shell',
 
