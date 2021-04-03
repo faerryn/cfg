@@ -1,10 +1,4 @@
 return { setup = function()
-	vim.o.hidden = true
-
-	vim.o.clipboard = 'unnamedplus'
-
-	vim.o.timeoutlen = 500
-
 	vim.o.swapfile = false
 	vim.o.undofile = true
 	vim.bo.swapfile = false
@@ -48,13 +42,16 @@ return { setup = function()
 	vim.wo.scrolloff = 4
 	vim.wo.sidescrolloff = 4
 
-	vim.o.completeopt = 'menuone,noinsert,noselect'
+	vim.o.clipboard = 'unnamedplus'
+	vim.o.completeopt = 'menuone,noinsert'
 	vim.o.confirm = true
 	vim.o.foldlevelstart = 99
+	vim.o.hidden = true
 	vim.o.inccommand = 'nosplit'
 	vim.o.iskeyword = 'a-z,A-Z,48-57,_,-'
 	vim.o.lazyredraw = true
 	vim.o.nrformats = 'alpha,octal,hex,bin'
+	vim.o.timeoutlen = 500
 
 	if vim.fn.executable('rg') == 1 then
 		vim.o.grepprg = 'rg --hidden --vimgrep'
