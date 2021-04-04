@@ -32,9 +32,17 @@ super + shift + q
 super + shift + c
 	bspc node -c
 
-# toggle the node's fullscreen state
+# float node
+super + shift + space
+	bspc node -t floating
+
+# tile node
+super + shift + t
+	bspc node -t tiled
+
+# fullscreen node
 super + shift + f
-	bspc node -t ~fullscreen
+	bspc node -t fullscreen
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l,n,p}
