@@ -34,7 +34,7 @@ super + shift + c
 
 # fullscreen node
 super + shift + {space,t,f}
-	bspc node -t {floating,tiled,fullscreen}
+	bspc node -t {floating,tiled,~fullscreen}
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l,n,p}
