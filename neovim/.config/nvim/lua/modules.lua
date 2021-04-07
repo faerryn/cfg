@@ -10,9 +10,7 @@ local modules = {
 	require'modules.colorizer',
 	require'modules.treesitter',
 
-	require'modules.align',
 	require'modules.comments',
-
 	require'modules.git',
 	require'modules.telescope',
 }

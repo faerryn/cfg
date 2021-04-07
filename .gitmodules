@@ -4,9 +4,6 @@
 [submodule "neovim/.config/nvim/pack/pack/opt/lightline.vim"]
 	path = neovim/.config/nvim/pack/plugins/opt/lightline.vim
 	url = https://github.com/itchyny/lightline.vim.git
-[submodule "neovim/.config/nvim/pack/pack/opt/vim-easy-align"]
-	path = neovim/.config/nvim/pack/plugins/opt/vim-easy-align
-	url = https://github.com/junegunn/vim-easy-align.git
 [submodule "neovim/.config/nvim/pack/pack/opt/nvim-colorizer.lua"]
 	path = neovim/.config/nvim/pack/plugins/opt/nvim-colorizer.lua
 	url = https://github.com/norcalli/nvim-colorizer.lua.git
