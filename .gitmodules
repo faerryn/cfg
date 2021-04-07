@@ -45,4 +45,4 @@
 	url = https://github.com/gruvbox-community/gruvbox.git
 [submodule "neovim/.config/nvim/pack/plugins/opt/zig.vim"]
 	path = neovim/.config/nvim/pack/plugins/opt/zig.vim
-	url = https://github.com/ziglang/zig.vim.git
+	url = https://github.com/faerryn/zig.vim.git
