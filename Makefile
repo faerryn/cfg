@@ -1,5 +1,7 @@
 .PHONY: bspwm firefox fish fontconfig git inputrc mpv neovim picom rofi sh
 
+all: bspwm firefox fish fontconfig git inputrc mpv neovim picom rofi sh
+
 bspwm:
 	stow bspwm/
 
