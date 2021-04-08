@@ -5,8 +5,10 @@ all: bspwm firefox fish fontconfig git inputrc mpv neovim picom rofi sh
 bspwm:
 	stow bspwm/
 
+FIREFOX_PROFILE:="$(HOME)"/.mozilla/firefox/"$(shell sed -n -e '/Path/s/^Path=//p' ~/.mozilla/firefox/profiles.ini)"
+
 firefox:
-	test -r ~/.mozilla/firefox/profiles.ini && ln -srf firefox/chrome "$(HOME)"/.mozilla/firefox/`sed -n -e '/Path/s/^Path=//p' ~/.mozilla/firefox/profiles.ini`
+	stow firefox -t "$(FIREFOX_PROFILE)"
 
 fish:
 	stow fish/
