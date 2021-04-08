@@ -6,7 +6,7 @@ bspwm:
 	stow bspwm/
 
 firefox:
-	ln -srf firefox/chrome "$(HOME)"/.mozilla/firefox/`sed -n -e '/Path/s/^Path=//p' ~/.mozilla/firefox/profiles.ini`
+	test -r ~/.mozilla/firefox/profiles.ini && ln -srf firefox/chrome "$(HOME)"/.mozilla/firefox/`sed -n -e '/Path/s/^Path=//p' ~/.mozilla/firefox/profiles.ini`
 
 fish:
 	stow fish/
