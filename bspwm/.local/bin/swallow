@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -euf
+
 swallower="$(bspc query -N -n)"
 
 "${@}" &
