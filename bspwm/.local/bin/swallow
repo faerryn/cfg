@@ -1,6 +1,6 @@
 #!/bin/sh
 
-${@} &
+"${@}" &
 
 bspc subscribe node_add -c 1 >/dev/null
 bspc node -s last.local
