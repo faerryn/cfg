@@ -1,11 +1,12 @@
 #!/bin/sh
 
+swallower="$(bspc query -N -n)"
+
 "${@}" &
 
-bspc subscribe node_add -c 1 >/dev/null
-bspc node -s last.local
-bspc node -f last.local
-id=$(xdo id)
-xdo hide
+swallowed="$(bspc subscribe node_add -c 1 | cut -d' ' -f4)"
+bspc node "${swallower}" --flag hidden=on
+bspc node -f "${swallowed}"
 wait
-xdo show "$id"
+bspc node "${swallower}" --flag hidden=off
+bspc node -f "${swallower}"
