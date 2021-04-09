@@ -6,9 +6,8 @@ swallower="$(bspc query -N -n)"
 
 "${@}" &
 
-swallowed="$(bspc subscribe node_add -c 1 | cut -d' ' -f4)"
-bspc node "${swallower}" --flag hidden=on
-bspc node -f "${swallowed}"
+bspc subscribe node_add -c 1 >/dev/null
+bspc node "${swallower}" -g hidden=on
 wait
-bspc node "${swallower}" --flag hidden=off
-bspc node -f "${swallower}"
+bspc node "${swallower}" -g hidden=off
+bspc node "${swallower}" -f
