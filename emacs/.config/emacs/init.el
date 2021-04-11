@@ -87,14 +87,7 @@
 (straight-use-package 'general)
 (setq-default
  general-override-states
- '(insert
-   emacs
-   hybrid
-   normal
-   visual
-   motion
-   operator
-   replace))
+ '(insert emacs hybrid normal visual motion operator replace))
 (require 'general)
 (general-define-key
  :states '(normal visual motion)
