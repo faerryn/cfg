@@ -1,10 +1,17 @@
-;; ignore buffers with names of form *<string>* for the purposes of navigation
+;; hide buffers based on name
+(defun custom--should-hide-buffer-based-on-name (name)
+  (and
+   (not (string-match "^\\*scratch\\*$" name))
+   (or
+    (string-match "^\\*" name)
+    (string-match "^magit: " name)
+    (string-match "^magit-process: " name))))
+
+;; configure buffer navigation to ignore "hidden" bufferse
 (set-frame-parameter
  nil 'buffer-predicate
  (lambda (buffer)
-   (or
-    (string-match "^\\*scratch\\*$" (buffer-name buffer))
-    (not (string-match "^\\*" (buffer-name buffer))))))
+   (not (custom--should-hide-buffer-based-on-name (buffer-name buffer)))))
 
 ;; configure backup
 (setq-default
@@ -52,6 +59,7 @@
 
 ;; ivy
 (straight-use-package 'ivy)
+(setq-default ivy-ignore-buffers `(custom--should-hide-buffer-based-on-name))
 (require 'ivy)
 (ivy-mode +1)
 
@@ -67,9 +75,32 @@
 
 ;; magit
 (straight-use-package 'magit)
+(setq-default magit-define-global-key-bindings)
 (require 'magit)
 
 ;; gruvbox-theme
 (straight-use-package 'gruvbox-theme)
 (require 'gruvbox-theme)
 (load-theme 'gruvbox t)
+
+;; general
+(straight-use-package 'general)
+(setq-default
+ general-override-states
+ '(insert
+   emacs
+   hybrid
+   normal
+   visual
+   motion
+   operator
+   replace))
+(require 'general)
+(general-define-key
+ :states '(normal visual motion)
+ :keymaps 'override
+
+ "SPC f" 'find-file
+ "SPC b" 'switch-to-buffer
+
+ "SPC g" 'magit)
