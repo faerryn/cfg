@@ -88,26 +88,12 @@
 (straight-use-package 'magit)
 (setq-default magit-define-global-key-bindings)
 (require 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; gruvbox-theme
 (straight-use-package 'gruvbox-theme)
 (require 'gruvbox-theme)
 (load-theme 'gruvbox t)
-
-;; general
-(straight-use-package 'general)
-(setq-default
- general-override-states
- '(insert emacs hybrid normal visual motion operator replace))
-(require 'general)
-(general-define-key
- :states '(normal visual motion)
- :keymaps 'override
-
- "SPC f" 'find-file
- "SPC b" 'switch-to-buffer
-
- "SPC g" 'magit)
 
 ;; exwm
 (straight-use-package 'exwm)
