@@ -2,13 +2,18 @@
 (set-frame-parameter
  nil 'buffer-predicate
  (lambda (buffer)
-   (or (string-match "^\\*scratch\\*$" (buffer-name buffer)) (not (string-match "^\\*" (buffer-name buffer))))))
+   (or
+    (string-match "^\\*scratch\\*$" (buffer-name buffer))
+    (not (string-match "^\\*" (buffer-name buffer))))))
 
 ;; configure backup files
 (setq-default
  backup-by-copying t
  backup-directory-alist
  `(("." . ,(expand-file-name "backup" user-emacs-directory))))
+
+;; disable lockfiles
+(setq-default create-lockfiles nil)
 
 ;; install straight.el
 (defvar bootstrap-version)
