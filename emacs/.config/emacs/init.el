@@ -1,15 +1,23 @@
 ;; hide buffers based on name
 (defun custom--should-hide-buffer-based-on-name (name)
-  (and
-   (not (string-match "^\\*scratch\\*$" name))
-   (or
-    (string-match "^\\*" name)
-    (string-match "^magit\\(-.*\\)?: " name))))
+  (or
+   (string-match "^\\*Buffer List\\*$" name)
+   (string-match "^\\*Messages\\*$" name)
+   (string-match "^\\*straight-process\\*$" name)
+   (string-match "^magit\\(-.*\\)?: " name)))
+
+;; configure async-shell-command
+(setq-default
+ async-shell-command-buffer 'new-buffer
+ display-buffer-alist
+ '(("^\\*Async Shell Command\\*" . display-buffer-window)))
 
 ;; configure buffer navigation to ignore "hidden" bufferse
 (defun custom--should-show-buffer (buffer)
   (not (custom--should-hide-buffer-based-on-name (buffer-name buffer))))
-(set-frame-parameter nil 'buffer-predicate 'custom--should-show-buffer)
+(add-to-list
+ 'default-frame-alist
+ '(buffer-predicate . custom--should-show-buffer))
 
 ;; configure backup
 (setq-default
@@ -57,7 +65,7 @@
 
 ;; ivy
 (straight-use-package 'ivy)
-(setq-default ivy-ignore-buffers `(custom--should-hide-buffer-based-on-name))
+(setq-default ivy-ignore-buffers '(custom--should-hide-buffer-based-on-name))
 (require 'ivy)
 (ivy-mode +1)
 
@@ -95,3 +103,48 @@
  "SPC b" 'switch-to-buffer
 
  "SPC g" 'magit)
+
+;; exwm
+(straight-use-package 'exwm)
+
+(defun custom--setup-exwm (switch-string)
+  (add-to-list
+   'initial-frame-alist
+   '(fullscreen . fullboth))
+
+  (start-process "sxhkd" nil "sxhkd")
+  (start-process "picom" nil "picom")
+  (start-process "redshift" nil "redshift")
+
+  (set-process-query-on-exit-flag (get-process "sxhkd") nil)
+  (set-process-query-on-exit-flag (get-process "picom") nil)
+  (set-process-query-on-exit-flag (get-process "redshift") nil)
+
+  ;; combine custom buffer-predicate with exwm's buffer-predicate
+  (add-hook
+   'exwm-init-hook
+   (lambda ()
+     (modify-all-frames-parameters
+      '((buffer-predicate
+	 . (lambda (buffer)
+	     (and
+	      (custom--should-show-buffer buffer)
+	      (exwm-layout--other-buffer-predicate buffer))))))))
+  
+  (add-hook
+   'exwm-exit-hook
+   (lambda () (stop-process (get-process "redshift"))))
+
+  (defun custom--exwm-update-buffer-name ()
+    (exwm-workspace-rename-buffer
+     (concat exwm-class-name ": " exwm-title)))
+
+  (add-hook 'exwm-update-class-hook 'custom--exwm-update-buffer-name)
+  (add-hook 'exwm-update-title-hook 'custom--exwm-update-buffer-name)
+
+  (require 'exwm)
+  (exwm-enable))
+
+(add-to-list
+ 'command-switch-alist
+ '("--exwm" . custom--setup-exwm))

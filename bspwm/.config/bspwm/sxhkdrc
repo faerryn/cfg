@@ -10,20 +10,6 @@ super + p
 super + w
 	rofi -show window
 
-# volume control
-XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
-
-shift + XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume @DEFAULT_SINK@ {100,0}%
-
-# brightness control
-XF86MonBrightness{Up,Down}
-	xbacklight {+,-}5
-
-shift + XF86MonBrightness{Up,Down}
-	xbacklight {100,0}
-
 # quit/restart bspwm
 super + shift + q
 	bspc quit
