@@ -4,14 +4,12 @@
    (not (string-match "^\\*scratch\\*$" name))
    (or
     (string-match "^\\*" name)
-    (string-match "^magit: " name)
-    (string-match "^magit-process: " name))))
+    (string-match "^magit\\(-.*\\)?: " name))))
 
 ;; configure buffer navigation to ignore "hidden" bufferse
-(set-frame-parameter
- nil 'buffer-predicate
- (lambda (buffer)
-   (not (custom--should-hide-buffer-based-on-name (buffer-name buffer)))))
+(defun custom--should-show-buffer (buffer)
+  (not (custom--should-hide-buffer-based-on-name (buffer-name buffer))))
+(set-frame-parameter nil 'buffer-predicate 'custom--should-show-buffer)
 
 ;; configure backup
 (setq-default
