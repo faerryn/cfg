@@ -1,7 +1,5 @@
 return { setup = function()
-	vim.o.swapfile = false
 	vim.o.undofile = true
-	vim.bo.swapfile = false
 	vim.bo.undofile = true
 
 	vim.g.mapleader = ' '
