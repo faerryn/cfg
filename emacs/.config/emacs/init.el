@@ -68,3 +68,8 @@
 ;; magit
 (straight-use-package 'magit)
 (require 'magit)
+
+;; gruvbox-theme
+(straight-use-package 'gruvbox-theme)
+(require 'gruvbox-theme)
+(load-theme 'gruvbox t)
