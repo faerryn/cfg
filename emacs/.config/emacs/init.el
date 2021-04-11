@@ -7,7 +7,6 @@
    (string-match "^\\*Async Shell Command\\*\\(<[0-9]+>\\)?$" name)
    (string-match "^\\*Buffer List\\*$" name)
    (string-match "^\\*Help\\*$" name)
-   (string-match "^\\*Messages\\*$" name)
    (string-match "^\\*straight-process\\*$" name)
    (string-match "^magit\\(-.*\\)?: " name)))
 
