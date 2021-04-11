@@ -126,11 +126,9 @@
    (lambda () (stop-process (get-process "redshift"))))
 
   (defun custom--exwm-update-buffer-name ()
-    (exwm-workspace-rename-buffer
-     (concat exwm-class-name ": " exwm-title)))
+    (exwm-workspace-rename-buffer (concat exwm-class-name)))
 
   (add-hook 'exwm-update-class-hook 'custom--exwm-update-buffer-name)
-  (add-hook 'exwm-update-title-hook 'custom--exwm-update-buffer-name)
 
   (require 'exwm)
   (exwm-enable))
