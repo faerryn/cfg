@@ -1,6 +1,7 @@
 ;; hide buffers based on name
 (defun custom--should-hide-buffer-based-on-name (name)
   (or
+   (string-match "^\\*Async Shell Command\\*\\(<[0-9]+>\\)?$" name)
    (string-match "^\\*Buffer List\\*$" name)
    (string-match "^\\*Messages\\*$" name)
    (string-match "^\\*straight-process\\*$" name)
