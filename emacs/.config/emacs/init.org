@@ -1,0 +1,118 @@
+#+TITLE: init.org
+#+STARTUP: content
+
+* General Setup
+** Follow Symlinks
+#+begin_src emacs-lisp
+  (setq-default vc-follow-symlinks t)
+#+end_src
+** Hide \*Async Shell Command*
+#+begin_src emacs-lisp
+  (setq-default
+   async-shell-command-buffer 'new-buffer
+   display-buffer-alist
+   '(("^\\*Async Shell Command\\*" . display-buffer-window)))
+#+end_src
+** Backup, Auto-Save, and Lockfiles
+#+begin_src emacs-lisp
+  (setq-default
+   backup-by-copying t
+   backup-directory-alist
+   `(("." . ,(expand-file-name "backup" user-emacs-directory)))
+
+   auto-save-file-name-transforms
+   `((".*" ,(expand-file-name "auto-saves" user-emacs-directory) t))
+
+   create-lockfiles nil)
+#+end_src
+** Display Line Number
+#+begin_src emacs-lisp
+  (setq-default display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode +1)
+#+end_src
+** Org Mode
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
+* Package Management Setup
+** straight.el
+#+begin_src emacs-lisp
+  (setq-default straight-use-package-by-default t)
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+#+end_src
+** use-package
+#+begin_src emacs-lisp
+  (straight-use-package 'use-package)
+  (setq-default use-package-hook-name-suffix nil)
+  (require 'use-package)
+#+end_src
+** general.el
+#+begin_src emacs-lisp
+  (straight-use-package 'general)
+  (require 'general)
+#+end_src
+* Packages
+** Evil
+#+begin_src emacs-lisp
+  (use-package evil
+    :hook (emacs-startup-hook . evil-mode)
+    :init
+    (setq-default evil-want-integration t
+                  evil-want-keybinding nil))
+
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+
+#+end_src
+** Magit
+#+begin_src emacs-lisp
+  (use-package magit
+    :general
+    ("C-x g" 'magit-status)
+    :init
+    (setq-default magit-define-global-key-bindings))
+
+#+end_src
+** Gruvbox
+#+begin_src emacs-lisp
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox t))
+
+#+end_src
+** EXWM
+#+begin_src emacs-lisp
+  (use-package exwm
+    :commands exwm-enable
+    :config
+    (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
+    (make-process :name "picom" :command '("picom") :noquery t)
+    (make-process :name "redshift" :command '("redshift") :noquery t)
+
+    (add-to-list
+     'initial-frame-alist
+     '(fullscreen . fullboth))
+
+    (add-hook
+     'exwm-update-class-hook
+     (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
+
+  (add-to-list
+   'command-switch-alist
+   '("--exwm"
+     . (lambda (switch-string)
+         (exwm-enable))))
+#+end_src
