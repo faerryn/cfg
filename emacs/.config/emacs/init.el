@@ -25,7 +25,8 @@
 (setq-default display-line-numbers-type 'relative)
 (global-display-line-numbers-mode +1)
 
-;; install straight.el
+;; straight.el
+(setq-default straight-use-package-by-default t)
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -39,53 +40,61 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; use-package
+(straight-use-package 'use-package)
+(setq-default use-package-hook-name-suffix nil)
+(require 'use-package)
+
+;; general.el
+(straight-use-package 'general)
+(require 'general)
+
 ;; evil
-(straight-use-package 'evil)
-(setq-default evil-want-integration t
-	      evil-want-keybinding nil)
-(require 'evil)
-(evil-mode +1)
+(use-package evil
+  :hook (emacs-startup-hook . evil-mode)
+  :init
+  (setq-default evil-want-integration t
+		evil-want-keybinding nil))
 
 ;; evil-collection
-(straight-use-package 'evil-collection)
-(require 'evil-collection)
-(evil-collection-init)
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 
 ;; magit
-(straight-use-package 'magit)
-(setq-default magit-define-global-key-bindings)
-(require 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+(use-package magit
+  :general
+  ("C-x g" 'magit-status)
+  :init
+  (setq-default magit-define-global-key-bindings))
 
 ;; gruvbox-theme
-(straight-use-package 'gruvbox-theme)
-(require 'gruvbox-theme)
-(load-theme 'gruvbox t)
+(use-package gruvbox-theme
+  :config
+  (load-theme 'gruvbox t))
 
 ;; exwm
-(straight-use-package 'exwm)
-
-(defun custom--setup-exwm (switch-string)
-  ;; fullscreen emacs
+(use-package exwm
+  :commands exwm-enable
+  :config
+  ; fullscreen emacs
   (add-to-list
    'initial-frame-alist
    '(fullscreen . fullboth))
 
-  ;; set exwm buffer names
+  ; set exwm buffer names
   (add-hook
    'exwm-update-class-hook
-   (lambda () (exwm-workspace-rename-buffer (concat exwm-class-name))))
+   (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
 
-  ;; startup daemons
-  (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
-  (make-process :name "picom" :command '("picom") :noquery t)
-  (make-process :name "redshift" :command '("redshift") :noquery t)
-
-  ;; start exwm
-  (require 'exwm)
-  (exwm-enable))
-
-;; start exwm on --exwm
+; start exwm on --exwm
 (add-to-list
  'command-switch-alist
- '("--exwm" . custom--setup-exwm))
+ '("--exwm"
+   . (lambda (switch-string)
+       ; startup daemons
+       (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
+       (make-process :name "picom" :command '("picom") :noquery t)
+       (make-process :name "redshift" :command '("redshift") :noquery t)
+       (exwm-enable))))
