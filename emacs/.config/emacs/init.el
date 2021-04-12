@@ -1,27 +1,11 @@
 ;; follow symlinks
 (setq-default vc-follow-symlinks t)
 
-;; hide buffers based on name
-(defun custom--should-hide-buffer-based-on-name (name)
-  (or
-   (string-match "^\\*Async Shell Command\\*\\(<[0-9]+>\\)?$" name)
-   (string-match "^\\*Buffer List\\*$" name)
-   (string-match "^\\*Help\\*$" name)
-   (string-match "^\\*straight-process\\*$" name)
-   (string-match "^magit\\(-.*\\)?: " name)))
-
 ;; configure async-shell-command
 (setq-default
  async-shell-command-buffer 'new-buffer
  display-buffer-alist
  '(("^\\*Async Shell Command\\*" . display-buffer-window)))
-
-;; configure buffer navigation to ignore "hidden" bufferse
-(defun custom--should-show-buffer (buffer)
-  (not (custom--should-hide-buffer-based-on-name (buffer-name buffer))))
-(add-to-list
- 'default-frame-alist
- '(buffer-predicate . custom--should-show-buffer))
 
 ;; configure backup
 (setq-default
@@ -67,22 +51,6 @@
 (require 'evil-collection)
 (evil-collection-init)
 
-;; ivy
-(straight-use-package 'ivy)
-(setq-default ivy-ignore-buffers '(custom--should-hide-buffer-based-on-name))
-(require 'ivy)
-(ivy-mode +1)
-
-;; counsel
-(straight-use-package 'counsel)
-(require 'counsel)
-(counsel-mode +1)
-
-;; swiper
-(straight-use-package 'swiper)
-(require 'swiper)
-(global-set-key (kbd "C-s") 'swiper-isearch)
-
 ;; magit
 (straight-use-package 'magit)
 (setq-default magit-define-global-key-bindings)
@@ -98,41 +66,26 @@
 (straight-use-package 'exwm)
 
 (defun custom--setup-exwm (switch-string)
+  ;; fullscreen emacs
   (add-to-list
    'initial-frame-alist
    '(fullscreen . fullboth))
 
-  (start-process "sxhkd" nil "sxhkd")
-  (start-process "picom" nil "picom")
-  (start-process "redshift" nil "redshift")
-
-  (set-process-query-on-exit-flag (get-process "sxhkd") nil)
-  (set-process-query-on-exit-flag (get-process "picom") nil)
-  (set-process-query-on-exit-flag (get-process "redshift") nil)
-
-  ;; combine custom buffer-predicate with exwm's buffer-predicate
+  ;; set exwm buffer names
   (add-hook
-   'exwm-init-hook
-   (lambda ()
-     (modify-all-frames-parameters
-      '((buffer-predicate
-	 . (lambda (buffer)
-	     (and
-	      (custom--should-show-buffer buffer)
-	      (exwm-layout--other-buffer-predicate buffer))))))))
-  
-  (add-hook
-   'exwm-exit-hook
-   (lambda () (stop-process (get-process "redshift"))))
+   'exwm-update-class-hook
+   (lambda () (exwm-workspace-rename-buffer (concat exwm-class-name))))
 
-  (defun custom--exwm-update-buffer-name ()
-    (exwm-workspace-rename-buffer (concat exwm-class-name)))
+  ;; startup daemons
+  (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
+  (make-process :name "picom" :command '("picom") :noquery t)
+  (make-process :name "redshift" :command '("redshift") :noquery t)
 
-  (add-hook 'exwm-update-class-hook 'custom--exwm-update-buffer-name)
-
+  ;; start exwm
   (require 'exwm)
   (exwm-enable))
 
+;; start exwm on --exwm
 (add-to-list
  'command-switch-alist
  '("--exwm" . custom--setup-exwm))
