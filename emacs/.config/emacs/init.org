@@ -75,28 +75,13 @@
     :hook (emacs-startup-hook . evil-mode)
     :init
     (setq-default evil-want-integration t
-                  evil-want-keybinding nil))
+                  evil-want-keybinding nil
+                  evil-want-Y-yank-to-eol t))
 
   (use-package evil-collection
     :after evil
     :config
     (evil-collection-init))
-
-#+end_src
-** Magit
-#+begin_src emacs-lisp
-  (use-package magit
-    :general
-    ("C-x g" 'magit-status)
-    :init
-    (setq-default magit-define-global-key-bindings))
-
-#+end_src
-** Gruvbox
-#+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
 
 #+end_src
 ** EXWM
@@ -121,4 +106,20 @@
    '("--exwm"
      . (lambda (switch-string)
          (exwm-enable))))
+#+end_src
+** Gruvbox
+#+begin_src emacs-lisp
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox t))
+
+#+end_src
+** Magit
+#+begin_src emacs-lisp
+  (use-package magit
+    :general
+    ("C-x g" 'magit-status)
+    :init
+    (setq-default magit-define-global-key-bindings))
+
 #+end_src
