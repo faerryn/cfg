@@ -1,45 +1,6 @@
 #+TITLE: init.org
 #+STARTUP: content
 
-* General Setup
-** Follow Symlinks
-#+begin_src emacs-lisp
-  (setq-default vc-follow-symlinks t)
-#+end_src
-** Hide \*Async Shell Command*
-#+begin_src emacs-lisp
-  (setq-default
-   async-shell-command-buffer 'new-buffer
-   display-buffer-alist
-   '(("^\\*Async Shell Command\\*" . display-buffer-window)))
-#+end_src
-** Backup, Auto-Save, and Lockfiles
-#+begin_src emacs-lisp
-  (setq-default
-   backup-by-copying t
-   backup-directory-alist
-   `(("." . ,(expand-file-name "backup" user-emacs-directory)))
-
-   auto-save-file-name-transforms
-   `((".*" ,(expand-file-name "auto-saves" user-emacs-directory) t))
-
-   create-lockfiles nil)
-#+end_src
-** Display Line Number
-#+begin_src emacs-lisp
-  (setq-default display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode +1)
-#+end_src
-** Org Mode
-#+begin_src emacs-lisp
-  (add-hook 'org-mode-hook 'org-indent-mode)
-#+end_src
-** Font
-#+begin_src emacs-lisp
-  (add-to-list
-   'default-frame-alist
-   '(font . "monospace-12"))
-#+end_src
 * Package Management Setup
 ** straight.el
 #+begin_src emacs-lisp
@@ -69,7 +30,12 @@
   (require 'general)
 #+end_src
 * Packages
+** Dired
+#+begin_src emacs-lisp
+  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode +1)))
+#+end_src
 ** Evil
+*** Evil
 #+begin_src emacs-lisp
   (use-package evil
     :hook (emacs-startup-hook . evil-mode)
@@ -77,12 +43,13 @@
     (setq-default evil-want-integration t
                   evil-want-keybinding nil
                   evil-want-Y-yank-to-eol t))
-
+#+end_src
+*** Evil Collection
+#+begin_src emacs-lisp
   (use-package evil-collection
     :after evil
     :config
     (evil-collection-init))
-
 #+end_src
 ** EXWM
 #+begin_src emacs-lisp
@@ -112,7 +79,6 @@
   (use-package gruvbox-theme
     :config
     (load-theme 'gruvbox t))
-
 #+end_src
 ** Magit
 #+begin_src emacs-lisp
@@ -121,5 +87,44 @@
     ("C-x g" 'magit-status)
     :init
     (setq-default magit-define-global-key-bindings))
+#+end_src
+** Org
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
+** Miscellaneous
+*** Follow Symlinks
+#+begin_src emacs-lisp
+  (setq-default vc-follow-symlinks t)
+#+end_src
+*** Hide \*Async Shell Command*
+#+begin_src emacs-lisp
+  (setq-default
+   async-shell-command-buffer 'new-buffer)
+  (add-to-list
+   'display-buffer-alist
+   '("^\\*Async Shell Command\\*" . display-buffer-window))
+#+end_src
+*** Backup, Auto-Save, and Lockfiles
+#+begin_src emacs-lisp
+  (setq-default
+   backup-by-copying t
+   backup-directory-alist
+   `(("." . ,(expand-file-name "backup" user-emacs-directory)))
 
+   auto-save-file-name-transforms
+   `((".*" ,(expand-file-name "auto-saves" user-emacs-directory) t))
+
+   create-lockfiles nil)
+#+end_src
+*** Display Line Number
+#+begin_src emacs-lisp
+  (setq-default display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode +1)
+#+end_src
+*** Font
+#+begin_src emacs-lisp
+  (add-to-list
+   'default-frame-alist
+   '(font . "monospace-12"))
 #+end_src
