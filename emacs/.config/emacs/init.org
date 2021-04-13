@@ -34,6 +34,12 @@
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook 'org-indent-mode)
 #+end_src
+** Font
+#+begin_src emacs-lisp
+  (add-to-list
+   'default-frame-alist
+   '(font . "monospace-12"))
+#+end_src
 * Package Management Setup
 ** straight.el
 #+begin_src emacs-lisp
