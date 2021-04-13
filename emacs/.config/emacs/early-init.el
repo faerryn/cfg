@@ -2,12 +2,19 @@
 (setq-default
  inhibit-startup-screen t
  package-enable-at-startup nil
- use-dialog-box nil)
+ use-dialog-box nil
+
+ auto-save-default nil
+ create-lockfiles nil
+ make-backup-files nil)
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
+
+;; disable garbage collection
+(setq-default gc-cons-threshold most-positive-fixnum)
 
 ;; tangle init.org
 (let
