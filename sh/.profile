@@ -6,10 +6,6 @@ export XDG_CONFIG_HOME="${HOME}"/.config
 export XDG_DATA_HOME="${HOME}"/.local/share
 export XDG_DATA_DIRS=/usr/local/share:/usr/share:"${XDG_DATA_DIRS}"
 
-# Neovim
-export EDITOR=nvim
-export VISUAL="${EDITOR}"
-
 # Rust
 export RUSTUP_HOME="${XDG_DATA_HOME}"/rustup
 export CARGO_HOME="${XDG_DATA_HOME}"/cargo

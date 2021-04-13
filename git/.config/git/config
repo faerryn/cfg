@@ -1,11 +1,3 @@
 [user]
 	name = Jiang Meng Liao (Faerryn)
 	email = alexandre.liao@gmail.com
-[pull]
-	rebase = false
-[merge]
-	tool = nvimdiff
-[core]
-	autocrlf = input
-[clean]
-	requireForce = false
