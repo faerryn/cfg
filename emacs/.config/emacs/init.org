@@ -133,6 +133,23 @@ Provide a --exwm flag to request for EXWM.
      . (lambda (switch-string)
          (exwm-enable))))
 #+end_src
+** Ivy
+*** Ivy
+#+begin_src emacs-lisp
+  (use-package ivy
+    :config
+    (ivy-mode +1))
+#+end_src
+*** Counsel
+#+begin_src emacs-lisp
+  (use-package counsel
+    :hook (emacs-startup-hook . counsel-mode))
+#+end_src
+*** Swiper
+#+begin_src emacs-lisp
+  (use-package swiper
+    :general ("C-s" 'swiper-isearch))
+#+end_src
 ** GCMH
 GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that delegates garbage collection to times when Emacs is idle.
 #+begin_src emacs-lisp
