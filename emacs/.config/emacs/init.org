@@ -1,17 +1,12 @@
 #+TITLE: init.org
-#+STARTUP: content
+#+STARTUP: overview
 
 * Core
 Configure the basic Emacs settings.
-** Symlinks
-Follow symlinks 
-#+begin_src emacs-lisp
-  (setq-default vc-follow-symlinks t)
-#+end_src
 ** Async Shell Command
 Hide async-shell-command buffer.
 #+begin_src emacs-lisp
-  (setq-default
+  (setq
    async-shell-command-buffer 'new-buffer)
   (add-to-list
    'display-buffer-alist
@@ -20,7 +15,7 @@ Hide async-shell-command buffer.
 ** Display Line Numbers
 Show relative line numbers on the left gutter.
 #+begin_src emacs-lisp
-  (setq-default display-line-numbers-type 'relative)
+  (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode +1)
 #+end_src
 ** Font
@@ -29,13 +24,29 @@ Show relative line numbers on the left gutter.
    'default-frame-alist
    '(font . "monospace-12"))
 #+end_src
+** Key Chord Delay
+#+begin_src emacs-lisp
+  (setq
+    key-chord-two-keys-delay 0.05
+    key-chord-one-keys-delay 0.1)
+#+end_src
+** Mode Line
+#+begin_src emacs-lisp
+  (display-time-mode +1)
+  (display-battery-mode +1)
+#+end_src
+** Symlinks
+Follow symlinks.
+#+begin_src emacs-lisp
+  (setq find-file-visit-truename t)
+#+end_src
 * Bootstrap
 Bootstrap packages needed for package management.
 ** straight.el
 straight.el is a package manager for emacs that is functional -- that is, packages are only loaded if they are asked for.
 Compared to package.el, where any package ever installed is loaded, this makes reverting to a previous configuration must easier.
 #+begin_src emacs-lisp
-  (setq-default straight-use-package-by-default t)
+  (setq straight-use-package-by-default t)
   (defvar bootstrap-version)
   (let ((bootstrap-file
          (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -53,7 +64,7 @@ Compared to package.el, where any package ever installed is loaded, this makes r
 use-package is a configuration management tool that can defer loading of packages until later. This can improve startup time.
 #+begin_src emacs-lisp
   (straight-use-package 'use-package)
-  (setq-default use-package-hook-name-suffix nil)
+  (setq use-package-hook-name-suffix nil)
   (require 'use-package)
 #+end_src
 ** general.el
@@ -66,6 +77,7 @@ Configure packages for Emacs glory.
 ** Dired
 Dired is the standard Emacs file manager.
 #+begin_src emacs-lisp
+  (require 'dired-x)
   (add-hook 'dired-mode-hook (lambda () (dired-omit-mode +1)))
 #+end_src
 ** Evil
@@ -76,9 +88,9 @@ The emulation package proper, which provides the text editing powers of vim to E
   (use-package evil
     :hook (emacs-startup-hook . evil-mode)
     :init
-    (setq-default evil-want-integration t
-                  evil-want-keybinding nil
-                  evil-want-Y-yank-to-eol t))
+    (setq evil-want-integration t
+          evil-want-keybinding nil
+          evil-want-Y-yank-to-eol t))
 #+end_src
 *** Evil Collection
 Evil Collection is a collection of vim-style keybindings for various Emacs major modes.
@@ -87,6 +99,10 @@ Evil Collection is a collection of vim-style keybindings for various Emacs major
     :after evil
     :config
     (evil-collection-init))
+#+end_src
+** EWW
+#+begin_src emacs-lisp
+  (setq eww-download-directory "~/www/")
 #+end_src
 ** EXWM
 EXWM (Emacs X Window Manager) is a window manager for X11 written in Emacs Lisp.
@@ -108,7 +124,7 @@ The window manager proper, which manages X11 windows as Emacs buffers.
      'exwm-update-class-hook
      (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
 #+end_src
-*** Command Flag
+*** Startup Flag
 Provide a --exwm flag to request for EXWM.
 #+begin_src emacs-lisp
   (add-to-list
@@ -121,6 +137,7 @@ Provide a --exwm flag to request for EXWM.
 GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that delegates garbage collection to times when Emacs is idle.
 #+begin_src emacs-lisp
   (use-package gcmh
+    :disabled t
     :hook (emacs-startup-hook . gcmh-mode))
 #+end_src
 ** Gruvbox
@@ -137,9 +154,8 @@ Magit is the best Git client.
     :general
     ("C-x g" 'magit-status)
     :init
-    (setq-default magit-define-global-key-bindings))
+    (setq magit-define-global-key-bindings nil))
 #+end_src
-
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
 #+begin_src emacs-lisp

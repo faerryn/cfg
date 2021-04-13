@@ -1,6 +1,6 @@
 # terminal emulator
 super + shift + Return
-	st
+	emacs -f eshell
 
 # program launcher
 super + p
