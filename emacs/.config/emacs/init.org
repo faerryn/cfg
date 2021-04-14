@@ -110,27 +110,25 @@ The emulation package proper, which provides the text editing powers of vim to E
 #+begin_src emacs-lisp
   (use-package evil
     :hook (emacs-startup-hook . evil-mode)
-    :init
-    (setq evil-want-integration t
-          evil-want-keybinding nil
-          evil-want-Y-yank-to-eol t))
-
+    :init (setq evil-want-integration t
+                evil-want-keybinding nil
+                evil-want-Y-yank-to-eol t)
+    :config
+    (require 'undo-fu)
+    (evil-collection-init))
 #+end_src
 *** Evil Collection
 Evil Collection is a collection of vim-style keybindings for various Emacs major modes.
 #+begin_src emacs-lisp
   (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+    :commands evil-collection-init)
 #+end_src
 *** Undo Fu
 Undo Fu for evil mode redo.
 #+begin_src emacs-lisp
   (use-package undo-fu
     :defer t
-    :init
-    (setq evil-undo-system 'undo-fu))
+    :init (setq evil-undo-system 'undo-fu))
 #+end_src
 ** Mode Line Misc
 *** Time
