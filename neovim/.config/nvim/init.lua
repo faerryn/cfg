@@ -147,6 +147,7 @@ use {
 		vim.fn['lightline#enable']()
 	end,
 }
+
 use {
 	'norcalli/nvim-colorizer.lua',
 	config = function()
