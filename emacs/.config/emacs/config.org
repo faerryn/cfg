@@ -10,6 +10,12 @@ Hide async-shell-command buffer.
   (add-to-list 'display-buffer-alist
                '("^\\*Async Shell Command\\*" . display-buffer-window))
 #+end_src
+** Auto Save, Lockfiles, Backup
+#+begin_src emacs-lisp
+  (setq auto-save-default nil
+        create-lockfiles nil
+        make-backup-files nil)
+#+end_src
 ** Display Line Numbers
 Show relative line numbers on the left gutter.
 #+begin_src emacs-lisp
@@ -35,6 +41,23 @@ Show relative line numbers on the left gutter.
 Follow symlinks.
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t)
+#+end_src
+** User Emacs Directory
+#+begin_src emacs-lisp
+  (setq user-emacs-directory
+        (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+#+end_src
+** User Interface
+*** Inhibit Startup Screen
+#+begin_src emacs-lisp
+  (setq inhibit-startup-screen t)
+#+end_src
+*** Dialog Box, Menu Bar, Scroll Bar, Tool Bar
+#+begin_src emacs-lisp
+  (setq use-dialog-box nil)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
 #+end_src
 * Bootstrap
 Bootstrap packages needed for package management.
@@ -101,6 +124,13 @@ Evil Collection is a collection of vim-style keybindings for various Emacs major
     :config
     (evil-collection-init))
 #+end_src
+*** Undo Fu
+Undo Fu for evil mode undo-redo.
+#+begin_src emacs-lisp
+  (use-package undo-fu
+    :init
+    (setq evil-undo-system 'undo-fu))
+#+end_src
 ** EWW
 #+begin_src emacs-lisp
   (setq eww-download-directory "~/www/")
@@ -159,12 +189,4 @@ Org is a versatile and powerful plain-text format for Emacs.
 #+begin_src emacs-lisp
   (require 'org)
   (add-hook 'org-mode-hook 'org-indent-mode)
-#+end_src
-
-** Undo Fu
-Undo Fu for evil mode.
-#+begin_src emacs-lisp
-  (use-package undo-fu
-    :config
-    (setq evil-undo-system 'undo-fu))
 #+end_src
