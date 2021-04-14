@@ -16,12 +16,6 @@ Hide async-shell-command buffer.
         create-lockfiles nil
         make-backup-files nil)
 #+end_src
-** Display Line Numbers
-Show relative line numbers on the left gutter.
-#+begin_src emacs-lisp
-  (setq display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode +1)
-#+end_src
 ** Font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist
@@ -31,11 +25,6 @@ Show relative line numbers on the left gutter.
 #+begin_src emacs-lisp
   (setq key-chord-two-keys-delay 0.02
         key-chord-one-keys-delay 0.04)
-#+end_src
-** Mode Line
-#+begin_src emacs-lisp
-  (display-time-mode +1)
-  (display-battery-mode +1)
 #+end_src
 ** Symlinks
 Follow symlinks.
@@ -105,6 +94,15 @@ Dired X (Dired Extra) provides extra functionality to Dired, the Emacs file mana
           '(("\\.ogg\\'" "mpv")
             ("\\.swf\\'" "ruffle"))))
 #+end_src
+** Display Line Numbers
+Show relative line numbers on the left gutter.
+#+begin_src emacs-lisp
+  (use-package display-line-numbers
+    :straight nil
+    :hook (emacs-startup-hook . global-display-line-numbers-mode)
+    :init
+    (setq display-line-numbers-type 'relative))
+#+end_src
 ** Evil
 Evil is a vim emulation layer in emacs.
 *** Evil
@@ -133,6 +131,19 @@ Undo Fu for evil mode redo.
   (use-package undo-fu
     :init
     (setq evil-undo-system 'undo-fu))
+#+end_src
+** Mode Line Misc
+*** Time
+#+begin_src emacs-lisp
+  (use-package time
+    :straight nil
+    :hook (emacs-startup-hook . display-time-mode))
+#+end_src
+*** Battery
+#+begin_src emacs-lisp
+  (use-package battery
+    :straight nil
+    :hook (emacs-startup-hook . display-battery-mode))
 #+end_src
 ** EWW
 EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
