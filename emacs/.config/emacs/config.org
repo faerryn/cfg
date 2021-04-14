@@ -1,4 +1,4 @@
-#+TITLE: init.org
+#+TITLE: config.org
 #+STARTUP: overview
 
 * Core
@@ -52,12 +52,13 @@ Follow symlinks.
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
 #+end_src
-*** Dialog Box, Menu Bar, Scroll Bar, Tool Bar
+*** Dialog Box, Menu Bar, Scroll Bar, Tool Bar, Tooltip
 #+begin_src emacs-lisp
   (setq use-dialog-box nil)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
+  (tooltip-mode -1)
 #+end_src
 * Bootstrap
 Bootstrap packages needed for package management.
@@ -93,15 +94,16 @@ general.el is a keybinding management tool that integrates well with Evil and us
 #+end_src
 * Packages
 Configure packages for Emacs glory.
-** Dired
-Dired is the standard Emacs file manager.
+** Dired X
+Dired X (Dired Extra) provides extra functionality to Dired, the Emacs file manager.
 #+begin_src emacs-lisp
-  (require 'dired-x)
-  (add-hook 'dired-mode-hook
-            (lambda () (dired-omit-mode +1)))
-  (setq dired-guess-shell-alist-user
-        '(("\\.ogg\\'" "mpv")
-          ("\\.swf\\'" "ruffle")))
+  (use-package dired-x
+    :straight nil
+    :hook (dired-mode-hook . dired-omit-mode)
+    :init
+    (setq dired-guess-shell-alist-user
+          '(("\\.ogg\\'" "mpv")
+            ("\\.swf\\'" "ruffle"))))
 #+end_src
 ** Evil
 Evil is a vim emulation layer in emacs.
@@ -109,12 +111,13 @@ Evil is a vim emulation layer in emacs.
 The emulation package proper, which provides the text editing powers of vim to Emacs.
 #+begin_src emacs-lisp
   (use-package evil
+    :after undo-fu ;; undo-fu is needed for redo
+    :hook (emacs-startup-hook . evil-mode)
     :init
     (setq evil-want-integration t
           evil-want-keybinding nil
-          evil-want-Y-yank-to-eol t)
-    :config
-    (add-hook 'emacs-startup-hook 'evil-mode))
+          evil-want-Y-yank-to-eol t))
+
 #+end_src
 *** Evil Collection
 Evil Collection is a collection of vim-style keybindings for various Emacs major modes.
@@ -125,23 +128,28 @@ Evil Collection is a collection of vim-style keybindings for various Emacs major
     (evil-collection-init))
 #+end_src
 *** Undo Fu
-Undo Fu for evil mode undo-redo.
+Undo Fu for evil mode redo.
 #+begin_src emacs-lisp
   (use-package undo-fu
     :init
     (setq evil-undo-system 'undo-fu))
 #+end_src
 ** EWW
+EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
 #+begin_src emacs-lisp
-  (setq eww-download-directory "~/www/")
+  (use-package eww
+    :straight nil
+    :init
+    (setq eww-download-directory "~/www/"))
 #+end_src
 ** EXWM
-EXWM (Emacs X Window Manager) is a window manager for X11 written in Emacs Lisp.
-*** EXWM
-The window manager proper, which manages X11 windows as Emacs buffers.
+EXWM (Emacs X Window Manager) is a window manager for X11 written in Emacs Lisp. It manages X11 windows as Emacs buffers.
 #+begin_src emacs-lisp
   (use-package exwm
     :commands exwm-enable
+    :init
+    (add-to-list 'command-switch-alist
+                 '("--exwm" . (lambda (switch-string) (exwm-enable))))
     :config
     (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
     (make-process :name "picom" :command '("picom") :noquery t)
@@ -155,25 +163,17 @@ The window manager proper, which manages X11 windows as Emacs buffers.
     (add-hook 'exwm-update-class-hook
               (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
 #+end_src
-*** Startup Flag
-Provide a --exwm flag to request for EXWM.
-#+begin_src emacs-lisp
-  (add-to-list 'command-switch-alist
-               '("--exwm" . (lambda (switch-string) (exwm-enable))))
-#+end_src
 ** GCMH
 GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that delegates garbage collection to times when Emacs is idle.
 #+begin_src emacs-lisp
   (use-package gcmh
-    :config
-    (add-hook 'emacs-startup-hook 'gcmh-mode))
+    :hook (emacs-startup-hook . gcmh-mode))
 #+end_src
 ** Gruvbox
 Gruvbox is the best theme.
 #+begin_src emacs-lisp
   (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
+    :hook (emacs-startup-hook . (lambda () (load-theme 'gruvbox t))))
 #+end_src
 ** Magit
 Magit is the best Git client.
@@ -187,6 +187,7 @@ Magit is the best Git client.
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
 #+begin_src emacs-lisp
-  (require 'org)
-  (add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org
+    :straight nil
+    :hook (org-mode-hook . org-indent-mode))
 #+end_src
