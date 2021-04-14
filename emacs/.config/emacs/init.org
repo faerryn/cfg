@@ -160,6 +160,7 @@ EXWM (Emacs X Window Manager) is a window manager for X11 written in Emacs Lisp.
     (add-to-list 'command-switch-alist
                  '("--exwm" . (lambda (switch-string) (exwm-enable))))
     :config
+    (call-process "xrdb" nil nil nil "-merge" (expand-file-name "Xresources" (getenv "XDG_CONFIG_HOME")))
     (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
     (make-process :name "picom" :command '("picom") :noquery t)
     (make-process :name "pipewire" :command '("pipewire") :noquery t)
