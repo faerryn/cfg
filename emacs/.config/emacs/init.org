@@ -109,7 +109,6 @@ Evil is a vim emulation layer in emacs.
 The emulation package proper, which provides the text editing powers of vim to Emacs.
 #+begin_src emacs-lisp
   (use-package evil
-    :after undo-fu ;; undo-fu is needed for redo
     :hook (emacs-startup-hook . evil-mode)
     :init
     (setq evil-want-integration t
@@ -129,6 +128,7 @@ Evil Collection is a collection of vim-style keybindings for various Emacs major
 Undo Fu for evil mode redo.
 #+begin_src emacs-lisp
   (use-package undo-fu
+    :defer t
     :init
     (setq evil-undo-system 'undo-fu))
 #+end_src
