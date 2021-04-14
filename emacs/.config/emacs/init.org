@@ -142,24 +142,6 @@ Gruvbox is the best theme.
     :config
     (load-theme 'gruvbox t))
 #+end_src
-** Ivy
-*** Ivy
-#+begin_src emacs-lisp
-  (use-package ivy
-    :config
-    (ivy-mode +1))
-#+end_src
-*** Counsel
-#+begin_src emacs-lisp
-  (use-package counsel
-    :hook (emacs-startup-hook . counsel-mode))
-#+end_src
-*** Swiper
-#+begin_src emacs-lisp
-  (use-package swiper
-    :disabled t
-    :general ("C-s" 'swiper-isearch))
-#+end_src
 ** Magit
 Magit is the best Git client.
 #+begin_src emacs-lisp
