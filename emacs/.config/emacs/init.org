@@ -54,9 +54,10 @@ straight.el is a package manager for emacs that is functional -- that is, packag
 Compared to package.el, where any package ever installed is loaded, this makes reverting to a previous configuration must easier.
 #+begin_src emacs-lisp
   (setq straight-use-package-by-default t)
+  (setq straight-base-dir (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
   (defvar bootstrap-version)
   (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" straight-base-dir))
         (bootstrap-version 5))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
@@ -140,6 +141,11 @@ Undo Fu for evil mode redo.
   (use-package battery
     :straight nil
     :hook (emacs-startup-hook . display-battery-mode))
+#+end_src
+** Tab Bar
+#+begin_src emacs-lisp
+  (use-package tab-bar
+    :hook (emacs-startup-hook . tab-bar-mode))
 #+end_src
 ** EWW
 EWW (Emacs Web Wowser) is good for browsing good ol' static sites.

@@ -33,7 +33,7 @@ vim.bo.shiftwidth = 2
 vim.bo.expandtab = false
 
 vim.o.list = true
-vim.o.listchars = 'eol:↲,tab:» ,trail:⋅,extends:…,precedes:…,nbsp:⎵'
+vim.o.listchars = 'tab:->,trail:.,extends:>,precedes:<,nbsp:?'
 vim.wo.list = true
 
 vim.o.scrolloff = 4
@@ -56,7 +56,7 @@ vim.o.timeoutlen = 500
 
 vim.o.background = 'dark'
 vim.o.termguicolors = (os.getenv'COLORTERM' == 'truecolor')
-vim.api.nvim_command[[autocmd ColorScheme * lua for i = 0, 15 do if vim.g['terminal_color_'..i] then vim.g['terminal_color_'..i] = nil end end]]
+vim.api.nvim_command[[autocmd ColorScheme * lua if vim.g['terminal_color_0'] then for i = 0, 15 do vim.g['terminal_color_'..i] = nil end end]]
 
 if vim.fn.executable('rg') == 1 then
 	vim.o.grepprg = 'rg --hidden --vimgrep'
