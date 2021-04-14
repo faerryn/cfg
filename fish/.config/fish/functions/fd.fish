@@ -1,3 +1,3 @@
 function fd
-	command fd -H $argv
+	command fd --hidden $argv
 end
