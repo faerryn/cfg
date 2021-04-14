@@ -1,6 +1,6 @@
 # terminal emulator
 super + shift + Return
-	emacs -f eshell
+	rofi-sensible-terminal
 
 # program launcher
 super + p

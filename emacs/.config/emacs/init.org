@@ -23,8 +23,8 @@ Show relative line numbers on the left gutter.
 #+end_src
 ** Key Chord Delay
 #+begin_src emacs-lisp
-  (setq key-chord-two-keys-delay 0.05
-        key-chord-one-keys-delay 0.1)
+  (setq key-chord-two-keys-delay 0.02
+        key-chord-one-keys-delay 0.04)
 #+end_src
 ** Mode Line
 #+begin_src emacs-lisp
@@ -114,6 +114,8 @@ The window manager proper, which manages X11 windows as Emacs buffers.
     :config
     (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
     (make-process :name "picom" :command '("picom") :noquery t)
+    (make-process :name "pipewire" :command '("pipewire") :noquery t)
+    (make-process :name "pipewire-pulse" :command '("pipewire-pulse") :noquery t)
     (make-process :name "redshift" :command '("redshift") :noquery t)
 
     (add-to-list 'initial-frame-alist

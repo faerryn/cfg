@@ -25,6 +25,7 @@ XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
 [ -f "${XRESOURCES}" ] && xrdb -merge "${XRESOURCES}"
 
 pgrep -x picom || picom &
+pgrep -x pipewire || { pipewire & pipewire-pulse & }
 pgrep -x redshift || redshift &
 
 WALLRC="${XDG_CONFIG_HOME}"/wallrc
