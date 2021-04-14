@@ -6,11 +6,9 @@ Configure the basic Emacs settings.
 ** Async Shell Command
 Hide async-shell-command buffer.
 #+begin_src emacs-lisp
-  (setq
-   async-shell-command-buffer 'new-buffer)
-  (add-to-list
-   'display-buffer-alist
-   '("^\\*Async Shell Command\\*" . display-buffer-window))
+  (setq async-shell-command-buffer 'new-buffer)
+  (add-to-list 'display-buffer-alist
+               '("^\\*Async Shell Command\\*" . display-buffer-window))
 #+end_src
 ** Display Line Numbers
 Show relative line numbers on the left gutter.
@@ -20,15 +18,13 @@ Show relative line numbers on the left gutter.
 #+end_src
 ** Font
 #+begin_src emacs-lisp
-  (add-to-list
-   'default-frame-alist
-   '(font . "monospace-12"))
+  (add-to-list 'default-frame-alist
+               '(font . "monospace-12"))
 #+end_src
 ** Key Chord Delay
 #+begin_src emacs-lisp
-  (setq
-    key-chord-two-keys-delay 0.05
-    key-chord-one-keys-delay 0.1)
+  (setq key-chord-two-keys-delay 0.05
+        key-chord-one-keys-delay 0.1)
 #+end_src
 ** Mode Line
 #+begin_src emacs-lisp
@@ -78,7 +74,11 @@ Configure packages for Emacs glory.
 Dired is the standard Emacs file manager.
 #+begin_src emacs-lisp
   (require 'dired-x)
-  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode +1)))
+  (add-hook 'dired-mode-hook
+            (lambda () (dired-omit-mode +1)))
+  (setq dired-guess-shell-alist-user
+        '(("\\.ogg\\'" "mpv")
+          ("\\.swf\\'" "ruffle")))
 #+end_src
 ** Evil
 Evil is a vim emulation layer in emacs.
@@ -116,22 +116,31 @@ The window manager proper, which manages X11 windows as Emacs buffers.
     (make-process :name "picom" :command '("picom") :noquery t)
     (make-process :name "redshift" :command '("redshift") :noquery t)
 
-    (add-to-list
-     'initial-frame-alist
-     '(fullscreen . fullboth))
+    (add-to-list 'initial-frame-alist
+                 '(fullscreen . fullboth))
 
-    (add-hook
-     'exwm-update-class-hook
-     (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
+    (add-hook 'exwm-update-class-hook
+              (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
 #+end_src
 *** Startup Flag
 Provide a --exwm flag to request for EXWM.
 #+begin_src emacs-lisp
-  (add-to-list
-   'command-switch-alist
-   '("--exwm"
-     . (lambda (switch-string)
-         (exwm-enable))))
+  (add-to-list 'command-switch-alist
+               '("--exwm" . (lambda (switch-string) (exwm-enable))))
+#+end_src
+** GCMH
+GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that delegates garbage collection to times when Emacs is idle.
+#+begin_src emacs-lisp
+  (use-package gcmh
+    :disabled t
+    :hook (emacs-startup-hook . gcmh-mode))
+#+end_src
+** Gruvbox
+Gruvbox is the best theme.
+#+begin_src emacs-lisp
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox t))
 #+end_src
 ** Ivy
 *** Ivy
@@ -148,21 +157,8 @@ Provide a --exwm flag to request for EXWM.
 *** Swiper
 #+begin_src emacs-lisp
   (use-package swiper
-    :general ("C-s" 'swiper-isearch))
-#+end_src
-** GCMH
-GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that delegates garbage collection to times when Emacs is idle.
-#+begin_src emacs-lisp
-  (use-package gcmh
     :disabled t
-    :hook (emacs-startup-hook . gcmh-mode))
-#+end_src
-** Gruvbox
-Gruvbox is the best theme.
-#+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox t))
+    :general ("C-s" 'swiper-isearch))
 #+end_src
 ** Magit
 Magit is the best Git client.
@@ -176,5 +172,14 @@ Magit is the best Git client.
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
 #+begin_src emacs-lisp
+  (require 'org)
   (add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
+
+** Undo Fu
+Undo Fu for evil mode.
+#+begin_src emacs-lisp
+  (use-package undo-fu
+    :config
+    (setq evil-undo-system 'undo-fu))
 #+end_src
