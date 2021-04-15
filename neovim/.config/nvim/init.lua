@@ -102,7 +102,9 @@ vim.api.nvim_command("command! Sshell split term://$SHELL")
 vim.api.nvim_command("command! Vshell vsplit term://$SHELL")
 vim.api.nvim_command("command! Tshell tabnew term://$SHELL")
 
-local use = require"user".use
+local user = require"user"
+user.setup()
+local use = user.use
 
 use {
 	"antoinemadec/FixCursorHold.nvim",
@@ -110,13 +112,14 @@ use {
 }
 
 use "ryvnf/readline.vim"
+
 use "tpope/vim-repeat"
 
 use {
 	"itchyny/lightline.vim",
+	after = "gruvbox-community/gruvbox",
 	init = function()
 		vim.g.lightline = {
-			colorscheme = vim.g.colors_name,
 			active = {
 				left = {
 					{ "mode", "paste" },
@@ -142,8 +145,9 @@ use {
 		}
 	end,
 	config = function()
-		vim.api.nvim_command("autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
-		vim.fn["lightline#enable"]()
+		local fix_colorscheme = [[if exists("g:colors_name") | let g:lightline.colorscheme = g:colors_name | endif | call lightline#enable()]]
+		vim.api.nvim_command("autocmd ColorScheme * "..fix_colorscheme)
+		vim.api.nvim_command(fix_colorscheme)
 	end,
 }
 
