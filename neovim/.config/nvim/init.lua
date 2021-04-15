@@ -13,10 +13,10 @@ vim.wo.signcolumn = "yes"
 vim.o.spellcapcheck = ""
 vim.bo.spellcapcheck = ""
 
-vim.o.laststatus = 2
-vim.o.showtabline = 2
-vim.o.showmode = false
-vim.o.showcmd = false
+vim.o.laststatus = 0
+vim.o.showtabline = 0
+vim.o.showmode = true
+vim.o.showcmd = true
 
 vim.o.equalalways = false
 vim.o.splitbelow = true
@@ -114,42 +114,6 @@ use {
 use "ryvnf/readline.vim"
 
 use "tpope/vim-repeat"
-
-use {
-	"itchyny/lightline.vim",
-	after = "gruvbox-community/gruvbox",
-	init = function()
-		vim.g.lightline = {
-			active = {
-				left = {
-					{ "mode", "paste" },
-					{ "readonly", "filename", "modified" },
-				},
-				right = {
-					{ "lineinfo" },
-					{ "percent" },
-					{ "fileformat", "fileencoding", "filetype" },
-				},
-			},
-			inactive = {
-				left = { {"filename" } },
-				right = {
-					{ "lineinfo" },
-					{ "percent" },
-				},
-			},
-			tabline = {
-				left = { {"tabs" } },
-				right = { },
-			},
-		}
-	end,
-	config = function()
-		local fix_colorscheme = [[if exists("g:colors_name") | let g:lightline.colorscheme = g:colors_name | endif | call lightline#enable()]]
-		vim.api.nvim_command("autocmd ColorScheme * "..fix_colorscheme)
-		vim.api.nvim_command(fix_colorscheme)
-	end,
-}
 
 use {
 	"norcalli/nvim-colorizer.lua",

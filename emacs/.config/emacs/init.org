@@ -167,6 +167,11 @@ Gruvbox is the best theme.
   (use-package gruvbox-theme
     :hook (emacs-startup-hook . (lambda () (load-theme 'gruvbox t))))
 #+end_src
+** Hide Mode Line
+#+begin_src emacs-lisp
+  (use-package hide-mode-line
+    :hook (emacs-startup-hook . global-hide-mode-line-mode))
+#+end_src
 ** Magit
 Magit is the best Git client.
 #+begin_src emacs-lisp
@@ -175,19 +180,6 @@ Magit is the best Git client.
     ("C-x g" 'magit-status)
     :init
     (setq magit-define-global-key-bindings nil))
-#+end_src
-** Mode Line Misc
-*** Time
-#+begin_src emacs-lisp
-  (use-package time
-    :straight nil
-    :hook (emacs-startup-hook . display-time-mode))
-#+end_src
-*** Battery
-#+begin_src emacs-lisp
-  (use-package battery
-    :straight nil
-    :hook (emacs-startup-hook . display-battery-mode))
 #+end_src
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
