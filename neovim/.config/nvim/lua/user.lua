@@ -35,8 +35,11 @@ local function parse_use(args)
 
 		pack.disabled = args.disabled
 
-		pack.after = args.after
-		pack.defer = args.defer
+		if type(args.after) == "string" then
+			pack.after = { args.after }
+		else
+			pack.after = args.after
+		end
 	else
 		error("TODO")
 	end
@@ -59,20 +62,14 @@ packadd_remaining = Deque:new()
 packadd_completed = {}
 
 local function can_packadd(pack)
-	if not pack.after then
-		return true
-	elseif type(pack.after) == "string" then
-		return packadd_completed[pack.after]
-	elseif type(pack.after) == "table" then
+	if pack.after then
 		for _, after in ipairs(pack.after) do
 			if not packadd_completed[after] then
 				return false
 			end
 		end
-		return true
-	else
-		error("TODO")
 	end
+	return true
 end
 
 local function packadds()
