@@ -1,5 +1,5 @@
 local packs = {}
-local packs_install_path = vim.fn.stdpath"data".."/site/pack/use/opt/"
+local packs_install_path = vim.fn.stdpath"data".."/site/pack/user/opt/"
 
 local function parse_packadd(args)
 	local pack
