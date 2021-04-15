@@ -1,6 +1,8 @@
 #+TITLE: config.org
 #+STARTUP: overview
 
+* Intro
+My goal for Emacs to craft a full desktop experience.
 * Core
 Configure the basic Emacs settings.
 ** Async Shell Command
@@ -110,6 +112,7 @@ The emulation package proper, which provides the text editing powers of vim to E
                 evil-want-Y-yank-to-eol t)
     :config
     (require 'undo-fu)
+    (require 'undohist)
     (evil-collection-init))
 #+end_src
 *** Evil Collection
@@ -118,12 +121,19 @@ Evil Collection is a collection of vim-style keybindings for various Emacs major
   (use-package evil-collection
     :commands evil-collection-init)
 #+end_src
-*** Undo Fu
+*** Undo
+**** Undo Fu
 Undo Fu for evil mode redo.
 #+begin_src emacs-lisp
   (use-package undo-fu
     :defer t
     :init (setq evil-undo-system 'undo-fu))
+#+end_src
+**** undohist
+#+begin_src emacs-lisp
+  (use-package undohist
+    :defer t
+    :config (undohist-initialize))
 #+end_src
 ** EWW
 EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
