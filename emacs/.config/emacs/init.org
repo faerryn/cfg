@@ -29,10 +29,6 @@ Hide async-shell-command buffer.
   (add-to-list 'default-frame-alist
                '(font . "monospace-12"))
 #+end_src
-** Frame Resize Pixelwise
-#+begin_src emacs-lisp
-  (setq frame-resize-pixelwise t)
-#+end_src
 ** Inhibit Startup Screen
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
@@ -129,24 +125,6 @@ Undo Fu for evil mode redo.
     :defer t
     :init (setq evil-undo-system 'undo-fu))
 #+end_src
-** Mode Line Misc
-*** Time
-#+begin_src emacs-lisp
-  (use-package time
-    :straight nil
-    :hook (emacs-startup-hook . display-time-mode))
-#+end_src
-*** Battery
-#+begin_src emacs-lisp
-  (use-package battery
-    :straight nil
-    :hook (emacs-startup-hook . display-battery-mode))
-#+end_src
-** Tab Bar
-#+begin_src emacs-lisp
-  (use-package tab-bar
-    :hook (emacs-startup-hook . tab-bar-mode))
-#+end_src
 ** EWW
 EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
 #+begin_src emacs-lisp
@@ -197,6 +175,19 @@ Magit is the best Git client.
     ("C-x g" 'magit-status)
     :init
     (setq magit-define-global-key-bindings nil))
+#+end_src
+** Mode Line Misc
+*** Time
+#+begin_src emacs-lisp
+  (use-package time
+    :straight nil
+    :hook (emacs-startup-hook . display-time-mode))
+#+end_src
+*** Battery
+#+begin_src emacs-lisp
+  (use-package battery
+    :straight nil
+    :hook (emacs-startup-hook . display-battery-mode))
 #+end_src
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
