@@ -108,7 +108,7 @@ local use = user.use
 
 use {
 	"antoinemadec/FixCursorHold.nvim",
-	setup = function() vim.g.cursorhold_updatetime = 1000 end,
+	init = function() vim.g.cursorhold_updatetime = 1000 end,
 }
 
 use "ryvnf/readline.vim"
