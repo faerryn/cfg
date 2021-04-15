@@ -7,5 +7,5 @@ export MOZ_X11_EGL=1
 
 bspwm
 
+pkill -x pulseaudio
 pkill -x redshift
-pkill -x pipewire
