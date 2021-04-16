@@ -3,3 +3,5 @@
 	email = alexandre.liao@gmail.com
 [merge]
 	tool = nvimdiff
+[clean]
+	requireForce = false
