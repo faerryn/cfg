@@ -178,8 +178,9 @@ GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that d
 ** Doom Themes
 Doom has the best themes, and the best gruvbox!
 #+begin_src emacs-lisp
-  (use-package doom-themes
-    :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t))))
+  (when (display-graphic-p)
+    (use-package doom-themes
+      :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t)))))
 #+end_src
 ** Hide Mode Line
 #+begin_src emacs-lisp
@@ -190,10 +191,8 @@ Doom has the best themes, and the best gruvbox!
 Magit is the best Git client.
 #+begin_src emacs-lisp
   (use-package magit
-    :general
-    ("C-x g" 'magit-status)
-    :init
-    (setq magit-define-global-key-bindings nil))
+    :general ("C-x g" 'magit-status)
+    :init (setq magit-define-global-key-bindings nil))
 #+end_src
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
