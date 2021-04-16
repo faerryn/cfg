@@ -2,10 +2,6 @@
 super + shift + Return
 	terminal
 
-# program launcher
-super + p
-	dmenu_path | rofi -dmenu -p run | "$SHELL"
-
 # quit/restart bspwm
 super + shift + q
 	bspc quit
