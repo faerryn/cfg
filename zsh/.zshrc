@@ -17,3 +17,6 @@ alias rg='\rg --hidden'
 alias ls='\ls -hvxCFX --color=auto --group-directories-first'
 alias ll='ls -g'
 alias la='ls -gA'
+
+autoload -U compinit
+compinit -d "${XDG_CACHE_HOME}"/zcompdump
