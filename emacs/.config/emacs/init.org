@@ -1,8 +1,7 @@
-#+TITLE: config.org
+#+TITLE: init.org
+#+AUTHOR: Jiang Meng Liao (Faerryn)
 #+STARTUP: overview
 
-* Intro
-My goal for Emacs to craft a full desktop experience.
 * Core
 Configure the basic Emacs settings.
 ** Async Shell Command
@@ -170,11 +169,11 @@ GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that d
   (use-package gcmh
     :hook (emacs-startup-hook . gcmh-mode))
 #+end_src
-** Gruvbox
-Gruvbox is the best theme.
+** Doom Themes
+Doom has the best themes, and the best gruvbox!
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :hook (emacs-startup-hook . (lambda () (load-theme 'gruvbox t))))
+  (use-package doom-themes
+    :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t))))
 #+end_src
 ** Hide Mode Line
 #+begin_src emacs-lisp
