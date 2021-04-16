@@ -132,6 +132,7 @@ Undo Fu for evil mode redo.
 #+begin_src emacs-lisp
   (use-package undohist
     :defer t
+    :init (setq undohist-ignored-files '("\.git/COMMIT_EDITMSG$"))
     :config (undohist-initialize))
 #+end_src
 ** EWW
