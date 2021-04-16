@@ -1,3 +1,5 @@
 [user]
 	name = Jiang Meng Liao (Faerryn)
 	email = alexandre.liao@gmail.com
+[merge]
+	tool = nvimdiff
