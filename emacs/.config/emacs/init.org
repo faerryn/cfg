@@ -49,6 +49,10 @@ Follow symlinks.
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t)
 #+end_src
+** User Emacs Directory
+#+begin_src emacs-lisp
+    (setq user-emacs-directory (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+#+end_src
 * Bootstrap
 Bootstrap packages needed for package management.
 ** straight.el
@@ -56,10 +60,9 @@ straight.el is a package manager for emacs that is functional -- that is, packag
 Compared to package.el, where any package ever installed is loaded, this makes reverting to a previous configuration must easier.
 #+begin_src emacs-lisp
   (setq straight-use-package-by-default t)
-  (setq straight-base-dir (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
   (defvar bootstrap-version)
   (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" straight-base-dir))
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
         (bootstrap-version 5))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
