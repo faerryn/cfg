@@ -2,6 +2,10 @@
 super + shift + Return
 	terminal
 
+# program launcher
+super + p
+	launcher
+
 # quit/restart bspwm
 super + shift + q
 	bspc quit
