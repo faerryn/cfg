@@ -39,6 +39,11 @@ Hide async-shell-command buffer.
   (setq key-chord-two-keys-delay 0.02
         key-chord-one-keys-delay 0.04)
 #+end_src
+** Mouse Whell
+#+begin_src emacs-lisp
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((meta)) ((control) . text-scale))
+        mouse-wheel-progressive-speed nil)
+#+end_src
 ** Symlinks
 Follow symlinks.
 #+begin_src emacs-lisp

@@ -1,4 +1,4 @@
-PS1="$(echo -n '\e[0;32m\W\e[0;39m ) ')"
+PS1="\e[0;32m\w\e[0;39m ) "
 
 HISTFILE="${XDG_DATA_HOME:-${HOME}/.local/share}"/bash_history
 
