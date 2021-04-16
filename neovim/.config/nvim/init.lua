@@ -146,7 +146,6 @@ use {
 
 		telescope.setup { defaults = {
 			mappings = { i = {
-				["<C-w>c"] = actions.close,
 				["<esc>"] = actions.close,
 				["<C-Y>"] = actions.move_selection_previous,
 				["<C-E>"] = actions.move_selection_next,
