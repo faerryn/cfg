@@ -18,5 +18,7 @@ alias ls='\ls -hvxCFX --color=auto --group-directories-first'
 alias ll='ls -g'
 alias la='ls -gA'
 
+fpath+=("${XDG_CONFIG_HOME}/zsh/site-functions")
+
 autoload -U compinit
 compinit -d "${XDG_CACHE_HOME}"/zcompdump
