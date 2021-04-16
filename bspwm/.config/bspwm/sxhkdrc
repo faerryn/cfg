@@ -4,11 +4,7 @@ super + shift + Return
 
 # program launcher
 super + p
-	rofi -show run
-
-# window switcher
-super + w
-	rofi -show window
+	dmenu_path | rofi -dmenu -p run | "$SHELL"
 
 # quit/restart bspwm
 super + shift + q
