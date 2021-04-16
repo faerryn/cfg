@@ -145,11 +145,7 @@ use {
 		local actions = require("telescope.actions")
 
 		telescope.setup { defaults = {
-			mappings = { i = {
-				["<esc>"] = actions.close,
-				["<C-Y>"] = actions.move_selection_previous,
-				["<C-E>"] = actions.move_selection_next,
-			} },
+			mappings = { i = { ["<esc>"] = actions.close } },
 			file_previewer = require("telescope.previewers").vim_buffer_cat.new,
 		} }
 
