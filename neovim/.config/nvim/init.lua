@@ -37,13 +37,12 @@ vim.bo.expandtab = false
 vim.o.list = true
 vim.wo.list = true
 
-vim.o.scrolloff = 4
-vim.o.sidescrolloff = 4
-vim.wo.scrolloff = 4
-vim.wo.sidescrolloff = 4
-
 vim.o.clipboard = "unnamedplus"
 vim.o.mouse = "ar"
+vim.api.nvim_set_keymap("", "<ScrollWheelUp>", "<C-Y>", { noremap = true })
+vim.api.nvim_set_keymap("", "<S-ScrollWheelUp>", "<C-U>", { noremap = true })
+vim.api.nvim_set_keymap("", "<ScrollWheelDown>", "<C-E>", { noremap = true })
+vim.api.nvim_set_keymap("", "<S-ScrollWheelDown>", "<C-D>", { noremap = true })
 
 vim.o.completeopt = "menuone,noinsert"
 vim.o.confirm = true
@@ -64,32 +63,30 @@ if vim.fn.executable("rg") == 1 then
 	vim.o.grepformat = "%f:%l:%c:%m"
 end
 
-local keymap_opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
 
-vim.api.nvim_set_keymap("n", "Y", "y$", keymap_opts)
+vim.api.nvim_set_keymap("n", "]a", "<Cmd>next<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[a", "<Cmd>previous<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "]A", "<Cmd>last<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[A", "<Cmd>first<CR>", { noremap = true })
 
-vim.api.nvim_set_keymap("n", "]a", "<Cmd>next<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[a", "<Cmd>previous<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "]A", "<Cmd>last<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[A", "<Cmd>first<CR>", keymap_opts)
+vim.api.nvim_set_keymap("n", "]b", "<Cmd>bnext<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[b", "<Cmd>bprevious<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "]B", "<Cmd>blast<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[B", "<Cmd>bfirst<CR>", { noremap = true })
 
-vim.api.nvim_set_keymap("n", "]b", "<Cmd>bnext<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[b", "<Cmd>bprevious<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "]B", "<Cmd>blast<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[B", "<Cmd>bfirst<CR>", keymap_opts)
+vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>lopen<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>q", "<Cmd>copen<CR>", { noremap = true })
 
-vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>lopen<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "<Leader>q", "<Cmd>copen<CR>", keymap_opts)
+vim.api.nvim_set_keymap("n", "]q", "<Cmd>cnext<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[q", "<Cmd>cprevious<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "]Q", "<Cmd>clast<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[Q", "<Cmd>cfirst<CR>", { noremap = true })
 
-vim.api.nvim_set_keymap("n", "]q", "<Cmd>cnext<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[q", "<Cmd>cprevious<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "]Q", "<Cmd>clast<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[Q", "<Cmd>cfirst<CR>", keymap_opts)
-
-vim.api.nvim_set_keymap("n", "]l", "<Cmd>lnext<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[l", "<Cmd>lprevious<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "]L", "<Cmd>llast<CR>", keymap_opts)
-vim.api.nvim_set_keymap("n", "[L", "<Cmd>lfirst<CR>", keymap_opts)
+vim.api.nvim_set_keymap("n", "]l", "<Cmd>lnext<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[l", "<Cmd>lprevious<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "]L", "<Cmd>llast<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "[L", "<Cmd>lfirst<CR>", { noremap = true })
 
 vim.g.netrw_banner = 0
 vim.g.netrw_hide = 1
@@ -151,9 +148,8 @@ use {
 
 		telescope.load_extension("fzy_native")
 
-		local keymap_opts = { noremap = true, silent = true }
-		vim.api.nvim_set_keymap("n", "<Leader>f", [[<Cmd>lua require("telescope.builtin").find_files{ hidden = true }<CR>]], keymap_opts)
-		vim.api.nvim_set_keymap("n", "<Leader>b", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], keymap_opts)
+		vim.api.nvim_set_keymap("n", "<Leader>f", [[<Cmd>lua require("telescope.builtin").find_files{ hidden = true }<CR>]], { noremap = true })
+		vim.api.nvim_set_keymap("n", "<Leader>b", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], { noremap = true })
 	end,
 }
 
