@@ -9,4 +9,4 @@
       (init.el (expand-file-name "init.el" user-emacs-directory)))
   (when (file-newer-than-file-p init.org init.el)
     (require 'ob-tangle)
-    (org-babel-tangle-file init.org init.el "emacs-lisp")))
+    (org-babel-tangle-file init.org init.el "^emacs-lisp$")))
