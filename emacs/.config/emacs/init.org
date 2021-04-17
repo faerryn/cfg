@@ -153,17 +153,7 @@ EXWM (Emacs X Window Manager) is a window manager for X11 written in Emacs Lisp.
     (add-hook
      'exwm-init-hook
      (lambda ()
-       (call-process "xrdb" nil nil nil "-merge"
-                     (expand-file-name "Xresources" (getenv "XDG_CONFIG_HOME")))
-       (make-process :name "sxhkd" :command '("sxhkd") :noquery t)
-       (make-process :name "picom" :command '("picom") :noquery t)
-       (make-process :name "pulseaudio"
-                     :command '("pulseaudio" "--exit-idle-time" "-1") :noquery t)
-       (make-process :name "redshift" :command '("redshift") :noquery t)))
-    (add-hook 'exwm-exit-hook
-                 (lambda ()
-                   (interrupt-process "redshift")
-                   (interrupt-process "pulseaudio")))
+       (make-process :name "sxhkd" :command '("sxhkd") :noquery t)))
     (add-hook 'exwm-update-class-hook
               (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
 #+end_src
