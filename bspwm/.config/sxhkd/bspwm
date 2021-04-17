@@ -6,7 +6,7 @@ super + shift + Return
 super + p
 	dmenu_run -f -i
 
-# quit/restart bspwm
+# quit bspwm
 super + shift + q
 	bspc quit
 
