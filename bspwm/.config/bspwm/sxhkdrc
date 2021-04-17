@@ -1,10 +1,10 @@
 # terminal emulator
 super + shift + Return
-	terminal
+	st
 
 # program launcher
 super + p
-	launcher
+	dmenu_run
 
 # quit/restart bspwm
 super + shift + q

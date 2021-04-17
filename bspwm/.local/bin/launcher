@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -euf
-
-for launcher in dmenu_run; do
-    if command -v "${launcher}" > /dev/null 2>&1; then
-        exec "${launcher}" "$@"
-    fi
-done

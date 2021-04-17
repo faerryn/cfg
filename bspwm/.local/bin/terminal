@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -euf
-
-for terminal in alacritty st; do
-    if command -v "${terminal}" > /dev/null 2>&1; then
-        exec "${terminal}" "$@"
-    fi
-done
