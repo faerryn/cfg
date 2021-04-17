@@ -7,7 +7,16 @@ export XDG_DATA_HOME="${HOME}"/.local/share
 export XDG_DATA_DIRS=/usr/local/share:/usr/share:"${XDG_DATA_DIRS}"
 
 # Path
-export PATH="${HOME}/.local/bin:${PATH}"
+prependpath () {
+    case ":${PATH}:" in
+        *:"${1}":*)
+            ;;
+        *)
+            PATH="${1}${PATH:+:${PATH}}"
+    esac
+}
+prependpath "${HOME}"/.local/bin
+unset prependpath
 
 # less
 export LESSHISTFILE=-
