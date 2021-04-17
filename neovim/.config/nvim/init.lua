@@ -43,32 +43,47 @@ vim.wo.wrap = false
 vim.o.list = true
 vim.wo.list = true
 
--- moar responsiveness
-vim.o.timeoutlen = 500
-vim.o.updatetime = 500
-
 vim.o.nrformats = "alpha,octal,hex,bin"
 
 vim.o.completeopt = "menuone,noinsert"
 
 vim.o.inccommand = "nosplit"
 
+-- keybind timeout, cursorhold timeout
+vim.o.timeoutlen = 500
+vim.o.updatetime = 500
+
+-- X11 integration
+vim.o.clipboard = "unnamedplus"
+vim.o.mouse = "ar"
+
+vim.api.nvim_set_keymap("", "<ScrollWheelUp>", "<C-Y>", { noremap = true })
+vim.api.nvim_set_keymap("", "<S-ScrollWheelUp>", "<C-U>", { noremap = true })
+vim.api.nvim_set_keymap("", "<ScrollWheelDown>", "<C-E>", { noremap = true })
+vim.api.nvim_set_keymap("", "<S-ScrollWheelDown>", "<C-D>", { noremap = true })
+
+-- performance
 vim.o.lazyredraw = true
 
+-- colorscheme
 vim.o.background = "dark"
 vim.o.termguicolors = (os.getenv"COLORTERM" == "truecolor")
 vim.api.nvim_command([[autocmd ColorScheme * lua if vim.g["terminal_color_0"] then for i = 0, 15 do vim.g["terminal_color_"..i] = nil end end]])
 
+-- ripgrep for :grep
 if vim.fn.executable("rg") == 1 then
 	vim.o.grepprg = "rg --hidden --vimgrep"
 	vim.o.grepformat = "%f:%l:%c:%m"
 end
 
-vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
+-- Y to eol
+vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 
+-- SPC as mapleader
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
 
+-- unimpaired bindings
 vim.api.nvim_set_keymap("n", "]a", "<Cmd>next<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "[a", "<Cmd>previous<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "]A", "<Cmd>last<CR>", { noremap = true })
@@ -92,12 +107,18 @@ vim.api.nvim_set_keymap("n", "[l", "<Cmd>lprevious<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "]L", "<Cmd>llast<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "[L", "<Cmd>lfirst<CR>", { noremap = true })
 
+-- netrw settings
 vim.g.netrw_banner = 0
 vim.g.netrw_hide = 1
 vim.g.netrw_keepdir = 0
 vim.g.netrw_list_hide = [[^\.\.\?/$]]
 vim.g.netrw_winsize = 25
 
+-- Fixes vim#7188
+vim.api.nvim_set_keymap("n", "gx", "<Cmd>!xdg-open <cfile><CR>", { noremap = true })
+vim.api.nvim_set_keymap("v", "gx", "<Cmd>!xdg-open <cfile><CR>", { noremap = true })
+
+-- shell split commands
 vim.api.nvim_command("command! Shell edit term://$SHELL")
 vim.api.nvim_command("command! Hshell vsplit term://$SHELL")
 vim.api.nvim_command("command! Lshell topleft vsplit term://$SHELL")
@@ -105,6 +126,7 @@ vim.api.nvim_command("command! Sshell split term://$SHELL")
 vim.api.nvim_command("command! Vshell vsplit term://$SHELL")
 vim.api.nvim_command("command! Tshell tabnew term://$SHELL")
 
+-- bootstrap user.nvim
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/faerryn/user.nvim"
 if vim.fn.empty(vim.fn.glob(user_install_path)) > 0 then
 	os.execute([[git clone --depth 1 https://github.com/faerryn/user.nvim.git ']]..user_install_path..[[']])
@@ -117,18 +139,19 @@ local use = user.use
 
 use "faerryn/user.nvim"
 
+-- Fixes neovim#12587
 use "antoinemadec/FixCursorHold.nvim"
 
+-- command mode shortcuts
 use "ryvnf/readline.vim"
 
+-- period (.) repeat for plugins
 use "tpope/vim-repeat"
 
-use {
-	"norcalli/nvim-colorizer.lua",
-	config = function() vim.api.nvim_command([[autocmd BufEnter * lua require("colorizer").attach_to_buffer()]]) end,
-}
-
+-- nvim lua library
 use "nvim-lua/plenary.nvim"
+
+-- fuzzy finding interface
 use "nvim-lua/popup.nvim"
 use "nvim-telescope/telescope-fzy-native.nvim"
 use {
@@ -154,7 +177,7 @@ use {
 	end,
 }
 
-use "nvim-lua/plenary.nvim"
+-- see what is modified
 use {
 	"lewis6991/gitsigns.nvim",
 	after = "nvim-lua/plenary.nvim",
@@ -172,8 +195,10 @@ use {
 	end,
 }
 
+-- comment code in and out
 use "tomtom/tcomment_vim"
 
+-- correct syntax highlighting
 use {
 	"nvim-treesitter/nvim-treesitter",
 	config = function()
@@ -181,6 +206,7 @@ use {
 	end,
 }
 
+-- mandatory colorscheme
 use {
 	"gruvbox-community/gruvbox",
 	init = function()
@@ -205,6 +231,7 @@ use {
 	config = function() vim.api.nvim_command("colorscheme gruvbox") end,
 }
 
+-- c of the future
 use {
 	"ziglang/zig.vim",
 	init = function() vim.g.zig_fmt_autosave = false end,
