@@ -4,7 +4,7 @@ set -euf
 
 # bspwm specific settings
 
-pgrep -x sxhkd || sxhkd "${XDG_CONFIG_HOME}/bspwm/sxhkdrc" &
+pgrep -x sxhkd || sxhkd "${XDG_CONFIG_HOME}/sxhkd/bspwm" &
 
 bspc monitor -d 1 2 3 4
 
