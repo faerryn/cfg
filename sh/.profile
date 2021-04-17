@@ -27,3 +27,6 @@ export INPUTRC="${XDG_CONFIG_HOME}"/readline/inputrc
 
 # X11
 export XAUTHORITY="${XDG_RUNTIME_DIR}"/Xauthority
+
+# SXHKD
+export SXHKD_SHELL=/bin/sh
