@@ -1,58 +1,59 @@
+-- modeline can be a security risk
 vim.o.modeline = false
 
+-- switch buffers without writing to disk
+vim.o.hidden = true
+
+-- space indents of 2
+vim.o.shiftwidth = 2
+vim.bo.shiftwidth = 2
+vim.o.tabstop = 2
+vim.bo.tabstop = 2
+vim.o.expandtab = false
+vim.bo.expandtab = false
+
+-- no swapfiles
 vim.o.swapfile = false
-vim.o.undofile = true
 vim.bo.swapfile = false
+
+-- yes undofiles
+vim.o.undofile = true
 vim.bo.undofile = true
 
-vim.g.mapleader = " "
-vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
-
+-- relative line numbers
 vim.wo.number = true
 vim.wo.relativenumber = true
+
+-- always show signcolumn
 vim.wo.signcolumn = "yes"
 
-vim.o.spellcapcheck = ""
-vim.bo.spellcapcheck = ""
-
+-- no tabline or statusline
 vim.o.laststatus = 0
 vim.o.showtabline = 0
-vim.o.showmode = true
-vim.o.showcmd = true
 
-vim.o.equalalways = false
+-- new splits go under and right
 vim.o.splitbelow = true
 vim.o.splitright = true
 
+-- break lines at word boundaries, and disable wrap by default
 vim.wo.linebreak = true
 vim.wo.wrap = false
 
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-vim.o.expandtab = false
-vim.bo.tabstop = 2
-vim.bo.shiftwidth = 2
-vim.bo.expandtab = false
-
+-- show tabs and trailing spaces
 vim.o.list = true
 vim.wo.list = true
 
-vim.o.clipboard = "unnamedplus"
-vim.o.mouse = "ar"
-vim.api.nvim_set_keymap("", "<ScrollWheelUp>", "<C-Y>", { noremap = true })
-vim.api.nvim_set_keymap("", "<S-ScrollWheelUp>", "<C-U>", { noremap = true })
-vim.api.nvim_set_keymap("", "<ScrollWheelDown>", "<C-E>", { noremap = true })
-vim.api.nvim_set_keymap("", "<S-ScrollWheelDown>", "<C-D>", { noremap = true })
+-- moar responsiveness
+vim.o.timeoutlen = 500
+vim.o.updatetime = 500
+
+vim.o.nrformats = "alpha,octal,hex,bin"
 
 vim.o.completeopt = "menuone,noinsert"
-vim.o.confirm = true
-vim.o.foldlevelstart = 99
-vim.o.hidden = true
+
 vim.o.inccommand = "nosplit"
-vim.o.iskeyword = "a-z,A-Z,48-57,_,-"
+
 vim.o.lazyredraw = true
-vim.o.nrformats = "alpha,octal,hex,bin"
-vim.o.timeoutlen = 500
 
 vim.o.background = "dark"
 vim.o.termguicolors = (os.getenv"COLORTERM" == "truecolor")
@@ -64,6 +65,9 @@ if vim.fn.executable("rg") == 1 then
 end
 
 vim.api.nvim_set_keymap("n", "Y", "y$", { noremap = true })
+
+vim.g.mapleader = " "
+vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
 
 vim.api.nvim_set_keymap("n", "]a", "<Cmd>next<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "[a", "<Cmd>previous<CR>", { noremap = true })
@@ -113,10 +117,7 @@ local use = user.use
 
 use "faerryn/user.nvim"
 
-use {
-	"antoinemadec/FixCursorHold.nvim",
-	init = function() vim.g.cursorhold_updatetime = 1000 end,
-}
+use "antoinemadec/FixCursorHold.nvim"
 
 use "ryvnf/readline.vim"
 
