@@ -205,3 +205,8 @@ Org is a versatile and powerful plain-text format for Emacs.
     :commands vterm
     :init (setq vterm-environment '("COLORTERM=truecolor")))
 #+end_src
+** which-key
+#+begin_src emacs-lisp
+  (use-package which-key
+    :hook (emacs-startup-hook . which-key-mode))
+#+end_src
