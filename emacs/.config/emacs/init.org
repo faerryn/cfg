@@ -2,7 +2,7 @@
 #+AUTHOR: Jiang Meng Liao (Faerryn)
 #+STARTUP: overview
 
-* Core
+* Vanilla
 Configure the basic Emacs settings.
 ** Async Shell Command
 Hide async-shell-command buffer.
@@ -15,6 +15,7 @@ Hide async-shell-command buffer.
 ** Disable Auto Save, Lockfiles, Backup
 #+begin_src emacs-lisp
   (setq auto-save-default nil
+        auto-save-list-file-prefix nil
         create-lockfiles nil
         make-backup-files nil)
 #+end_src
@@ -25,19 +26,14 @@ Hide async-shell-command buffer.
 #+end_src
 ** Indentation
 #+begin_src emacs-lisp
-  (setq indent-tabs-mode nil
-        tab-width 2)
+  (setq-default indent-tabs-mode nil
+                tab-width 2)
 #+end_src
 ** Inhibit Startup Screen
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
 #+end_src
-** Key Chord Delay
-#+begin_src emacs-lisp
-  (setq key-chord-two-keys-delay 0.02
-        key-chord-one-keys-delay 0.04)
-#+end_src
-** Mouse Whell
+** Mouse Wheel
 #+begin_src emacs-lisp
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((meta)) ((control) . text-scale))
         mouse-wheel-progressive-speed nil)
@@ -49,8 +45,12 @@ Follow symlinks.
 #+end_src
 ** User Emacs Directory
 #+begin_src emacs-lisp
-  (setq-default user-emacs-directory
-                (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+  (setq user-emacs-directory
+        (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+#+end_src
+** Truncate Lines
+#+begin_src emacs-lisp
+  (setq-default truncate-lines t)
 #+end_src
 * Bootstrap
 Bootstrap packages needed for package management.
@@ -105,6 +105,12 @@ Show relative line numbers on the left gutter.
     :hook (emacs-startup-hook . global-display-line-numbers-mode)
     :init
     (setq display-line-numbers-type 'relative))
+#+end_src
+** Doom Themes
+Doom has the best themes, and the best gruvbox!
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t))))
 #+end_src
 ** Evil
 Evil is a vim emulation layer in emacs.
@@ -169,12 +175,6 @@ GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that d
   (use-package gcmh
     :hook (emacs-startup-hook . gcmh-mode))
 #+end_src
-** Doom Themes
-Doom has the best themes, and the best gruvbox!
-#+begin_src emacs-lisp
-  (use-package doom-themes
-    :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t))))
-#+end_src
 ** Hide Mode Line
 #+begin_src emacs-lisp
   (use-package hide-mode-line
@@ -187,6 +187,11 @@ Magit is the best Git client.
     :general ("C-x g" 'magit-status)
     :init (setq magit-define-global-key-bindings nil))
 #+end_src
+** Markdown
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :mode "\\.md\\'")
+#+end_src
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
 #+begin_src emacs-lisp
@@ -194,7 +199,6 @@ Org is a versatile and powerful plain-text format for Emacs.
     :straight nil
     :hook (org-mode-hook . org-indent-mode))
 #+end_src
-
 ** Vterm
 #+begin_src emacs-lisp
   (use-package vterm
