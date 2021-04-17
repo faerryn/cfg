@@ -118,8 +118,7 @@ vim.g.netrw_list_hide = [[^\.\.\?/$]]
 vim.g.netrw_winsize = 25
 
 -- Fixes vim#7188
-vim.api.nvim_set_keymap("n", "gx", "<Cmd>!xdg-open <cfile><CR>", { noremap = true })
-vim.api.nvim_set_keymap("v", "gx", "<Cmd>!xdg-open <cfile><CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "gx", "<Cmd>!xdg-open <cfile><CR><CR>", { noremap = true })
 
 -- shell split commands
 vim.api.nvim_command("command! Shell edit term://$SHELL")
