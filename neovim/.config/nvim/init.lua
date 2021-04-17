@@ -43,10 +43,13 @@ vim.wo.wrap = false
 vim.o.list = true
 vim.wo.list = true
 
+-- increment and decrement everything
 vim.o.nrformats = "alpha,octal,hex,bin"
 
+-- menus shouldn't cobble my text
 vim.o.completeopt = "menuone,noinsert"
 
+-- highlight matches incrementally
 vim.o.inccommand = "nosplit"
 
 -- keybind timeout, cursorhold timeout
