@@ -23,6 +23,11 @@ Hide async-shell-command buffer.
   (setq use-dialog-box nil)
   (tooltip-mode -1)
 #+end_src
+** Indentation
+#+begin_src emacs-lisp
+  (setq indent-tabs-mode nil
+        tab-width 2)
+#+end_src
 ** Inhibit Startup Screen
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
@@ -44,7 +49,8 @@ Follow symlinks.
 #+end_src
 ** User Emacs Directory
 #+begin_src emacs-lisp
-  (setq user-emacs-directory (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+  (setq-default user-emacs-directory
+                (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
 #+end_src
 * Bootstrap
 Bootstrap packages needed for package management.
@@ -166,9 +172,8 @@ GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that d
 ** Doom Themes
 Doom has the best themes, and the best gruvbox!
 #+begin_src emacs-lisp
-  (when (display-graphic-p)
-    (use-package doom-themes
-      :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t)))))
+  (use-package doom-themes
+    :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t))))
 #+end_src
 ** Hide Mode Line
 #+begin_src emacs-lisp
