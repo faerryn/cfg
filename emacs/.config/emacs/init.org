@@ -95,7 +95,8 @@ Dired X (Dired Extra) provides extra functionality to Dired, the Emacs file mana
     :init
     (setq dired-guess-shell-alist-user
           '(("\\.\\(ogg\\|mkv\\|mp4\\)\\'" "mpv")
-            ("\\.swf\\'" "ruffle"))))
+            ("\\.swf\\'" "ruffle")
+            ("\\.\\(jpe?g\\|png\\)\\'" "sxiv"))))
 #+end_src
 ** Display Line Numbers
 Show relative line numbers on the left gutter.
