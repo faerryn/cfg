@@ -9,7 +9,7 @@ setopt HIST_LEX_WORDS
 setopt HIST_REDUCE_BLANKS
 
 alias diff='\diff --color=auto'
-alias grep='\grep ---color=auto'
+alias grep='\grep --color=auto'
 
 alias fd='\fd --hidden'
 alias rg='\rg --hidden'
