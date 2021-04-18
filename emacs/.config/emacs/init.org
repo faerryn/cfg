@@ -26,8 +26,7 @@ Hide async-shell-command buffer.
 #+end_src
 ** Indentation
 #+begin_src emacs-lisp
-  (setq-default indent-tabs-mode nil
-                tab-width 2)
+  (setq-default tab-width 2)
 #+end_src
 ** Inhibit Startup Screen
 #+begin_src emacs-lisp
