@@ -187,10 +187,14 @@ Magit is the best Git client.
     :general ("C-x g" 'magit-status)
     :init (setq magit-define-global-key-bindings nil))
 #+end_src
-** Markdown
+** Filetypes
 #+begin_src emacs-lisp
+  (use-package lua-mode
+    :mode "\\.lua\\'")
   (use-package markdown-mode
     :mode "\\.md\\'")
+  (use-package zig-mode
+    :mode "\\.zig\\'")
 #+end_src
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.

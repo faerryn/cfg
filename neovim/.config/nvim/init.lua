@@ -238,3 +238,6 @@ use {
 	"ziglang/zig.vim",
 	init = function() vim.g.zig_fmt_autosave = false end,
 }
+
+-- org mode for vim, evil for emacs
+use "axvr/org.vim"
