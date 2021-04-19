@@ -4,6 +4,12 @@
 
 * Vanilla
 Configure the basic Emacs settings.
+** Async Shell Command
+#+begin_src emacs-lisp
+  (setq async-shell-command-buffer 'new-buffer)
+  (add-to-list 'display-buffer-alist
+                '("\\*Async Shell Command\\*.*" display-buffer-no-window nil))
+#+end_src
 ** Disable Auto Save, Lockfiles, Backup
 #+begin_src emacs-lisp
   (setq auto-save-default nil
@@ -143,6 +149,24 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
     :init
     (setq eww-download-directory "~/www/"))
 #+end_src
+** EXWM
+#+begin_src emacs-lisp
+  (use-package exwm
+    :commands exwm-enable
+    :config
+    (add-hook 'exwm-init-hook
+              (lambda () (make-process :name "sxhkd" :command '("sxhkd") :noquery t)))
+    (add-hook 'exwm-update-class-hook (lambda () (rename-buffer exwm-class-name t))))	
+#+end_src
+** Filetypes
+#+begin_src emacs-lisp
+  (use-package lua-mode
+    :mode "\\.lua\\'")
+  (use-package markdown-mode
+    :mode "\\.md\\'")
+  (use-package zig-mode
+    :mode "\\.zig\\'")
+#+end_src
 ** GCMH
 GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that delegates garbage collection to times when Emacs is idle.
 #+begin_src emacs-lisp
@@ -155,15 +179,6 @@ Magit is the best Git client.
   (use-package magit
     :general ("C-c g" 'magit-status)
     :init (setq magit-define-global-key-bindings nil))
-#+end_src
-** Filetypes
-#+begin_src emacs-lisp
-  (use-package lua-mode
-    :mode "\\.lua\\'")
-  (use-package markdown-mode
-    :mode "\\.md\\'")
-  (use-package zig-mode
-    :mode "\\.zig\\'")
 #+end_src
 ** Org
 Org is a versatile and powerful plain-text format for Emacs.
