@@ -1,2 +1,6 @@
 #!/bin/sh
-exec emacsclient -c -a '' "${@}"
+if [ -n "${DISPLAY}" ]; then
+	exec emacsclient -c -a '' "${@}"
+else
+	exec emacsclient -a '' "${@}"
+fi

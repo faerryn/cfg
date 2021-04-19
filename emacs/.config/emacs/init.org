@@ -96,8 +96,7 @@ Show relative line numbers on the left gutter.
   (use-package display-line-numbers
     :straight nil
     :hook (emacs-startup-hook . global-display-line-numbers-mode)
-    :init
-    (setq display-line-numbers-type 'relative))
+    :init (setq display-line-numbers-type 'relative))
 #+end_src
 ** Doom Themes
 Doom has the best themes, and the best gruvbox!
@@ -146,8 +145,7 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
 #+begin_src emacs-lisp
   (use-package eww
     :straight nil
-    :init
-    (setq eww-download-directory "~/www/"))
+    :init (setq eww-download-directory "~/www/"))
 #+end_src
 ** EXWM
 #+begin_src emacs-lisp
