@@ -4,14 +4,6 @@
 
 * Vanilla
 Configure the basic Emacs settings.
-** Async Shell Command
-Hide async-shell-command buffer.
-#+begin_src emacs-lisp
-  (setq async-shell-command-buffer 'new-buffer
-        async-shell-command-display-buffer nil)
-  (add-to-list 'display-buffer-alist
-               '("^\\*Async Shell Command\\*" . (display-buffer-no-window . nil)))
-#+end_src
 ** Disable Auto Save, Lockfiles, Backup
 #+begin_src emacs-lisp
   (setq auto-save-default nil
@@ -90,12 +82,7 @@ Dired X (Dired Extra) provides extra functionality to Dired, the Emacs file mana
 #+begin_src emacs-lisp
   (use-package dired-x
     :straight nil
-    :hook (dired-mode-hook . dired-omit-mode)
-    :init
-    (setq dired-guess-shell-alist-user
-          '(("\\.\\(ogg\\|mkv\\|mp4\\)\\'" "mpv")
-            ("\\.swf\\'" "ruffle")
-            ("\\.\\(jpe?g\\|png\\)\\'" "sxiv"))))
+    :hook (dired-mode-hook . dired-omit-mode))
 #+end_src
 ** Display Line Numbers
 Show relative line numbers on the left gutter.
@@ -156,19 +143,6 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
     :init
     (setq eww-download-directory "~/www/"))
 #+end_src
-** EXWM
-EXWM (Emacs X Window Manager) is a window manager for X11 written in Emacs Lisp. It manages X11 windows as Emacs buffers.
-#+begin_src emacs-lisp
-  (use-package exwm
-    :commands exwm-enable
-    :config
-    (add-hook
-     'exwm-init-hook
-     (lambda ()
-       (make-process :name "sxhkd" :command '("sxhkd") :noquery t)))
-    (add-hook 'exwm-update-class-hook
-              (lambda () (exwm-workspace-rename-buffer exwm-class-name))))
-#+end_src
 ** GCMH
 GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that delegates garbage collection to times when Emacs is idle.
 #+begin_src emacs-lisp
@@ -202,12 +176,6 @@ Org is a versatile and powerful plain-text format for Emacs.
   (use-package org
     :straight nil
     :hook (org-mode-hook . org-indent-mode))
-#+end_src
-** Vterm
-#+begin_src emacs-lisp
-  (use-package vterm
-    :commands vterm
-    :init (setq vterm-environment '("COLORTERM=truecolor")))
 #+end_src
 ** which-key
 #+begin_src emacs-lisp
