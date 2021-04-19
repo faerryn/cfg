@@ -149,11 +149,6 @@ GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that d
   (use-package gcmh
     :hook (emacs-startup-hook . gcmh-mode))
 #+end_src
-** Hide Mode Line
-#+begin_src emacs-lisp
-  (use-package hide-mode-line
-    :hook (emacs-startup-hook . global-hide-mode-line-mode))
-#+end_src
 ** Magit
 Magit is the best Git client.
 #+begin_src emacs-lisp

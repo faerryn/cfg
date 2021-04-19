@@ -28,7 +28,7 @@ vim.wo.relativenumber = true
 vim.wo.signcolumn = "yes"
 
 -- no tabline or statusline
-vim.o.laststatus = 0
+vim.o.laststatus = 2
 vim.o.showtabline = 0
 
 -- new splits go under and right
@@ -158,6 +158,7 @@ use "nvim-lua/popup.nvim"
 use "nvim-telescope/telescope-fzy-native.nvim"
 use {
 	"nvim-telescope/telescope.nvim",
+	disabled = true,
 	after = {
 		"nvim-lua/plenary.nvim",
 		"nvim-lua/popup.nvim",
