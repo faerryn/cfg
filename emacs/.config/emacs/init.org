@@ -184,7 +184,7 @@ GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that d
 Magit is the best Git client.
 #+begin_src emacs-lisp
   (use-package magit
-    :general ("C-x g" 'magit-status)
+    :general ("C-c g" 'magit-status)
     :init (setq magit-define-global-key-bindings nil))
 #+end_src
 ** Filetypes
