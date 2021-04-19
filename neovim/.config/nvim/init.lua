@@ -241,3 +241,6 @@ use {
 
 -- org mode for vim, evil for emacs
 use "axvr/org.vim"
+
+-- wait for all installation and configs to finish
+user.startup()
