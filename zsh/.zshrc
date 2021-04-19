@@ -1,4 +1,4 @@
-PS1='%F{green}%~%f ) '
+PS1='%F{green}%1~%f ) '
 
 SAVEHIST=500
 HISTFILE="${XDG_DATA_HOME}"/zhistory

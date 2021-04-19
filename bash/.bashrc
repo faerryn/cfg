@@ -1,4 +1,4 @@
-PS1="\e[0;32m\w\e[0;39m ) "
+PS1="\e[0;32m\W\e[0;39m ) "
 
 HISTFILE="${XDG_DATA_HOME}"/bash_history
 
