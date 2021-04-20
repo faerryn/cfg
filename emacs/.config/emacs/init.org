@@ -151,6 +151,9 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
 #+begin_src emacs-lisp
   (use-package exwm
     :commands exwm-enable
+    :init
+    (setq exwm-input-prefix-keys '(?\C-x ?\C-c ?\C-g ?\M-&))
+    (setq exwm-mode-map nil)
     :config
     (add-hook 'exwm-init-hook
               (lambda () (make-process :name "sxhkd" :command '("sxhkd") :noquery t)))
