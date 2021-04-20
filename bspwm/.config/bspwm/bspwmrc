@@ -14,13 +14,3 @@ bspc config window_gap           16
 bspc config split_ratio          0.50
 
 bspc config focused_border_color '#fabd2f'
-
-# startup jobs
-
-xsetroot -cursor_name left_ptr
-
-XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
-[ -f "${XRESOURCES}" ] && xrdb -merge "${XRESOURCES}"
-
-WALLRC="${XDG_CONFIG_HOME}"/wallrc
-[ -f "${WALLRC}" ] && "${WALLRC}"

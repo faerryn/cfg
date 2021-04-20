@@ -9,7 +9,9 @@ XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
 [ -f "${XRESOURCES}" ] && xrdb -merge "${XRESOURCES}"
 
 WALLRC="${XDG_CONFIG_HOME}"/wallrc
-[ -f "${WALLRC}" ] && "${WALLRC}"
+[ -f "${WALLRC}" ] && "${WALLRC}" &
+
+xsetroot -cursor_name left_ptr &
 
 pgrep -x picom || picom &
 pgrep -x pulseaudio || pulseaudio --exit-idle-time -1 &

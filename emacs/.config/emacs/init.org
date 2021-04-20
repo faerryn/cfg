@@ -152,7 +152,7 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
   (use-package exwm
     :commands exwm-enable
     :init
-    (setq exwm-input-prefix-keys '(?\C-x ?\C-c ?\C-g ?\M-x ?\M-&))
+    (setq exwm-input-prefix-keys '(?\C-x ?\C-g ?\M-x ?\M-&))
     (setq exwm-mode-map nil)
     :config
     (add-hook 'exwm-init-hook
@@ -191,7 +191,7 @@ GCMH (Garbage Collection Magic Hack) provides a smarter garbage collector that d
 Magit is the best Git client.
 #+begin_src emacs-lisp
   (use-package magit
-    :general ("C-c g" 'magit-status)
+    :commands magit
     :init (setq magit-define-global-key-bindings nil))
 #+end_src
 ** which-key
