@@ -182,7 +182,6 @@ Magit is the best Git client.
 Org is a versatile and powerful plain-text format for Emacs.
 #+begin_src emacs-lisp
   (use-package org
-    :straight nil
     :hook (org-mode-hook . org-indent-mode))
 #+end_src
 ** which-key

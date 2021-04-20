@@ -4,7 +4,7 @@ super + shift + Return
 
 # program launcher
 super + p
-	dmenu_run -f -i
+	dmenu_run -f -i -l 16 -p run:
 
 # quit bspwm
 super + shift + q
