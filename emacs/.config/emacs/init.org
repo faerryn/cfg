@@ -152,7 +152,7 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
   (use-package exwm
     :commands exwm-enable
     :init
-    (setq exwm-input-prefix-keys '(?\C-x ?\C-c ?\C-g ?\M-&))
+    (setq exwm-input-prefix-keys '(?\C-x ?\C-c ?\C-g ?\M-x ?\M-&))
     (setq exwm-mode-map nil)
     :config
     (add-hook 'exwm-init-hook
