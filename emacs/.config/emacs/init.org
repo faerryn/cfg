@@ -157,11 +157,24 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
     (add-hook 'exwm-update-class-hook (lambda () (rename-buffer exwm-class-name t))))	
 #+end_src
 ** Filetypes
+*** Lua
 #+begin_src emacs-lisp
   (use-package lua-mode
     :mode "\\.lua\\'")
+#+end_src
+*** Markdown
+#+begin_src emacs-lisp
   (use-package markdown-mode
     :mode "\\.md\\'")
+#+end_src
+*** Org
+Org is a versatile and powerful plain-text format for Emacs.
+#+begin_src emacs-lisp
+  (use-package org
+    :hook (org-mode-hook . org-indent-mode))
+#+end_src
+*** Zig
+#+begin_src emacs-lisp
   (use-package zig-mode
     :mode "\\.zig\\'")
 #+end_src
@@ -177,12 +190,6 @@ Magit is the best Git client.
   (use-package magit
     :general ("C-c g" 'magit-status)
     :init (setq magit-define-global-key-bindings nil))
-#+end_src
-** Org
-Org is a versatile and powerful plain-text format for Emacs.
-#+begin_src emacs-lisp
-  (use-package org
-    :hook (org-mode-hook . org-indent-mode))
 #+end_src
 ** which-key
 #+begin_src emacs-lisp
