@@ -13,6 +13,7 @@ WALLRC="${XDG_CONFIG_HOME}"/wallrc
 
 xsetroot -cursor_name left_ptr &
 
+pgrep -x lxpolkit || lxpolkit &
 pgrep -x picom || picom &
 pgrep -x pulseaudio || pulseaudio --exit-idle-time -1 &
 pgrep -x redshift || redshift &
@@ -20,6 +21,7 @@ pgrep -x redshift || redshift &
 XSESSION="${XDG_CONFIG_HOME}"/xsession
 "${XSESSION}"
 
+pkill -x lxpolkit
 pkill -x picom
 pkill -x pulseaudio
 pkill -x redshift

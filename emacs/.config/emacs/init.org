@@ -22,10 +22,6 @@ Configure the basic Emacs settings.
   (setq use-dialog-box nil)
   (tooltip-mode -1)
 #+end_src
-** Indentation
-#+begin_src emacs-lisp
-  (setq-default tab-width 2)
-#+end_src
 ** Inhibit Startup Screen
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
@@ -102,7 +98,7 @@ Show relative line numbers on the left gutter.
 Doom has the best themes, and the best gruvbox!
 #+begin_src emacs-lisp
   (use-package doom-themes
-    :hook (emacs-startup-hook . (lambda () (load-theme 'doom-gruvbox t))))
+    :hook (emacs-startup-hook . (lambda () (load-theme 'doom-one t))))
 #+end_src
 ** Evil
 Evil is a vim emulation layer in emacs.
@@ -152,11 +148,13 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
   (use-package exwm
     :commands exwm-enable
     :init
-    (setq exwm-input-prefix-keys '(?\C-x ?\C-g ?\M-x ?\M-&))
+    (setq exwm-input-prefix-keys '(?\C-x ?\C-h ?\C-g ?\M-x ?\M-&))
     (setq exwm-mode-map nil)
     :config
     (add-hook 'exwm-init-hook
               (lambda () (make-process :name "sxhkd" :command '("sxhkd") :noquery t)))
+    (add-hook 'exwm-floating-setup-hook
+              (lambda () (set-window-dedicated-p (frame-selected-window) nil)))
     (add-hook 'exwm-update-class-hook (lambda () (rename-buffer exwm-class-name t))))	
 #+end_src
 ** Filetypes
@@ -174,6 +172,7 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
 Org is a versatile and powerful plain-text format for Emacs.
 #+begin_src emacs-lisp
   (use-package org
+    :straight nil
     :hook (org-mode-hook . org-indent-mode))
 #+end_src
 *** Zig
@@ -193,6 +192,14 @@ Magit is the best Git client.
   (use-package magit
     :commands magit
     :init (setq magit-define-global-key-bindings nil))
+#+end_src
+** vterm
+A real termianl emulator.
+#+begin_src emacs-lisp
+  (use-package vterm
+    :init
+    (setq vterm-environment '("COLORTERM=truecolor"))
+    :commands vterm)
 #+end_src
 ** which-key
 #+begin_src emacs-lisp
