@@ -1,10 +1,10 @@
 # terminal emulator
 super + shift + Return
-	st
+	alacritty
 
 # program launcher
 super + p
-	dmenu_run -f -i -l 16 -p run:
+	dmenu_path | rofi -dmenu -i -p run | $SHELL
 
 # quit bspwm
 super + shift + q
