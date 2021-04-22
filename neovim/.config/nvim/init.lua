@@ -27,10 +27,6 @@ vim.wo.relativenumber = true
 -- always show signcolumn
 vim.wo.signcolumn = "yes"
 
--- no tabline or statusline
-vim.o.laststatus = 2
-vim.o.showtabline = 0
-
 -- new splits go under and right
 vim.o.splitbelow = true
 vim.o.splitright = true
@@ -118,7 +114,7 @@ vim.g.netrw_list_hide = [[^\.\.\?/$]]
 vim.g.netrw_winsize = 25
 
 -- Fixes vim#7188
-vim.api.nvim_set_keymap("n", "gx", "<Cmd>!xdg-open <cfile><CR><CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "gx", "<Cmd>!xdg-open <cfile>&<CR><CR>", { noremap = true })
 
 -- shell split commands
 vim.api.nvim_command("command! Shell edit term://$SHELL")
