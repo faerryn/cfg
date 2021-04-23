@@ -1,10 +1,10 @@
 # terminal emulator
 super + shift + Return
-	alacritty
+	st -f 'monospace:size=12'
 
 # program launcher
 super + p
-	dmenu_path | rofi -dmenu -sort -i -p run | $SHELL
+	dmenu_run -fn 'monospace:12' -l 16 -i
 
 # quit bspwm
 super + shift + q
