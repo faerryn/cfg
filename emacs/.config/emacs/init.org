@@ -22,6 +22,11 @@ Configure the basic Emacs settings.
   (setq use-dialog-box nil)
   (tooltip-mode -1)
 #+end_src
+** Font
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(font . "monospace-12"))
+  (add-to-list 'default-frame-alist '(font . "Consolas-12"))
+#+end_src
 ** Inhibit Startup Screen
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
@@ -36,14 +41,20 @@ Follow symlinks.
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t)
 #+end_src
-** User Emacs Directory
-#+begin_src emacs-lisp
-  (setq user-emacs-directory
-        (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
-#+end_src
 ** Truncate Lines
 #+begin_src emacs-lisp
   (setq-default truncate-lines t)
+#+end_src
+** User Emacs Directory
+#+begin_src emacs-lisp
+  (setq user-emacs-directory
+        (expand-file-name
+         "emacs/"
+         (or (getenv "XDG_DATA_HOME") (getenv "APPDATA"))))
+#+end_src
+** Visible Bell
+#+begin_src emacs-lisp
+  (setq visible-bell t)
 #+end_src
 * Bootstrap
 Bootstrap packages needed for package management.
