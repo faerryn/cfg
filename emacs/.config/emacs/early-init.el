@@ -6,6 +6,7 @@
 
 ;; settings that change the frame's size
 (add-to-list 'default-frame-alist '(font . "monospace-12"))
+(add-to-list 'default-frame-alist '(font . "Consolas-12"))
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
