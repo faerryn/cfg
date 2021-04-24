@@ -9,6 +9,12 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
+;; Platform specific fonts
+(when (string= system-type "gnu/linux")
+  (add-to-list 'default-frame-alist '(font . "monospace-12")))
+(when (string= system-type "windows-nt")
+  (add-to-list 'default-frame-alist '(font . "Consolas-12")))
+
 ;; tangle init.org
 (let ((init.org (expand-file-name "init.org" user-emacs-directory))
       (init.el (expand-file-name "init.el" user-emacs-directory)))
