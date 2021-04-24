@@ -66,8 +66,7 @@ vim.o.lazyredraw = true
 
 -- colorscheme
 vim.o.background = "dark"
-vim.o.termguicolors = (os.getenv("COLORTERM") == "truecolor") or (vim.fn.windowsversion():len() > 0)
-vim.api.nvim_command([[autocmd ColorScheme * lua if vim.g["terminal_color_0"] then for i = 0, 15 do vim.g["terminal_color_"..i] = nil end end]])
+vim.o.termguicolors = (os.getenv("COLORTERM") == "truecolor") or (os.getenv("TERM") == "st-256color") or (vim.fn.windowsversion():len() > 0)
 
 -- ripgrep for :grep
 if vim.fn.executable("rg") == 1 then
