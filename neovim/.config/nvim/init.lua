@@ -119,12 +119,12 @@ if vim.fn.executable("xdg-open") > 0 then
 end
 
 -- shell split commands
-vim.api.nvim_command("command! Shell edit term://$SHELL")
-vim.api.nvim_command("command! Hshell vsplit term://$SHELL")
-vim.api.nvim_command("command! Lshell topleft vsplit term://$SHELL")
-vim.api.nvim_command("command! Sshell split term://$SHELL")
-vim.api.nvim_command("command! Vshell vsplit term://$SHELL")
-vim.api.nvim_command("command! Tshell tabnew term://$SHELL")
+vim.api.nvim_command("command! Shell edit term://"..vim.o.shell)
+vim.api.nvim_command("command! Hshell vsplit term://"..vim.o.shell)
+vim.api.nvim_command("command! Lshell topleft vsplit term://"..vim.o.shell)
+vim.api.nvim_command("command! Sshell split term://"..vim.o.shell)
+vim.api.nvim_command("command! Vshell vsplit term://"..vim.o.shell)
+vim.api.nvim_command("command! Tshell tabnew term://"..vim.o.shell)
 
 -- bootstrap user.nvim
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/faerryn/user.nvim/default/default"
