@@ -149,20 +149,6 @@ EWW (Emacs Web Wowser) is good for browsing good ol' static sites.
     :straight nil
     :init (setq eww-download-directory "~/www/"))
 #+end_src
-** EXWM
-#+begin_src emacs-lisp
-  (use-package exwm
-    :commands exwm-enable
-    :init
-    (setq exwm-input-prefix-keys '(?\C-x ?\C-h ?\C-g ?\M-x ?\M-&))
-    (setq exwm-mode-map nil)
-    :config
-    (add-hook 'exwm-init-hook
-              (lambda () (make-process :name "sxhkd" :command '("sxhkd") :noquery t)))
-    (add-hook 'exwm-floating-setup-hook
-              (lambda () (set-window-dedicated-p (frame-selected-window) nil)))
-    (add-hook 'exwm-update-class-hook (lambda () (rename-buffer exwm-class-name t))))	
-#+end_src
 ** Filetypes
 *** Lua
 #+begin_src emacs-lisp
@@ -198,14 +184,6 @@ Magit is the best Git client.
   (use-package magit
     :general ("C-x g" 'magit-status)
     :init (setq magit-define-global-key-bindings nil))
-#+end_src
-** vterm
-A real termianl emulator.
-#+begin_src emacs-lisp
-  (use-package vterm
-    :init
-    (setq vterm-environment '("COLORTERM=truecolor"))
-    :commands vterm)
 #+end_src
 ** which-key
 #+begin_src emacs-lisp

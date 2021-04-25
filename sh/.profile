@@ -25,7 +25,7 @@ prependmanpath () {
 		*:"${1}":*)
 			;;
 		*)
-			MANPATH="${1}${MANPATH:+:${MANPATH}}"
+			MANPATH="${1}:${MANPATH:-}"
 	esac
 }
 prependmanpath "${HOME}"/.local/share/man
