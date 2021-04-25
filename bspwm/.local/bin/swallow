@@ -5,10 +5,8 @@ set -euf
 # get the swallowing node's id
 swallower="$(bspc query -N -n)"
 
+# execute command
 "${@}" &
-
-# wait until the new node appears
-bspc subscribe node_add -c 1 >/dev/null
 
 # hide the swallowing node
 bspc node "${swallower}" -g hidden=on
