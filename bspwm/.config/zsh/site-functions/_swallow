@@ -1,3 +1,0 @@
-#compdef swallow
-
-_arguments -s -S "*:: :_normal"

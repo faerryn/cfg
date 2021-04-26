@@ -19,19 +19,6 @@ prependpath "${HOME}"/.local/bin
 unset prependpath
 export PATH
 
-# Manpage
-prependmanpath () {
-	case ":${MANPATH}:" in
-		*:"${1}":*)
-			;;
-		*)
-			MANPATH="${1}:${MANPATH:-}"
-	esac
-}
-prependmanpath "${HOME}"/.local/share/man
-unset prependmanpath
-export MANPATH
-
 # less
 export LESSHISTFILE=-
 export PAGER='less --mouse'

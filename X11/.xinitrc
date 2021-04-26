@@ -1,11 +1,11 @@
 #!/bin/sh
 
-set -euf
+set -uf
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 export MOZ_X11_EGL=1
 
-XRESOURCES="${HOME}"/.Xresources
+XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
 [ -f "${XRESOURCES}" ] && xrdb -merge "${XRESOURCES}"
 
 WALLRC="${XDG_CONFIG_HOME}"/wallrc

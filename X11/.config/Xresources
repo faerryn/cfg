@@ -19,6 +19,8 @@ st.color13: #c677dd
 st.color14: #56b6c2
 st.color15: #dcdfe4
 
+st.borderpx: 0
+
 ! dmenu is a dynamic menu for X
 dmenu.font: monospace-12
 
@@ -46,6 +48,6 @@ dwm.selbgcolor: #98c379
 dwm.selfgcolor: #282c34
 dwm.selbordercolor: #98c379
 
-dwm.borderpx: 1
-
 dwm.mfact: 0.5
+
+dwm.resizehints: 0
