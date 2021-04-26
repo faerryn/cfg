@@ -18,8 +18,8 @@ pgrep -x picom || picom &
 pgrep -x pulseaudio || pulseaudio --exit-idle-time -1 &
 pgrep -x redshift || redshift &
 
-XSESSION="${HOME}"/.Xsession
-"${XSESSION}"
+WMRC="${XDG_CONFIG_HOME}"/wmrc
+"${WMRC}"
 
 pkill -x lxpolkit
 pkill -x picom
