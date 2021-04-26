@@ -1,6 +1,6 @@
 # terminal emulator
 super + shift + Return
-	COLORTERM=truecolor st -f 'monospace:size=12'
+	st
 
 # program launcher
 super + p

@@ -44,3 +44,7 @@ export XAUTHORITY="${XDG_RUNTIME_DIR}"/Xauthority
 
 # SXHKD
 export SXHKD_SHELL=/bin/sh
+
+# ncurses
+export TERMINFO="${XDG_DATA_HOME}"/terminfo
+export TERMINFO_DIRS="${TERMINFO}":/usr/share/terminfo

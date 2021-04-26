@@ -1,0 +1,37 @@
+! st is a simple terminal for X
+st.font: monospace-12
+
+st.color0: #282c34
+st.color1: #e06c75
+st.color2: #98c379
+st.color3: #e5c07b
+st.color4: #61afef
+st.color5: #c678dd
+st.color6: #56b6c2
+st.color7: #dcdfe4
+
+st.color8: #282c34
+st.color9: #e06c75
+st.color10: #98c379
+st.color11: #e5c07b
+st.color12: #61afef
+st.color13: #c677dd
+st.color14: #56b6c2
+st.color15: #dcdfe4
+
+! dmenu is a dynamic menu for X
+dmenu.font: monospace-12
+
+dmenu.background: #282c34
+dmenu.foreground: #dcdfe4
+
+dmenu.selbackground: #98c379
+dmenu.selforeground: #282c34
+
+dmenu.outbackground: #61afef
+dmenu.outforeground: #282c34
+
+! Simple X Image Viewer
+Sxiv.font: monospace-12
+Sxiv.background: #282c34
+Sxiv.foreground: #dcdfe4
