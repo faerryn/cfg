@@ -4,7 +4,7 @@ super + shift + Return
 
 # program launcher
 super + p
-	dmenu_run -fn 'monospace:12' -l 16 -i
+	dmenu_run
 
 # quit bspwm
 super + shift + q

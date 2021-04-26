@@ -35,3 +35,17 @@ dmenu.outforeground: #282c34
 Sxiv.font: monospace-12
 Sxiv.background: #282c34
 Sxiv.foreground: #dcdfe4
+
+! dwm is a dynamic window manager for X
+dwm.font: monospace-12
+
+dwm.normbgcolor: #282c34
+dwm.normfgcolor: #dcdfe4
+
+dwm.selbgcolor: #98c379
+dwm.selfgcolor: #282c34
+dwm.selbordercolor: #98c379
+
+dwm.borderpx: 1
+
+dwm.mfact: 0.5
