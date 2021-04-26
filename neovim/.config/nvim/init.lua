@@ -150,33 +150,6 @@ use "tpope/vim-repeat"
 -- nvim lua library
 use "nvim-lua/plenary.nvim"
 
--- fuzzy finding interface
-use "nvim-lua/popup.nvim"
-use "nvim-telescope/telescope-fzy-native.nvim"
-use {
-	"nvim-telescope/telescope.nvim",
-	disabled = true,
-	after = {
-		"nvim-lua/plenary.nvim",
-		"nvim-lua/popup.nvim",
-		"nvim-telescope/telescope-fzy-native.nvim",
-	},
-	config = function()
-		local telescope = require("telescope")
-		local actions = require("telescope.actions")
-
-		telescope.setup { defaults = {
-			mappings = { i = { ["<esc>"] = actions.close } },
-			file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-		} }
-
-		telescope.load_extension("fzy_native")
-
-		vim.api.nvim_set_keymap("n", "<Leader>f", [[<Cmd>lua require("telescope.builtin").find_files{ hidden = true }<CR>]], { noremap = true })
-		vim.api.nvim_set_keymap("n", "<Leader>b", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], { noremap = true })
-	end,
-}
-
 -- see what is modified
 use {
 	"lewis6991/gitsigns.nvim",
@@ -206,10 +179,23 @@ use {
 	end,
 }
 
+-- Atom's one theme is noice
 use {
 	"sonph/onehalf",
 	subdir = "vim",
 	config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
+}
+
+-- A light statusline
+use {
+	"itchyny/lightline.vim",
+	init = function()
+		vim.g.lightline = { colorscheme = "default" }
+	end,
+	config = function()
+		vim.fn["lightline#enable"]()
+		vim.api.nvim_command("autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
+	end,
 }
 
 -- c of the future

@@ -8,7 +8,7 @@ Configure the basic Emacs settings.
 #+begin_src emacs-lisp
   (setq async-shell-command-buffer 'new-buffer)
   (add-to-list 'display-buffer-alist
-                '("\\*Async Shell Command\\*.*" display-buffer-no-window nil))
+               '("\\*Async Shell Command\\*.*" display-buffer-no-window nil))
 #+end_src
 ** Disable Auto Save, Lockfiles, Backup
 #+begin_src emacs-lisp
@@ -100,6 +100,11 @@ Show relative line numbers on the left gutter.
     :hook (emacs-startup-hook . global-display-line-numbers-mode)
     :init (setq display-line-numbers-type 'relative))
 #+end_src
+** Doom Modeline
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :hook (emacs-startup-hook . doom-modeline-mode))
+#+end_src
 ** Doom Themes
 Doom has the best themes, and the best gruvbox!
 #+begin_src emacs-lisp
@@ -184,6 +189,12 @@ Magit is the best Git client.
   (use-package magit
     :general ("C-x g" 'magit-status)
     :init (setq magit-define-global-key-bindings nil))
+#+end_src
+** Projectile
+#+begin_src emacs-lisp
+  (use-package projectile
+    :hook (emacs-startup-hook . projectile-mode)
+    :general ("C-x p" 'projectile-command-map))
 #+end_src
 ** which-key
 #+begin_src emacs-lisp
