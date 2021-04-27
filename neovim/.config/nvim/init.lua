@@ -48,9 +48,9 @@ vim.o.completeopt = "menuone,noinsert"
 -- highlight matches incrementally
 vim.o.inccommand = "nosplit"
 
--- keybind timeout, cursorhold timeout
+-- keybind timeout, swapfile and cursorhold updatetime
 vim.o.timeoutlen = 500
-vim.o.updatetime = 500
+vim.o.updatetime = 5000
 
 -- X11 integration
 vim.o.clipboard = "unnamedplus"
@@ -132,14 +132,17 @@ if vim.fn.empty(vim.fn.glob(user_install_path)) > 0 then
 end
 vim.api.nvim_command("packadd faerryn/user.nvim/default/default")
 
-local user = require"user"
+local user = require("user")
 user.setup()
 local use = user.use
 
 use "faerryn/user.nvim"
 
 -- Fixes neovim#12587
-use "antoinemadec/FixCursorHold.nvim"
+use {
+	"antoinemadec/FixCursorHold.nvim",
+	init = function() vim.g.cursorhold_updatetime = 500 end,
+}
 
 -- command mode shortcuts
 use "ryvnf/readline.vim"
@@ -174,6 +177,7 @@ use "tomtom/tcomment_vim"
 -- correct syntax highlighting
 use {
 	"nvim-treesitter/nvim-treesitter",
+	update = function() vim.api.nvim_command("TSUpdate") end,
 	config = function()
 		require("nvim-treesitter.configs").setup({ highlight = { enable = true } })
 	end,
@@ -190,10 +194,9 @@ use {
 use {
 	"itchyny/lightline.vim",
 	init = function()
-		vim.g.lightline = { colorscheme = "default" }
+		vim.g.lightline = { colorscheme = vim.g.colors_name or "default" }
 	end,
 	config = function()
-		vim.fn["lightline#enable"]()
 		vim.api.nvim_command("autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
 	end,
 }
@@ -206,6 +209,15 @@ use {
 
 -- org mode for vim, evil for emacs
 use "axvr/org.vim"
+
+-- you can't go wrong with the classic git plugin
+use {
+	"tpope/vim-fugitive",
+	config = function()
+		vim.api.nvim_command("autocmd! fugitive BufReadPost * call FugitiveDetect(resolve(expand('<amatch>:p')))")
+		vim.api.nvim_set_keymap("n", "<Leader>g", "<Cmd>Git<CR>", { noremap = true })
+	end,
+}
 
 -- wait for all installation and configs to finish
 user.startup()

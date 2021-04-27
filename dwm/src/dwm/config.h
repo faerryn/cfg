@@ -3,6 +3,7 @@
 /* appearance */
 static unsigned int borderpx  = 1;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
+static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char font[]            = "monospace:size=10";
@@ -14,20 +15,32 @@ static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
 static char selbgcolor[]            = "#005577";
 static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+	/*               fg           bg           border   */
+	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+};
+
+static const char *const autostart[] = {
+	"hsetroot", "-solid", normbgcolor, NULL,
+	"lxpolkit", NULL,
+	"picom", "--experimental-backends", NULL,
+	"pulseaudio", "--exit-idle-time=-1", NULL,
+	"redshift", NULL,
+	"slstatus", NULL,
+	NULL /* terminate */
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3" };
 
-static const Rule rules[0] = {
+static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
+	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -73,6 +86,7 @@ ResourcePref resources[] = {
 		{ "selfgcolor",         STRING,  &selfgcolor },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",               INTEGER, &snap },
+		{ "swallowfloating",    INTEGER, &swallowfloating },
 		{ "showbar",            INTEGER, &showbar },
 		{ "topbar",             INTEGER, &topbar },
 		{ "nmaster",            INTEGER, &nmaster },
