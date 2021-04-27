@@ -3,9 +3,9 @@
 /* appearance */
 static unsigned int borderpx  = 1;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
-static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
+static int focusonwheel       = 0;
 static char font[]            = "monospace:size=10";
 static const char *fonts[]          = { font };
 static char normbgcolor[]           = "#222222";
@@ -41,6 +41,7 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	{ "Dragon",  NULL,     NULL,           0,         0,          0,           1,        -1 },
 };
 
 /* layout(s) */
@@ -86,9 +87,9 @@ ResourcePref resources[] = {
 		{ "selfgcolor",         STRING,  &selfgcolor },
 		{ "borderpx",          	INTEGER, &borderpx },
 		{ "snap",               INTEGER, &snap },
-		{ "swallowfloating",    INTEGER, &swallowfloating },
 		{ "showbar",            INTEGER, &showbar },
 		{ "topbar",             INTEGER, &topbar },
+		{ "focusonwheel",       INTEGER, &focusonwheel },
 		{ "nmaster",            INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",              FLOAT,   &mfact },

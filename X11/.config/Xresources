@@ -48,6 +48,8 @@ dwm.selbgcolor: #98c379
 dwm.selfgcolor: #282c34
 dwm.selbordercolor: #98c379
 
+dwm.focusonwheel: 1
+
 dwm.mfact: 0.5
 
 dwm.resizehints: 0
