@@ -11,7 +11,7 @@ XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
 hsetroot -solid black
 
 pgrep -x lxpolkit || lxpolkit &
-pgrep -x picom || picom &
+pgrep -x picom || picom --experimental-backends &
 pgrep -x pulseaudio || pulseaudio --exit-idle-time -1 &
 pgrep -x redshift || redshift &
 pgrep -x slstatus || slstatus &
