@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -uf
+set -euf
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 export MOZ_X11_EGL=1
@@ -8,20 +8,18 @@ export MOZ_X11_EGL=1
 XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
 [ -f "${XRESOURCES}" ] && xrdb -merge "${XRESOURCES}"
 
-WALLRC="${XDG_CONFIG_HOME}"/wallrc
-[ -f "${WALLRC}" ] && "${WALLRC}" &
-
-xsetroot -cursor_name left_ptr &
+hsetroot -solid black
 
 pgrep -x lxpolkit || lxpolkit &
 pgrep -x picom || picom &
 pgrep -x pulseaudio || pulseaudio --exit-idle-time -1 &
 pgrep -x redshift || redshift &
+pgrep -x slstatus || slstatus &
 
-WMRC="${XDG_CONFIG_HOME}"/wmrc
-"${WMRC}"
+dwm || true
 
 pkill -x lxpolkit
 pkill -x picom
 pkill -x pulseaudio
 pkill -x redshift
+pkill -x slstatus
