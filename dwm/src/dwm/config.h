@@ -46,8 +46,13 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 };
 
-/* autostart */
-static const char *autostart[] = {
+/* auto */
+static const char *autoenv[] = {
+	"_JAVA_AWT_WM_NONREPARENTING", "1",
+	"MOZ_X11_EGL", "1",
+};
+
+static const char *autorun[] = {
  "hsetroot", "-solid", normbgcolor, NULL,
  "lxpolkit", NULL,
  "picom", "--experimental-backends", NULL,
