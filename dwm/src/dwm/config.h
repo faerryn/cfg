@@ -20,16 +20,6 @@ static char *colors[][3] = {
 	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
-static const char *const autostart[] = {
-	"hsetroot", "-solid", normbgcolor, NULL,
-	"lxpolkit", NULL,
-	"picom", "--experimental-backends", NULL,
-	"pulseaudio", "--exit-idle-time=-1", NULL,
-	"redshift", NULL,
-	"slstatus", NULL,
-	NULL /* terminate */
-};
-
 /* tagging */
 static const char *tags[] = { "1", "2", "3" };
 
@@ -54,6 +44,14 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+};
+
+/* autostart */
+static const char *autostart[] = {
+ "hsetroot", "-solid", normbgcolor, NULL,
+ "lxpolkit", NULL,
+ "picom", "--experimental-backends", NULL,
+ "slstatus", NULL,
 };
 
 /* key definitions */
