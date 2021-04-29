@@ -70,8 +70,8 @@ static const char *autorun[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-#define BRICTL(mag) { .v = (const char*[]){ "xbacklight", mag, NULL } } 
-#define VOLCTL(mag) { .v = (const char*[]){ "pactl", "set-sink-volume", "@DEFAULT_SINK@", mag "%", NULL } } 
+#define BRICTL(sign, mag) { .v = (const char*[]){ "xbacklight", sign mag, NULL } }
+#define VOLCTL(sign, mag) { .v = (const char*[]){ "amixer", "set", "Master", mag "%" sign, NULL } }
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
@@ -131,14 +131,14 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, 
 
-	{ 0,               XF86XK_MonBrightnessUp, spawn,          BRICTL("+5") },
-	{ 0,             XF86XK_MonBrightnessDown, spawn,          BRICTL("-5") },
-	{ ShiftMask,       XF86XK_MonBrightnessUp, spawn,          BRICTL("100") },
-	{ ShiftMask,     XF86XK_MonBrightnessDown, spawn,          BRICTL("0") },
-	{ 0,              XF86XK_AudioRaiseVolume, spawn,          VOLCTL("+5") },
-	{ 0,              XF86XK_AudioLowerVolume, spawn,          VOLCTL("-5") },
-	{ ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          VOLCTL("100") },
-	{ ShiftMask,      XF86XK_AudioLowerVolume, spawn,          VOLCTL("0") },
+	{ 0,               XF86XK_MonBrightnessUp, spawn,          BRICTL("+", "5") },
+	{ 0,             XF86XK_MonBrightnessDown, spawn,          BRICTL("-", "5") },
+	{ ShiftMask,       XF86XK_MonBrightnessUp, spawn,          BRICTL("", "100") },
+	{ ShiftMask,     XF86XK_MonBrightnessDown, spawn,          BRICTL("", "0") },
+	{ 0,              XF86XK_AudioRaiseVolume, spawn,          VOLCTL("+", "5") },
+	{ 0,              XF86XK_AudioLowerVolume, spawn,          VOLCTL("-", "5") },
+	{ ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          VOLCTL("", "100") },
+	{ ShiftMask,      XF86XK_AudioLowerVolume, spawn,          VOLCTL("", "0") },
 };
 
 /* button definitions */
