@@ -219,5 +219,8 @@ use {
 	end,
 }
 
+-- a really useful plugin
+use "tpope/vim-abolish"
+
 -- wait for all installation and configs to finish
 user.startup()
