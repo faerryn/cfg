@@ -53,3 +53,10 @@ dwm.focusonwheel: 1
 dwm.mfact: 0.5
 
 dwm.resizehints: 0
+
+! tabbed is a simple generic tabbed frontend to xembed-aware applications
+tabbed.font: monospace-12
+tabbed.normbgcolor: #282c34
+tabbed.normfgcolor: #dcdfe4
+tabbed.selbgcolor: #98c379
+tabbed.selfgcolor: #282c34
