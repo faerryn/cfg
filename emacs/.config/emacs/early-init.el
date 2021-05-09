@@ -3,8 +3,7 @@
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(add-hook 'emacs-startup-hook
-	  (lambda () (scroll-bar-mode -1)))
+(scroll-bar-mode -1)
 
 (add-to-list 'default-frame-alist
 	     '(font . "monospace-12"))
