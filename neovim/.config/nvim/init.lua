@@ -214,16 +214,6 @@ use {
 	end,
 }
 
-use "nvim-lua/popup.nvim"
-use "nvim-telescope/telescope-fzy-native.nvim"
-use {
-	"nvim-telescope/telescope.nvim",
-	config = function()
-		require('telescope').load_extension('fzy_native')
-		vim.api.nvim_set_keymap("n", "<Leader>ff", "<Cmd>lua require('telescope.builtin').find_files({ hidden = true })<CR>", { noremap = true })
-	end,
-}
-
 -- a really useful plugin
 use "tpope/vim-abolish"
 

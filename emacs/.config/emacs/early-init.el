@@ -22,10 +22,8 @@
       `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
 
 ;; dired
-(add-hook 'dired-mode-hook
-	  (lambda ()
-	    (require 'dired-x)
-	    (dired-omit-mode +1)))
+(autoload 'dired-omit-mode "dired-x")
+(add-hook 'dired-mode-hook #'dired-omit-mode)
 
 ;; straight.el
 (setq straight-use-package-by-default t)
@@ -61,15 +59,14 @@
 
 (use-package undo-fu)
 (use-package undo-fu-session
-  :init (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
   :config (global-undo-fu-session-mode))
 
-(use-package evil-collection
-  :config (evil-collection-init))
+(use-package evil-collection)
 
 ;; Smarter GC
 (use-package gcmh
-  :hook (emacs-startup . gcmh-mode))
+  :defer 1
+  :config (gcmh-mode +1))
 
 ;; Magit
 (use-package magit
