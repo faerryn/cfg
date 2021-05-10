@@ -1,16 +1,33 @@
+;; Speed up startup by disabling GC
 (setq gc-cons-threshold most-positive-fixnum)
-(setq user-emacs-directory (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
 
+;; Disable extra UI
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; Set user-emacs-directory to a more appropriate location
+(setq user-emacs-directory (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+
+;; Relative line numbers
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode +1)
+
+;; Set default font
 (add-to-list 'default-frame-alist
 	     '(font . "monospace-12"))
 
+;; Set backup
 (setq backup-directory-alist
       `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
 
+;; dired
+(add-hook 'dired-mode-hook
+	  (lambda ()
+	    (require 'dired-x)
+	    (dired-omit-mode +1)))
+
+;; straight.el
 (setq straight-use-package-by-default t)
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -25,13 +42,18 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; use-package
 (straight-use-package 'use-package)
 
-(use-package general)
+;; general.el
+(straight-use-package 'general)
+(require 'general)
 
+;; doom-one theme
 (use-package doom-themes
   :config (load-theme 'doom-one t))
 
+;; evil mode
 (use-package evil
   :init (setq evil-want-keybinding nil
 	      evil-undo-system 'undo-fu)
@@ -45,19 +67,15 @@
 (use-package evil-collection
   :config (evil-collection-init))
 
-(setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode +1)
-
+;; Smarter GC
 (use-package gcmh
   :hook (emacs-startup . gcmh-mode))
 
+;; Magit
 (use-package magit
   :general ("C-x g" #'magit-status)
   :init (setq magit-define-global-key-bindings nil))
 
+;; which-key
 (use-package which-key
   :config (which-key-mode +1))
-
-(use-package dired-x
-  :straight nil
-  :hook (dired-mode . dired-omit-mode))
