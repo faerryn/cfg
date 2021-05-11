@@ -100,14 +100,14 @@ vim.api.nvim_set_keymap("n", "[L",        "<Cmd>lfirst<CR>",    { noremap = true
 -- highlight yank
 vim.api.nvim_command("autocmd TextYankPost * lua vim.highlight.on_yank()")
 
--- netrw settings
-vim.g.netrw_banner = 0
-vim.g.netrw_hide = 1
-vim.g.netrw_keepdir = 0
+-- netrw
+vim.g.netrw_banner    = 0
+vim.g.netrw_hide      = 1
+vim.g.netrw_keepdir   = 0
 vim.g.netrw_list_hide = [[^\.\.\?/$]]
-vim.g.netrw_winsize = 25
+vim.g.netrw_winsize   = 25
 
--- Fixes vim#7188
+-- Hacks vim#7188
 if vim.fn.executable("xdg-open") > 0 then
 	vim.api.nvim_set_keymap("n", "gx", "<Cmd>!xdg-open <cfile>&<CR><CR>", { noremap = true })
 end
