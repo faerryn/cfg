@@ -7,5 +7,6 @@ XRESOURCES="${XDG_CONFIG_HOME}"/Xresources
 
 pgrep -x pipewire || pipewire &
 pgrep -x pipewire-pulse || pipewire-pulse &
+pgrep -x unclutter || unclutter &
 
 exec dwm
