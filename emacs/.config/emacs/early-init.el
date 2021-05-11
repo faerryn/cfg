@@ -10,7 +10,11 @@
 (setq inhibit-startup-screen t)
 
 ;; Set user-emacs-directory to a more appropriate location
-(setq user-emacs-directory (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+(setq user-emacs-directory
+      (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+
+;; follow symlinks
+(setq vc-follow-symlinks t)
 
 ;; Relative line numbers
 (setq display-line-numbers-type 'relative)
@@ -47,40 +51,49 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; use-package
-(straight-use-package 'use-package)
-
 ;; general.el
 (straight-use-package 'general)
 (require 'general)
 
 ;; doom-one theme
-(use-package doom-themes
-  :config (load-theme 'doom-one t))
+(straight-use-package 'doom-themes)
+(load-theme 'doom-one t)
 
 ;; evil mode
-(use-package evil
-  :init (setq evil-want-keybinding nil
-	      evil-undo-system 'undo-fu)
-  :config (evil-mode +1))
+(straight-use-package 'evil)
+(setq evil-want-keybinding nil
+      evil-undo-system 'undo-fu)
+(require 'evil)
+(evil-mode +1)
 
-(use-package undo-fu)
-(use-package undo-fu-session
-  :config (global-undo-fu-session-mode))
+(straight-use-package 'undo-fu)
+(require 'undo-fu)
+(straight-use-package 'undo-fu-session)
+(require 'undo-fu-session)
+(global-undo-fu-session-mode)
 
-(use-package evil-collection
-  :config (evil-collection-init))
-
-;; Smarter GC
-(use-package gcmh
-  :defer 1
-  :config (gcmh-mode +1))
+(straight-use-package 'evil-collection)
+(require 'evil-collection)
+(evil-collection-init)
 
 ;; Magit
-(use-package magit
-  :general ("C-x g" #'magit-status)
-  :init (setq magit-define-global-key-bindings nil))
+(straight-use-package 'magit)
+(setq magit-define-global-key-bindings nil)
+(autoload 'magit-status "magit")
+(general-def "C-c g" #'magit-status)
 
 ;; which-key
-(use-package which-key
-  :config (which-key-mode +1))
+(straight-use-package 'which-key)
+(require 'which-key)
+(which-key-mode +1)
+
+;; projectile
+(straight-use-package 'projectile)
+(require 'projectile)
+(projectile-mode +1)
+(general-def "C-c p" #'projectile-command-map)
+
+;; Smarter GC
+(straight-use-package 'gcmh)
+(require 'gcmh)
+(gcmh-mode +1)
