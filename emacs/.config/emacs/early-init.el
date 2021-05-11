@@ -6,6 +6,9 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; Disable startup screen
+(setq inhibit-startup-screen t)
+
 ;; Set user-emacs-directory to a more appropriate location
 (setq user-emacs-directory (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
 
@@ -20,6 +23,10 @@
 ;; Set backup
 (setq backup-directory-alist
       `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
+
+;; Buffer predicate
+(add-to-list 'default-frame-alist
+	     '(buffer-predicate . buffer-file-name))
 
 ;; dired
 (autoload 'dired-omit-mode "dired-x")
