@@ -61,7 +61,8 @@
 (use-package undo-fu-session
   :config (global-undo-fu-session-mode))
 
-(use-package evil-collection)
+(use-package evil-collection
+  :config (evil-collection-init))
 
 ;; Smarter GC
 (use-package gcmh
