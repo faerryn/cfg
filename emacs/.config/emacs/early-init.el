@@ -87,12 +87,6 @@
 (require 'which-key)
 (which-key-mode +1)
 
-;; projectile
-(straight-use-package 'projectile)
-(require 'projectile)
-(projectile-mode +1)
-(general-def "C-c p" #'projectile-command-map)
-
 ;; Smarter GC
 (straight-use-package 'gcmh)
 (require 'gcmh)
