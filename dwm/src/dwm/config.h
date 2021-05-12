@@ -54,9 +54,14 @@ static const char *autoenv[] = {
 
 static const char *autorun[] = {
  "hsetroot", "-solid", normbgcolor, NULL,
+
  "lxpolkit", NULL,
  "picom", "--experimental-backends", NULL,
  "slstatus", NULL,
+ "unclutter", NULL,
+
+ "pipewire", NULL,
+ "pipewire-pulse", NULL,
 };
 
 /* key definitions */
