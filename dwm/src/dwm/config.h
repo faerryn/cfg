@@ -59,9 +59,6 @@ static const char *autorun[] = {
  "picom", "--experimental-backends", NULL,
  "slstatus", NULL,
  "unclutter", NULL,
-
- "pipewire", NULL,
- "pipewire-pulse", NULL,
 };
 
 /* key definitions */
