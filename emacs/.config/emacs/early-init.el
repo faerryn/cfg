@@ -37,10 +37,8 @@
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
 ;; straight.el
-(setq straight-use-package-by-default t)
 (defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -50,10 +48,6 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-
-;; general.el
-(straight-use-package 'general)
-(require 'general)
 
 ;; doom-one theme
 (straight-use-package 'doom-themes)
@@ -80,7 +74,7 @@
 (straight-use-package 'magit)
 (setq magit-define-global-key-bindings nil)
 (autoload 'magit-status "magit")
-(general-def "C-c g" #'magit-status)
+(global-set-key (kbd "C-c g") #'magit-status)
 
 ;; which-key
 (straight-use-package 'which-key)
