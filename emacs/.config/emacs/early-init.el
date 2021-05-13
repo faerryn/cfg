@@ -84,4 +84,4 @@
 ;; Smarter GC
 (straight-use-package 'gcmh)
 (require 'gcmh)
-(gcmh-mode +1)
+(add-hook 'emacs-startup-hook #'gcmh-mode)
