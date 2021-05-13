@@ -1,1 +1,1 @@
-../sh/.profile
+emulate sh -c '. ~/.profile'
