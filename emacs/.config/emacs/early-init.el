@@ -1,5 +1,8 @@
-;; Speed up startup by disabling GC
+;; Disabling GC
 (setq gc-cons-threshold most-positive-fixnum)
+
+;; Disable package.el
+(setq package-enable-at-startup nil)
 
 ;; Disable extra UI
 (tool-bar-mode -1)
@@ -74,7 +77,7 @@
 (straight-use-package 'magit)
 (setq magit-define-global-key-bindings nil)
 (autoload 'magit-status "magit")
-(global-set-key (kbd "C-c g") #'magit-status)
+(global-set-key (kbd "C-x g") #'magit-status)
 
 ;; which-key
 (straight-use-package 'which-key)
