@@ -16,8 +16,11 @@
 (setq user-emacs-directory
       (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
 
-;; follow symlinks
+;; Follow symlinks
 (setq vc-follow-symlinks t)
+
+;; Truncate lines
+(toggle-truncate-lines +1)
 
 ;; Relative line numbers
 (setq display-line-numbers-type 'relative)
