@@ -78,15 +78,10 @@
 
 ;; TTY support
 (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-(straight-use-package 'xclip)
 
+(straight-use-package 'xclip)
 (autoload 'xclip-mode "xclip")
 (add-hook 'tty-setup-hook #'xclip-mode)
-
-(straight-use-package 'evil-terminal-cursor-changer)
-(autoload 'evil-terminal-cursor-changer-activate "evil-terminal-cursor-changer")
-(add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
-(add-hook 'kill-emacs-hook (lambda () (evil-set-cursor t)))
 
 ;; Magit
 (straight-use-package 'magit)
