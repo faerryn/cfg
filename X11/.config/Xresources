@@ -33,11 +33,6 @@ dmenu.selforeground: #282c34
 dmenu.outbackground: #61afef
 dmenu.outforeground: #282c34
 
-! Simple X Image Viewer
-Sxiv.font: monospace-12
-Sxiv.background: #282c34
-Sxiv.foreground: #dcdfe4
-
 ! dwm is a dynamic window manager for X
 dwm.font: monospace-12
 
@@ -54,9 +49,7 @@ dwm.mfact: 0.5
 
 dwm.resizehints: 0
 
-! tabbed is a simple generic tabbed frontend to xembed-aware applications
-tabbed.font: monospace-12
-tabbed.normbgcolor: #282c34
-tabbed.normfgcolor: #dcdfe4
-tabbed.selbgcolor: #98c379
-tabbed.selfgcolor: #282c34
+! Simple X Image Viewer
+Sxiv.font: monospace-12
+Sxiv.background: #282c34
+Sxiv.foreground: #dcdfe4
