@@ -5,12 +5,12 @@
 (setq package-enable-at-startup nil)
 
 ;; Disable extra UI
-(menu-bar-mode -1)
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; Disable startup screen
 (setq inhibit-startup-screen t)
+(setq use-dialog-box nil)
+
+(menu-bar-mode -1)
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 
 ;; Set user-emacs-directory to a more appropriate location
 (setq user-emacs-directory
