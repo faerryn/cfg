@@ -1,3 +1,5 @@
+--- init.lua
+
 -- modeline can be a security risk
 vim.o.modeline = false
 

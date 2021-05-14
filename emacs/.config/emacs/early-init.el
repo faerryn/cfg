@@ -1,3 +1,5 @@
+;;; early-init.el --- Faerryn's Emacs Config
+
 ;; Disabling GC
 (setq gc-cons-threshold most-positive-fixnum)
 
