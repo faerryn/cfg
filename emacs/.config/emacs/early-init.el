@@ -25,6 +25,9 @@
 ;; Truncate lines
 (toggle-truncate-lines +1)
 
+;; Show Paren Mod
+(show-paren-mode +1)
+
 ;; Relative line numbers
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode +1)
@@ -85,6 +88,11 @@
 (straight-use-package 'xclip)
 (autoload 'xclip-mode "xclip")
 (add-hook 'tty-setup-hook #'xclip-mode)
+
+(straight-use-package 'evil-terminal-cursor-changer)
+(autoload 'evil-terminal-cursor-changer-activate "evil-terminal-cursor-changer")
+(add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
+(add-hook 'kill-emacs-hook (lambda () (evil-set-cursor t)))
 
 ;; Magit
 (straight-use-package 'magit)
