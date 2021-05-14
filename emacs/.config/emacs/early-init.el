@@ -5,9 +5,9 @@
 (setq package-enable-at-startup nil)
 
 ;; Disable extra UI
-(tool-bar-mode -1)
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Disable startup screen
 (setq inhibit-startup-screen t)
@@ -75,6 +75,18 @@
 (straight-use-package 'evil-collection)
 (require 'evil-collection)
 (evil-collection-init)
+
+;; TTY support
+(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+(straight-use-package 'xclip)
+
+(autoload 'xclip-mode "xclip")
+(add-hook 'tty-setup-hook #'xclip-mode)
+
+(straight-use-package 'evil-terminal-cursor-changer)
+(autoload 'evil-terminal-cursor-changer-activate "evil-terminal-cursor-changer")
+(add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
+(add-hook 'kill-emacs-hook (lambda () (evil-set-cursor t)))
 
 ;; Magit
 (straight-use-package 'magit)
