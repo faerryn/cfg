@@ -31,7 +31,6 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-	{ "Dragon",  NULL,     NULL,           0,         0,          0,           1,        -1 },
 };
 
 /* layout(s) */
@@ -55,6 +54,7 @@ static const char *autoenv[] = {
 static const char *autorun[] = {
  "hsetroot", "-solid", normbgcolor, NULL,
 
+ "lxpolkit", NULL,
  "picom", "--experimental-backends", NULL,
  "slstatus", NULL,
  "unclutter", NULL,
@@ -70,9 +70,6 @@ static const char *autorun[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
-#define BRICTL(sign, mag) { .v = (const char*[]){ "xbacklight", sign mag, NULL } }
-#define VOLCTL(sign, mag) { .v = (const char*[]){ "pulsemixer", "--change-volume", sign mag, NULL } }
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
@@ -137,15 +134,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, 
-
-	{ 0,               XF86XK_MonBrightnessUp, spawn,          BRICTL("+", "5") },
-	{ 0,             XF86XK_MonBrightnessDown, spawn,          BRICTL("-", "5") },
-	{ ShiftMask,       XF86XK_MonBrightnessUp, spawn,          BRICTL("", "100") },
-	{ ShiftMask,     XF86XK_MonBrightnessDown, spawn,          BRICTL("", "0") },
-	{ 0,              XF86XK_AudioRaiseVolume, spawn,          VOLCTL("+", "5") },
-	{ 0,              XF86XK_AudioLowerVolume, spawn,          VOLCTL("-", "5") },
-	{ ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          VOLCTL("", "100") },
-	{ ShiftMask,      XF86XK_AudioLowerVolume, spawn,          VOLCTL("", "0") },
 };
 
 /* button definitions */
