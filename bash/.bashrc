@@ -1,7 +1,7 @@
 PS1="\e[0;32m\W\e[0;39m ) "
 
 HISTSIZE=10000
-HISTFILE="${XDG_DATA_HOME}"/bash_history
+HISTFILE="$XDG_DATA_HOME"/bash_history
 
 alias diff='\diff --color=auto'
 alias grep='\grep --color=auto'

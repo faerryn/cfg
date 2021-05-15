@@ -1,8 +1,8 @@
 PS1='%F{green}%1~%f ) '
 
 HISTSIZE=10000
-SAVEHIST="${HISTSIZE}"
-HISTFILE="${XDG_DATA_HOME}"/zhistory
+SAVEHIST="$HISTSIZE"
+HISTFILE="$XDG_DATA_HOME"/zhistory
 
 alias diff='\diff --color=auto'
 alias grep='\grep --color=auto'
