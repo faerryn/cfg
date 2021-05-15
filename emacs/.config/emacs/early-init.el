@@ -22,11 +22,11 @@
 ;; Follow symlinks
 (setq vc-follow-symlinks t)
 
-;; Truncate lines
-(toggle-truncate-lines +1)
-
 ;; Show Paren Mod
 (show-paren-mode +1)
+
+;; Line wrap
+(global-visual-line-mode +1)
 
 ;; Relative line numbers
 (setq display-line-numbers-type 'relative)
@@ -97,13 +97,18 @@
 ;; Magit
 (straight-use-package 'magit)
 (setq magit-define-global-key-bindings nil)
-(autoload 'magit-status "magit")
+(autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
 (global-set-key (kbd "C-x g") #'magit-status)
 
 ;; which-key
 (straight-use-package 'which-key)
 (require 'which-key)
 (which-key-mode +1)
+
+;; Markdown Mode
+(straight-use-package 'markdown-mode)
+(autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files." t)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; Smarter GC
 (straight-use-package 'gcmh)

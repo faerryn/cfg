@@ -29,9 +29,9 @@ vim.wo.signcolumn = "yes"
 vim.o.splitbelow = true
 vim.o.splitright = true
 
--- break lines at word boundaries, and disable wrap by default
+-- nice line wrapping
 vim.wo.linebreak = true
-vim.wo.wrap = false
+vim.wo.wrap = true
 
 -- show tabs and trailing spaces
 vim.o.list = true
@@ -193,10 +193,8 @@ use {
 -- A light statusline
 use {
 	"itchyny/lightline.vim",
-	init = function()
-		vim.g.lightline = { colorscheme = vim.g.colors_name or "default" }
-	end,
 	config = function()
+		vim.g.lightline = { colorscheme = vim.g.colors_name or "default" }
 		vim.api.nvim_command("autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
 	end,
 }
@@ -219,8 +217,11 @@ use {
 	end,
 }
 
--- a really useful plugin
+-- tpope's search and replace
 use "tpope/vim-abolish"
+
+-- tpope's date manipulation
+use "tpope/vim-speeddating"
 
 -- wait for all installation and configs to finish
 user.startup()
