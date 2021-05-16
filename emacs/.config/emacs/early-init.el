@@ -28,6 +28,9 @@
 ;; Electric pair mode
 (electric-pair-mode +1)
 
+;; Tab complete
+(setq tab-always-indent 'complete)
+
 ;; Line wrap
 (global-visual-line-mode +1)
 
@@ -65,27 +68,25 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; doom-one theme
-(straight-use-package 'doom-themes)
-(load-theme 'doom-one t)
+;; vertico
+(straight-use-package 'vertico)
+(vertico-mode +1)
 
-;; evil mode
-(straight-use-package 'evil)
-(setq evil-want-Y-yank-to-eol t
-      evil-want-keybinding nil
-      evil-undo-system 'undo-fu)
-(require 'evil)
-(evil-mode +1)
+;; corfu
+(straight-use-package 'corfu)
+(corfu-global-mode +1)
 
-(straight-use-package 'undo-fu)
-(require 'undo-fu)
-(straight-use-package 'undo-fu-session)
-(require 'undo-fu-session)
-(global-undo-fu-session-mode)
+;; marginalia
+(straight-use-package 'marginalia)
+(marginalia-mode +1)
 
-(straight-use-package 'evil-collection)
-(require 'evil-collection)
-(evil-collection-init)
+;; Smarter GC
+(straight-use-package 'gcmh)
+(add-hook 'emacs-startup-hook #'gcmh-mode)
+
+;; which-key
+(straight-use-package 'which-key)
+(which-key-mode +1)
 
 ;; TTY support
 (add-hook 'tty-setup-hook #'xterm-mouse-mode)
@@ -97,27 +98,34 @@
 (add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
 (add-hook 'kill-emacs-hook (lambda () (evil-set-cursor t)))
 
+;; eglot
+(straight-use-package 'eglot)
+
+;; rust
+(straight-use-package 'rust-mode)
+
+;; zig
+(straight-use-package 'zig-mode)
+
+;; doom-one theme
+(straight-use-package 'doom-themes)
+(load-theme 'doom-one t)
+
+;; evil mode
+(straight-use-package 'evil)
+(setq evil-want-Y-yank-to-eol t
+      evil-want-keybinding nil
+      evil-undo-system 'undo-fu)
+(evil-mode +1)
+
+(straight-use-package 'undo-fu)
+(straight-use-package 'undo-fu-session)
+(global-undo-fu-session-mode)
+
+(straight-use-package 'evil-collection)
+(evil-collection-init)
+
 ;; Magit
 (straight-use-package 'magit)
 (setq magit-define-global-key-bindings nil)
 (global-set-key (kbd "C-c g") #'magit-status)
-
-;; which-key
-(straight-use-package 'which-key)
-(require 'which-key)
-(which-key-mode +1)
-
-;; vertico
-(straight-use-package 'vertico)
-(require 'vertico)
-(vertico-mode +1)
-
-;; marginalia
-(straight-use-package 'marginalia)
-(require 'marginalia)
-(marginalia-mode +1)
-
-;; Smarter GC
-(straight-use-package 'gcmh)
-(require 'gcmh)
-(add-hook 'emacs-startup-hook #'gcmh-mode)
