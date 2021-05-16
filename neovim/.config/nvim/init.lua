@@ -1,4 +1,4 @@
---- nightly.lua
+--- init.lua
 
 -- modeline can be a security risk
 vim.o.modeline = false
@@ -109,11 +109,6 @@ vim.g.netrw_keepdir   = 0
 vim.g.netrw_list_hide = [[^\.\.\?/$]]
 vim.g.netrw_winsize   = 25
 
--- Hacks vim#7188
-if vim.fn.executable("xdg-open") > 0 then
-	vim.api.nvim_set_keymap("n", "gx", "<Cmd>!xdg-open <cfile>&<CR><CR>", { noremap = true })
-end
-
 -- shell split commands
 vim.api.nvim_command("command! Shell  edit           term://"..vim.o.shell)
 vim.api.nvim_command("command! Hshell vsplit         term://"..vim.o.shell)
@@ -203,15 +198,6 @@ use {
 use {
 	"ziglang/zig.vim",
 	init = function() vim.g.zig_fmt_autosave = false end,
-}
-
--- you can't go wrong with the classic git plugin
-use {
-	"tpope/vim-fugitive",
-	config = function()
-		vim.api.nvim_command("autocmd! fugitive BufReadPost * call FugitiveDetect(resolve(expand('<amatch>:p')))")
-		vim.api.nvim_set_keymap("n", "<Leader>g", "<Cmd>Git<CR>", { noremap = true })
-	end,
 }
 
 -- tpope's search and replace
