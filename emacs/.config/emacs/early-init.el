@@ -28,8 +28,7 @@
 ;; Woman manpath
 (when (executable-find "manpath")
   (with-eval-after-load "woman"
-    (setq woman-manpath
-	  (woman-parse-colon-path (string-trim (shell-command-to-string "manpath -q"))))))
+    (setq woman-manpath (woman-parse-colon-path (string-trim (shell-command-to-string "manpath -q"))))))
 
 ;; Show paren mode
 (show-paren-mode +1)
@@ -113,6 +112,14 @@
 
 ;; zig
 (straight-use-package 'zig-mode)
+
+;; tree-sitter
+(straight-use-package 'tree-sitter)
+(global-tree-sitter-mode +1)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
+(straight-use-package 'tree-sitter-langs)
+(require 'tree-sitter-langs)
 
 ;; doom-one theme
 (straight-use-package 'doom-themes)

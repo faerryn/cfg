@@ -174,7 +174,10 @@ use {
 	"nvim-treesitter/nvim-treesitter",
 	update = function() vim.api.nvim_command("TSUpdate") end,
 	config = function()
-		require("nvim-treesitter.configs").setup({ highlight = { enable = true } })
+		require("nvim-treesitter.configs").setup {
+			ensure_installed = "maintained",
+			highlight = { enable = true },
+		}
 	end,
 }
 
