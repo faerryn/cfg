@@ -67,7 +67,8 @@
 
 ;; evil mode
 (straight-use-package 'evil)
-(setq evil-want-keybinding nil
+(setq evil-want-Y-yank-to-eol t
+      evil-want-keybinding nil
       evil-undo-system 'undo-fu)
 (require 'evil)
 (evil-mode +1)
@@ -97,18 +98,16 @@
 ;; Magit
 (straight-use-package 'magit)
 (setq magit-define-global-key-bindings nil)
-(autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
-(global-set-key (kbd "C-x g") #'magit-status)
+(autoload 'magit-status "magit")
+(global-set-key (kbd "C-c g") #'magit-status)
 
 ;; which-key
 (straight-use-package 'which-key)
 (require 'which-key)
 (which-key-mode +1)
 
-;; Markdown Mode
-(straight-use-package 'markdown-mode)
-(autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files." t)
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+;; eglot
+(straight-use-package 'eglot)
 
 ;; Smarter GC
 (straight-use-package 'gcmh)

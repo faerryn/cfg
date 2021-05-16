@@ -205,9 +205,6 @@ use {
 	init = function() vim.g.zig_fmt_autosave = false end,
 }
 
--- org mode for vim, evil for emacs
-use "axvr/org.vim"
-
 -- you can't go wrong with the classic git plugin
 use {
 	"tpope/vim-fugitive",
@@ -219,9 +216,6 @@ use {
 
 -- tpope's search and replace
 use "tpope/vim-abolish"
-
--- tpope's date manipulation
-use "tpope/vim-speeddating"
 
 -- wait for all installation and configs to finish
 user.startup()
