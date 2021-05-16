@@ -106,9 +106,6 @@
 (require 'which-key)
 (which-key-mode +1)
 
-;; eglot
-(straight-use-package 'eglot)
-
 ;; Smarter GC
 (straight-use-package 'gcmh)
 (require 'gcmh)
