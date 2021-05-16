@@ -102,7 +102,8 @@
 
 (straight-use-package 'evil-terminal-cursor-changer)
 (add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
-(add-hook 'kill-emacs-hook (lambda () (evil-set-cursor t)))
+(with-eval-after-load "evil-terminal-cursor-changer"
+  (add-hook 'kill-emacs-hook (lambda () (setq cursor-type t) (etcc--evil-set-cursor))))
 
 ;; eglot
 (straight-use-package 'eglot)
@@ -139,7 +140,18 @@
 (straight-use-package 'evil-collection)
 (evil-collection-init)
 
-;; Magit
+;; Git integration
 (straight-use-package 'magit)
 (setq magit-define-global-key-bindings nil)
 (global-set-key (kbd "C-c g") #'magit-status)
+
+(straight-use-package 'diff-hl)
+(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+
+(with-eval-after-load "evil-terminal-cursor-changer"
+  (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor))
+
+(global-diff-hl-mode +1)
+(diff-hl-flydiff-mode +1)
+(diff-hl-margin-mode +1)
