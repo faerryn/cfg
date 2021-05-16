@@ -53,8 +53,10 @@
 (add-to-list 'default-frame-alist
 	     '(font . "monospace-12"))
 
-;; Set backup
+;; Backup directory
 (setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
+(setq tramp-backup-directory-alist
       `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
 
 ;; Buffer predicate
