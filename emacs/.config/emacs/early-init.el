@@ -25,6 +25,14 @@
 ;; Disable saving passwords
 (setq auth-source-save-behavior nil)
 
+;; Woman manpath
+(when (executable-find "manpath")
+  (with-eval-after-load "woman"
+    (setq woman-manpath
+	  (mapcar
+	   (lambda (manpath) (concat manpath "/"))
+	   (split-string (string-trim (shell-command-to-string "manpath -q")) ":")))))
+
 ;; Show paren mode
 (show-paren-mode +1)
 
