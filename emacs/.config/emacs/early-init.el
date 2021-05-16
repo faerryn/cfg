@@ -68,13 +68,13 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; vertico
-(straight-use-package 'vertico)
-(vertico-mode +1)
+;; selectrum
+(straight-use-package 'selectrum)
+(selectrum-mode +1)
 
-;; corfu
-(straight-use-package 'corfu)
-(corfu-global-mode +1)
+;; orderless
+(straight-use-package 'orderless)
+(setq completion-styles '(orderless))
 
 ;; marginalia
 (straight-use-package 'marginalia)
