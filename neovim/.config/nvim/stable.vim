@@ -1,4 +1,4 @@
-"" init.lua
+"" stable.lua
 
 " modeline can be a security risk
 set nomodeline
@@ -119,18 +119,23 @@ execute "command! Vshell vsplit         term://"..&shell
 execute "command! Tshell tabnew         term://"..&shell
 
 " bootstrap user.nvim
-let s:user_install_path = stdpath("data").."/site/pack/user/opt/faerryn/user.nvim/branch/backport-nvim-0.4.4"
+let s:user_branch = "backport-nvim-0.4.4"
+let s:user_branch_escaped = "backport-snvim-s0.4.4"
+let s:user_install_path = stdpath("data").."/site/pack/user/opt/faerryn/user.nvim/branch/"..s:user_branch_escaped
 if empty(glob(s:user_install_path))
-	execute "!git clone --branch backport-nvim-0.4.4 --depth 1 https://github.com/faerryn/user.nvim.git \""..s:user_install_path.."\""
+	silent execute "!git clone --branch \""..s:user_branch.."\" --depth 1 https://github.com/faerryn/user.nvim.git \""..s:user_install_path.."\""
 end
-packadd faerryn/user.nvim/branch/backport-nvim-0.4.4
+execute "packadd faerryn/user.nvim/branch/"..s:user_branch_escaped
 
 lua << EOF
 local user = require("user")
 user.setup()
 local use = user.use
 
-use "faerryn/user.nvim"
+use {
+	"faerryn/user.nvim",
+	branch = "backport-nvim-0.4.4",
+}
 
 -- Fixes neovim#12587
 use "antoinemadec/FixCursorHold.nvim"
