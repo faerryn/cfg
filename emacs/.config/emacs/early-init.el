@@ -22,8 +22,11 @@
 ;; Follow symlinks
 (setq vc-follow-symlinks t)
 
-;; Show Paren Mod
+;; Show paren mode
 (show-paren-mode +1)
+
+;; Electric pair mode
+(electric-pair-mode +1)
 
 ;; Line wrap
 (global-visual-line-mode +1)
@@ -87,24 +90,31 @@
 (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 
 (straight-use-package 'xclip)
-(autoload 'xclip-mode "xclip")
 (add-hook 'tty-setup-hook #'xclip-mode)
 
 (straight-use-package 'evil-terminal-cursor-changer)
-(autoload 'evil-terminal-cursor-changer-activate "evil-terminal-cursor-changer")
 (add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
 (add-hook 'kill-emacs-hook (lambda () (evil-set-cursor t)))
 
 ;; Magit
 (straight-use-package 'magit)
 (setq magit-define-global-key-bindings nil)
-(autoload 'magit-status "magit")
 (global-set-key (kbd "C-c g") #'magit-status)
 
 ;; which-key
 (straight-use-package 'which-key)
 (require 'which-key)
 (which-key-mode +1)
+
+;; vertico
+(straight-use-package 'vertico)
+(require 'vertico)
+(vertico-mode +1)
+
+;; marginalia
+(straight-use-package 'marginalia)
+(require 'marginalia)
+(marginalia-mode +1)
 
 ;; Smarter GC
 (straight-use-package 'gcmh)
