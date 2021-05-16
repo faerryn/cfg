@@ -52,6 +52,7 @@
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
 ;; straight.el
+(setq straight-use-symlinks t)
 (defvar bootstrap-version)
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
