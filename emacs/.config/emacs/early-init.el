@@ -22,6 +22,9 @@
 ;; Follow symlinks
 (setq vc-follow-symlinks t)
 
+;; Disable saving passwords
+(setq auth-source-save-behavior nil)
+
 ;; Show paren mode
 (show-paren-mode +1)
 
@@ -75,6 +78,8 @@
 ;; orderless
 (straight-use-package 'orderless)
 (setq completion-styles '(orderless))
+(setq orderless-skip-highlighting (lambda () selectrum-is-active)
+      selectrum-highlight-candidates-function #'orderless-highlight-matches)
 
 ;; marginalia
 (straight-use-package 'marginalia)

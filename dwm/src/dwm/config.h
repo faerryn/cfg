@@ -46,14 +46,15 @@ static const Layout layouts[] = {
 };
 
 /* auto */
-static const char *autoenv[] = {
+static char *const autoenv[] = {
 	"_JAVA_AWT_WM_NONREPARENTING", "1",
 	"MOZ_X11_EGL", "1",
 };
 
-static const char *autorun[] = {
+static char *const autorun[] = {
  "hsetroot", "-solid", normbgcolor, NULL,
 
+ "gammastep", NULL,
  "lxpolkit", NULL,
  "picom", "--experimental-backends", NULL,
  "slstatus", NULL,
