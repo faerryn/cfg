@@ -75,12 +75,6 @@
 (straight-use-package 'selectrum)
 (selectrum-mode +1)
 
-;; orderless
-(straight-use-package 'orderless)
-(setq completion-styles '(orderless))
-(setq orderless-skip-highlighting (lambda () selectrum-is-active)
-      selectrum-highlight-candidates-function #'orderless-highlight-matches)
-
 ;; marginalia
 (straight-use-package 'marginalia)
 (marginalia-mode +1)
