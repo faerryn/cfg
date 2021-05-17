@@ -121,14 +121,6 @@
 (straight-use-package 'vimrc-mode)
 (straight-use-package 'zig-mode)
 
-;; Tree-sitter
-(straight-use-package 'tree-sitter)
-(global-tree-sitter-mode +1)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-
-(straight-use-package 'tree-sitter-langs)
-(require 'tree-sitter-langs)
-
 ;; Vim emulation
 (straight-use-package 'evil)
 (setq evil-want-Y-yank-to-eol t
