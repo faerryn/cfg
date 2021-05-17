@@ -1,6 +1,6 @@
 ;;; early-init.el
 
-;; Disabling GC
+;; Disable garbage collection
 (setq gc-cons-threshold most-positive-fixnum)
 
 ;; Disable package.el
@@ -15,17 +15,26 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
+;; Default font
+(add-to-list 'default-frame-alist
+	     '(font . "monospace-12"))
+
+;; Keep file system clean
+(setq backup-directory-alist
+      `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
+(setq tramp-backup-directory-alist backup-directory-alist)
+(setq auto-save-list-file-prefix
+      (expand-file-name "auto-save-list/.saves-" user-emacs-directory))
+(setq auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "auto-saves/" user-emacs-directory) t)))
+(mkdir (expand-file-name "auto-saves/" user-emacs-directory) t)
+(setq create-lockfiles nil)
+
 ;; Follow symlinks
-(setq vc-follow-symlinks t)
+(setq find-file-visit-truename t)
 
 ;; Disable saving passwords
 (setq auth-source-save-behavior nil)
-
-;; Woman manpath
-(when (executable-find "manpath")
-  (with-eval-after-load "woman"
-    (setq woman-manpath
-	  (woman-parse-colon-path (string-trim (shell-command-to-string "manpath -q"))))))
 
 ;; Show paren mode
 (show-paren-mode +1)
@@ -43,16 +52,6 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode +1)
 
-;; Set default font
-(add-to-list 'default-frame-alist
-	     '(font . "monospace-12"))
-
-;; Backup directory
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
-(setq tramp-backup-directory-alist
-      `(("." . ,(expand-file-name "backups/" user-emacs-directory))))
-
 ;; Buffer predicate
 (add-to-list 'default-frame-alist
 	     '(buffer-predicate . buffer-file-name))
@@ -61,49 +60,64 @@
 (autoload 'dired-omit-mode "dired-x")
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
-;; compilation
-(setq warning-minimum-level :error)
+;; Woman manpath
+(when (executable-find "manpath")
+  (with-eval-after-load "woman"
+    (setq woman-manpath
+	  (woman-parse-colon-path
+	   (string-trim (shell-command-to-string "manpath -q"))))))
 
-;; straight.el
+;; Package manager
 (setq straight-use-symlinks t)
 (defvar bootstrap-version)
-(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+(let ((bootstrap-file (expand-file-name
+		       "straight/repos/straight.el/bootstrap.el"
+		       user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; selectrum
+;; Theme
+(straight-use-package 'doom-themes)
+(load-theme 'doom-one t)
+
+;; TTY support
+(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+
+(straight-use-package 'xclip)
+(add-hook 'tty-setup-hook #'xclip-mode)
+
+;; Completion user interface
 (straight-use-package 'selectrum)
 (selectrum-mode +1)
 
-;; marginalia
 (straight-use-package 'marginalia)
 (marginalia-mode +1)
 
-;; Smarter GC
+;; Smart garbage collection
 (straight-use-package 'gcmh)
 (add-hook 'emacs-startup-hook #'gcmh-mode)
 
-;; which-key
+;; Which key
 (straight-use-package 'which-key)
 (which-key-mode +1)
 
-;; eglot
+;; Language server protocol
 (straight-use-package 'eglot)
 
-;; major modes
+;; Major modes
 (straight-use-package 'lua-mode)
 (straight-use-package 'rust-mode)
 (straight-use-package 'vimrc-mode)
 (straight-use-package 'zig-mode)
 
-;; tree-sitter
+;; Tree-sitter
 (straight-use-package 'tree-sitter)
 (global-tree-sitter-mode +1)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
@@ -111,11 +125,7 @@
 (straight-use-package 'tree-sitter-langs)
 (require 'tree-sitter-langs)
 
-;; doom-one theme
-(straight-use-package 'doom-themes)
-(load-theme 'doom-one t)
-
-;; evil mode
+;; Vim emulation
 (straight-use-package 'evil)
 (setq evil-want-Y-yank-to-eol t
       evil-want-keybinding nil
@@ -128,6 +138,14 @@
 
 (straight-use-package 'evil-collection)
 (evil-collection-init)
+
+(straight-use-package 'evil-terminal-cursor-changer)
+(add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
+(with-eval-after-load "evil-terminal-cursor-changer"
+  (add-hook 'kill-emacs-hook
+	    (lambda ()
+	      (evil-set-cursor t)
+	      (etcc--evil-set-cursor))))
 
 ;; Git integration
 (straight-use-package 'magit)
@@ -142,17 +160,5 @@
 (diff-hl-flydiff-mode +1)
 (diff-hl-margin-mode +1)
 
-;; TTY support
-(add-hook 'tty-setup-hook #'xterm-mouse-mode)
-
-(straight-use-package 'xclip)
-(add-hook 'tty-setup-hook #'xclip-mode)
-
-(straight-use-package 'evil-terminal-cursor-changer)
-(add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
 (with-eval-after-load "evil-terminal-cursor-changer"
-  (add-hook 'kill-emacs-hook
-	    (lambda ()
-	      (setq cursor-type t)
-	      (etcc--evil-set-cursor)))
   (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor))
