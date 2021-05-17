@@ -12,12 +12,8 @@
 
 (menu-bar-mode -1)
 (tooltip-mode -1)
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-
-;; Set user-emacs-directory to a more appropriate location
-(setq user-emacs-directory
-      (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
 
 ;; Follow symlinks
 (setq vc-follow-symlinks t)
@@ -64,6 +60,9 @@
 (autoload 'dired-omit-mode "dired-x")
 (add-hook 'dired-mode-hook #'dired-omit-mode)
 
+;; compilation
+(setq warning-minimum-level :error)
+
 ;; straight.el
 (setq straight-use-symlinks t)
 (defvar bootstrap-version)
@@ -71,9 +70,9 @@
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-	(url-retrieve-synchronously
-	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	 'silent 'inhibit-cookies)
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
