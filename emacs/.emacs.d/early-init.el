@@ -97,10 +97,10 @@
 ;; eglot
 (straight-use-package 'eglot)
 
-;; rust
+;; major modes
+(straight-use-package 'lua-mode)
 (straight-use-package 'rust-mode)
-
-;; zig
+(straight-use-package 'vimrc-mode)
 (straight-use-package 'zig-mode)
 
 ;; tree-sitter
