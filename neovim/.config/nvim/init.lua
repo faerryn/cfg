@@ -1,5 +1,8 @@
 --- init.lua
 
+-- autocmd group
+vim.api.nvim_command("augroup custom | autocmd! | augroup END")
+
 -- modeline can be a security risk
 vim.o.modeline = false
 
@@ -71,6 +74,15 @@ end
 -- Y to eol
 vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 
+-- highlight yank
+vim.api.nvim_command("autocmd custom TextYankPost * lua vim.highlight.on_yank()")
+
+-- confirm mkdir
+vim.api.nvim_command([[autocmd custom BufWritePre * lua require("custom").confirm_mkdir()]])
+
+-- follow symlinks
+vim.api.nvim_command([[autocmd custom BufNewFile,BufRead * lua require("custom").follow_symlink()]])
+
 -- SPC as mapleader
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
@@ -98,9 +110,6 @@ vim.api.nvim_set_keymap("n", "]l",        "<Cmd>lnext<CR>",     { noremap = true
 vim.api.nvim_set_keymap("n", "[l",        "<Cmd>lprevious<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "]L",        "<Cmd>llast<CR>",     { noremap = true })
 vim.api.nvim_set_keymap("n", "[L",        "<Cmd>lfirst<CR>",    { noremap = true })
-
--- highlight yank
-vim.api.nvim_command("autocmd TextYankPost * lua vim.highlight.on_yank()")
 
 -- netrw
 vim.g.netrw_banner    = 0
@@ -194,7 +203,7 @@ use {
 	"itchyny/lightline.vim",
 	config = function()
 		vim.g.lightline = { colorscheme = vim.g.colors_name or "default" }
-		vim.api.nvim_command("autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
+		vim.api.nvim_command("autocmd custom ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
 	end,
 }
 
