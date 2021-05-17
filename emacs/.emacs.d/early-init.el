@@ -23,11 +23,11 @@
 (setq backup-directory-alist
       `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
 (setq tramp-backup-directory-alist backup-directory-alist)
-(setq auto-save-list-file-prefix
-      (expand-file-name "auto-save-list/.saves-" user-emacs-directory))
-(setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "auto-saves/" user-emacs-directory) t)))
-(mkdir (expand-file-name "auto-saves/" user-emacs-directory) t)
+(let ((auto-save-file-name-directory
+       (expand-file-name "auto-saves/" user-emacs-directory)))
+  (mkdir auto-save-file-name-directory t)
+  (setq auto-save-file-name-transforms
+	`((".*" ,auto-save-file-name-directory t))))
 (setq create-lockfiles nil)
 
 ;; Follow symlinks
