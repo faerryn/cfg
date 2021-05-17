@@ -24,7 +24,8 @@
 ;; Woman manpath
 (when (executable-find "manpath")
   (with-eval-after-load "woman"
-    (setq woman-manpath (woman-parse-colon-path (string-trim (shell-command-to-string "manpath -q"))))))
+    (setq woman-manpath
+	  (woman-parse-colon-path (string-trim (shell-command-to-string "manpath -q"))))))
 
 ;; Show paren mode
 (show-paren-mode +1)
@@ -93,17 +94,6 @@
 (straight-use-package 'which-key)
 (which-key-mode +1)
 
-;; TTY support
-(add-hook 'tty-setup-hook #'xterm-mouse-mode)
-
-(straight-use-package 'xclip)
-(add-hook 'tty-setup-hook #'xclip-mode)
-
-(straight-use-package 'evil-terminal-cursor-changer)
-(add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
-(with-eval-after-load "evil-terminal-cursor-changer"
-  (add-hook 'kill-emacs-hook (lambda () (setq cursor-type t) (etcc--evil-set-cursor))))
-
 ;; eglot
 (straight-use-package 'eglot)
 
@@ -148,9 +138,21 @@
 (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
-(with-eval-after-load "evil-terminal-cursor-changer"
-  (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor))
-
 (global-diff-hl-mode +1)
 (diff-hl-flydiff-mode +1)
 (diff-hl-margin-mode +1)
+
+;; TTY support
+(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+
+(straight-use-package 'xclip)
+(add-hook 'tty-setup-hook #'xclip-mode)
+
+(straight-use-package 'evil-terminal-cursor-changer)
+(add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
+(with-eval-after-load "evil-terminal-cursor-changer"
+  (add-hook 'kill-emacs-hook
+	    (lambda ()
+	      (setq cursor-type t)
+	      (etcc--evil-set-cursor)))
+  (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor))
