@@ -77,9 +77,6 @@ vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 -- highlight yank
 vim.api.nvim_command("autocmd custom TextYankPost * lua vim.highlight.on_yank()")
 
--- confirm mkdir
-vim.api.nvim_command([[autocmd custom BufWritePre * lua require("custom").confirm_mkdir()]])
-
 -- SPC as mapleader
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
@@ -95,14 +92,13 @@ vim.api.nvim_set_keymap("n", "[b",        "<Cmd>bprevious<CR>", { noremap = true
 vim.api.nvim_set_keymap("n", "]B",        "<Cmd>blast<CR>",     { noremap = true })
 vim.api.nvim_set_keymap("n", "[B",        "<Cmd>bfirst<CR>",    { noremap = true })
 
-vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>lopen<CR>",     { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>q", "<Cmd>copen<CR>",     { noremap = true })
-
 vim.api.nvim_set_keymap("n", "]q",        "<Cmd>cnext<CR>",     { noremap = true })
 vim.api.nvim_set_keymap("n", "[q",        "<Cmd>cprevious<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "]Q",        "<Cmd>clast<CR>",     { noremap = true })
 vim.api.nvim_set_keymap("n", "[Q",        "<Cmd>cfirst<CR>",    { noremap = true })
 
+vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>lopen<CR>",     { noremap = true })
 vim.api.nvim_set_keymap("n", "]l",        "<Cmd>lnext<CR>",     { noremap = true })
 vim.api.nvim_set_keymap("n", "[l",        "<Cmd>lprevious<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "]L",        "<Cmd>llast<CR>",     { noremap = true })
@@ -203,9 +199,6 @@ use {
 		vim.api.nvim_command("autocmd custom ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
 	end,
 }
-
--- follow symlinks
-use "faerryn/follow.vim"
 
 -- c of the future
 use {
