@@ -17,7 +17,7 @@
 
 ;; Default font
 (add-to-list 'default-frame-alist
-	     '(font . "monospace-12"))
+             '(font . "monospace-12"))
 
 ;; Change user-emacs-directory
 (setq user-emacs-directory
@@ -31,7 +31,7 @@
        (expand-file-name "auto-saves/" user-emacs-directory)))
   (mkdir auto-save-file-name-directory t)
   (setq auto-save-file-name-transforms
-	`((".*" ,auto-save-file-name-directory t))))
+        `((".*" ,auto-save-file-name-directory t))))
 (setq create-lockfiles nil)
 
 ;; Follow symlinks
@@ -40,10 +40,13 @@
 ;; Disable saving passwords
 (setq auth-source-save-behavior nil)
 
-;; Show paren mode
+;; Highlight matching parenthesis
 (show-paren-mode +1)
 
-;; Electric pair mode
+;; Whitespace
+(whitespace-mode +1)
+
+;; Autocomplete pairs
 (electric-pair-mode +1)
 
 ;; Tab complete
@@ -58,31 +61,32 @@
 
 ;; Buffer predicate
 (add-to-list 'default-frame-alist
-	     '(buffer-predicate . buffer-file-name))
+             '(buffer-predicate . buffer-file-name))
 
 ;; dired
 (autoload 'dired-omit-mode "dired-x")
 (add-hook 'dired-mode-hook #'dired-omit-mode)
+(setq dired-listing-switches "-l -ahgvFX --group-directories-first")
 
 ;; Woman manpath
 (when (executable-find "manpath")
   (with-eval-after-load "woman"
     (setq woman-manpath
-	  (woman-parse-colon-path
-	   (string-trim (shell-command-to-string "manpath -q"))))))
+          (woman-parse-colon-path
+           (string-trim (shell-command-to-string "manpath -q"))))))
 
 ;; Package manager
 (setq straight-use-symlinks t)
 (defvar bootstrap-version)
 (let ((bootstrap-file (expand-file-name
-		       "straight/repos/straight.el/bootstrap.el"
-		       user-emacs-directory))
+                       "straight/repos/straight.el/bootstrap.el"
+                       user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-	(url-retrieve-synchronously
-	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	 'silent 'inhibit-cookies)
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -139,9 +143,9 @@
 (add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
 (with-eval-after-load "evil-terminal-cursor-changer"
   (add-hook 'kill-emacs-hook
-	    (lambda ()
-	      (evil-set-cursor t)
-	      (etcc--evil-set-cursor))))
+            (lambda ()
+              (evil-set-cursor t)
+              (etcc--evil-set-cursor))))
 
 ;; Git integration
 (straight-use-package 'magit)
