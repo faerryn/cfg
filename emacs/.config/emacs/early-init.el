@@ -19,6 +19,10 @@
 (add-to-list 'default-frame-alist
 	     '(font . "monospace-12"))
 
+;; Change user-emacs-directory
+(setq user-emacs-directory
+      (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+
 ;; Keep file system clean
 (setq backup-directory-alist
       `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
