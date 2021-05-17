@@ -80,9 +80,6 @@ vim.api.nvim_command("autocmd custom TextYankPost * lua vim.highlight.on_yank()"
 -- confirm mkdir
 vim.api.nvim_command([[autocmd custom BufWritePre * lua require("custom").confirm_mkdir()]])
 
--- follow symlinks
-vim.api.nvim_command([[autocmd custom BufNewFile,BufRead * lua require("custom").follow_symlink()]])
-
 -- SPC as mapleader
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
@@ -206,6 +203,9 @@ use {
 		vim.api.nvim_command("autocmd custom ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
 	end,
 }
+
+-- follow symlinks
+use "faerryn/follow.vim"
 
 -- c of the future
 use {

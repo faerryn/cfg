@@ -1,19 +1,7 @@
-local function follow_symlink()
-	local filepath = vim.api.nvim_buf_get_name(0)
-	local resolved = vim.fn.resolve(filepath)
-
-	if filepath == resolved then
-		return
-	end
-
-	vim.api.nvim_buf_set_name(0, resolved)
-	vim.api.nvim_command("write!")
-end
-
 local function confirm_mkdir()
-	local dir = vim.fn.expand("%:h")
+	local dir = vim.fn.expand("%:p:h")
 
-	if vim.fn.empty(vim.fn.glob(dir)) == 0 then
+	if vim.fn.isdirectory(dir) > 0 then
 		return
 	end
 
