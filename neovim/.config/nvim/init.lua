@@ -9,14 +9,6 @@ vim.o.modeline = false
 -- switch buffers without writing to disk
 vim.o.hidden = true
 
--- space indents of 2
-vim.o.shiftwidth  = 2
-vim.bo.shiftwidth = 2
-vim.o.tabstop     = 2
-vim.bo.tabstop    = 2
-vim.o.expandtab   = false
-vim.bo.expandtab  = false
-
 -- yes undofiles
 vim.o.undofile = true
 vim.bo.undofile = true
