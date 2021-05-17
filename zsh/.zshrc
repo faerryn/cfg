@@ -1,4 +1,4 @@
-PS1='%F{green}%1~%f ) '
+PS1='%F{green}%1~%f %(?..%F{red})%)%f '
 
 HISTSIZE=10000
 SAVEHIST="$HISTSIZE"
