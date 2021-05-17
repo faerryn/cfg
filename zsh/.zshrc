@@ -10,7 +10,7 @@ alias grep='\grep --color=auto'
 alias fd='\fd --hidden'
 alias rg='\rg --hidden'
 
-alias ls='\ls -hvxCFX --color=auto --group-directories-first'
+alias ls='\ls -hvFX --color=auto --group-directories-first'
 alias ll='ls -g'
 alias la='ls -gA'
 
