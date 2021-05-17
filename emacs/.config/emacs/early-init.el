@@ -6,7 +6,7 @@
 ;; Disable package.el
 (setq package-enable-at-startup nil)
 
-;; Disable extra UI
+;; Disable extra user interface
 (setq inhibit-startup-screen t)
 (setq use-dialog-box nil)
 
