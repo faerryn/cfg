@@ -25,7 +25,7 @@ export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 
 # Python
-export PYTHONSTARTUP="$XDG_CONFIG_HOME"/python_history
+export PYTHONSTARTUP="$XDG_CONFIG_HOME"/pythonstartup.py
 
 # terminfo
 export TERMINFO="$XDG_DATA_HOME"/terminfo
