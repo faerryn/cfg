@@ -26,7 +26,7 @@
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
           (url-retrieve-synchronously
-            "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
            'silent 'inhibit-cookies)
         (goto-char (point-max))
         (eval-print-last-sexp)))
@@ -108,15 +108,17 @@
         evil-want-keybinding nil)
   (add-hook 'emacs-startup-hook #'evil-mode)
 #+end_src
-*** Boring-but-efficient undo
+*** Vim undo
 #+begin_src emacs-lisp
   (straight-use-package 'undo-fu)
-  (straight-use-package 'undo-fu-session)
-
   (setq evil-undo-system 'undo-fu)
-  (add-hook 'evil-mode-hook #'global-undo-fu-session-mode)
-  #+end_src
-*** Vim bindings for other packages
+#+end_src
+**** Remember undos
+#+begin_src emacs-lisp
+  (straight-use-package 'undo-fu-session)
+  (global-undo-fu-session-mode +1)
+#+end_src
+*** Vim-style everything
 #+begin_src emacs-lisp
   (straight-use-package 'evil-collection)
   (evil-collection-init)
@@ -154,12 +156,12 @@
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
   (setq magit-define-global-key-bindings nil)
-  (global-set-key (kbd "C-c g") #'magit-status)
 #+end_src
 *** Git gutter
 #+begin_src emacs-lisp
   (straight-use-package 'diff-hl)
-  (setq diff-hl-show-staged-changes nil)
+  (setq diff-hl-command-prefix nil
+        diff-hl-show-staged-changes nil)
   (global-diff-hl-mode +1)
   (diff-hl-flydiff-mode +1)
   (diff-hl-margin-mode +1)
