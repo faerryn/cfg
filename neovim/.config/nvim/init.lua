@@ -158,10 +158,7 @@ use {
 use "tomtom/tcomment_vim"
 
 -- align stuff
-use {
-	"tommcdo/vim-lion",
-	init = function() vim.g.lion_squeeze_spaces = 1 end,
-}
+use "tommcdo/vim-lion"
 
 -- correct syntax highlighting
 use {
