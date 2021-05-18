@@ -44,7 +44,7 @@
 (show-paren-mode +1)
 
 ;; Whitespace
-(whitespace-mode +1)
+(global-whitespace-mode +1)
 
 ;; Autocomplete pairs
 (electric-pair-mode +1)
