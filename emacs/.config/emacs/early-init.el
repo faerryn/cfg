@@ -64,16 +64,14 @@
              '(buffer-predicate . buffer-file-name))
 
 ;; dired
-(autoload 'dired-omit-mode "dired-x")
-(add-hook 'dired-mode-hook #'dired-omit-mode)
-(setq dired-listing-switches "-l -ahgvFX --group-directories-first")
+(setq dired-listing-switches "-l -hgvAFX --group-directories-first")
 
 ;; Woman manpath
 (when (executable-find "manpath")
   (with-eval-after-load "woman"
     (setq woman-manpath
           (woman-parse-colon-path
-           (string-trim (shell-command-to-string "manpath -q"))))))
+           (string-trim-right (shell-command-to-string "manpath -q") "\n")))))
 
 ;; Package manager
 (setq straight-use-symlinks t)
