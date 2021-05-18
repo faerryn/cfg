@@ -122,24 +122,18 @@
   (straight-use-package 'evil-collection)
   (evil-collection-init)
 #+end_src
-* Miscellany
-** Clean file system
-#+begin_src emacs-lisp
-  (setq backup-directory-alist
-        `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
-  (setq tramp-backup-directory-alist backup-directory-alist)
-  (let ((auto-save-file-name-directory
-         (expand-file-name "auto-saves/" user-emacs-directory)))
-    (mkdir auto-save-file-name-directory t)
-    (setq auto-save-file-name-transforms
-          `((".*" ,auto-save-file-name-directory t))))
-  (setq create-lockfiles nil)
-#+end_src
-** Configure dired
+* Major modes
+** Dired
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
 #+end_src
-** Configure woman
+** Emacs Lisp
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil)))
+#+end_src
+** Woman
 #+begin_src emacs-lisp
   (when (executable-find "manpath")
     (with-eval-after-load "woman"
@@ -147,19 +141,15 @@
             (woman-parse-colon-path
              (string-trim-right (shell-command-to-string "manpath -q") "\n")))))
 #+end_src
-** Disable saving passwords
+** Sundry
 #+begin_src emacs-lisp
-  (setq auth-source-save-behavior nil)
+  (straight-use-package 'lua-mode)
+  (straight-use-package 'markdown-mode)
+  (straight-use-package 'rust-mode)
+  (straight-use-package 'vimrc-mode)
+  (straight-use-package 'zig-mode)
 #+end_src
-** Don't cycle into non-file buffers
-#+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist
-               '(buffer-predicate . buffer-file-name))
-#+end_src
-** Follow symlinks
-#+begin_src emacs-lisp
-  (setq find-file-visit-truename t)
-#+end_src
+* Tools
 ** Git integration
 *** Git client
 #+begin_src emacs-lisp
@@ -175,7 +165,7 @@
   (diff-hl-flydiff-mode +1)
   (diff-hl-margin-mode +1)
 #+end_src
-*** diff-hl + magit synced refresh
+*** diff-hl + magit patch
 #+begin_src emacs-lisp
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
@@ -183,20 +173,34 @@
 ** Language server protocol
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
 #+end_src
-** Major modes
+* Miscellany
+** Clean file system
 #+begin_src emacs-lisp
-  (straight-use-package 'lua-mode)
-  (straight-use-package 'markdown-mode)
-  (straight-use-package 'rust-mode)
-  (straight-use-package 'vimrc-mode)
-  (straight-use-package 'zig-mode)
+  (setq backup-directory-alist
+        `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
+  (setq tramp-backup-directory-alist backup-directory-alist)
+  (let ((auto-save-file-name-directory
+         (expand-file-name "auto-saves/" user-emacs-directory)))
+    (mkdir auto-save-file-name-directory t)
+    (setq auto-save-file-name-transforms
+          `((".*" ,auto-save-file-name-directory t))))
+  (setq create-lockfiles nil)
 #+end_src
-** Make elisp indent with spaces
+** Disable saving passwords
 #+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (setq indent-tabs-mode nil)))
+  (setq auth-source-save-behavior nil)
+#+end_src
+** Don't cycle into non-file buffers
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist
+               '(buffer-predicate . buffer-file-name))
+#+end_src
+** Follow symlinks
+#+begin_src emacs-lisp
+  (setq find-file-visit-truename t)
 #+end_src
 ** TTY support
 *** Mouse support
@@ -219,7 +223,7 @@
                   (evil-set-cursor t)
                   (etcc--evil-set-cursor)))))
 #+end_src
-*** diff-hl patch
+*** etcc + diff-hl patch
 #+begin_src emacs-lisp
   (with-eval-after-load "diff-hl"
     (with-eval-after-load "evil-terminal-cursor-changer"
