@@ -1,5 +1,9 @@
 ;;; early-init.el
 
+;; Disable default garbage collection
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; Load config.org
 (let* ((config (expand-file-name "config" (file-name-directory load-file-name)))
        (config.org (concat config ".org"))
        (config.el (concat config ".el"))
