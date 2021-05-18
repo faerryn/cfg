@@ -40,6 +40,16 @@
   (straight-use-package 'marginalia)
   (marginalia-mode +1)
 #+end_src
+*** Completion sorting
+#+begin_src emacs-lisp
+  (straight-use-package 'orderless)
+  (setq completion-styles '(orderless))
+#+end_src
+**** selectrum + orderless patch
+#+begin_src emacs-lisp
+  (setq selectrum-refine-candidates-function #'orderless-filter)
+  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
+#+end_src
 ** Dark theme
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
