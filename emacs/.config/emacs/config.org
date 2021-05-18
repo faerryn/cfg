@@ -2,18 +2,18 @@
 #+STARTUP: indent overview
 
 * Prologue
-** Disable default garbage collection
-#+begin_src emacs-lisp
-  (setq gc-cons-threshold most-positive-fixnum)
-#+end_src
-** Disable defautt package manager
-#+begin_src emacs-lisp
-  (setq package-enable-at-startup nil)
-#+end_src
 ** Change user-emacs-directory
 #+begin_src emacs-lisp
   (setq user-emacs-directory
         (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
+#+end_src
+** Disable default garbage collection
+#+begin_src emacs-lisp
+  (setq gc-cons-threshold most-positive-fixnum)
+#+end_src
+** Disable default package manager
+#+begin_src emacs-lisp
+  (setq package-enable-at-startup nil)
 #+end_src
 ** Install package manager
 #+begin_src emacs-lisp
@@ -26,9 +26,7 @@
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
           (url-retrieve-synchronously
-           (concat
-            "https://raw.githubusercontent.com"
-            "/raxod502/straight.el/develop/install.el")
+            "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
            'silent 'inhibit-cookies)
         (goto-char (point-max))
         (eval-print-last-sexp)))
@@ -66,7 +64,7 @@
   (setq inhibit-startup-screen t)
   (setq use-dialog-box nil)
   (menu-bar-mode -1)
-  (scroll-bar-mode -1)
+  (when (featurep 'scroll-bar) (scroll-bar-mode -1))
   (tool-bar-mode -1)
   (tooltip-mode -1)
 #+end_src
@@ -84,8 +82,9 @@
   (straight-use-package 'which-key)
   (which-key-mode +1)
 #+end_src
-** Show whitespace as characters
+** Show whitespace
 #+begin_src emacs-lisp
+  (setq whitespace-style '(face trailing indentation big-indent))
   (global-whitespace-mode +1)
 #+end_src
 ** Wrap lines
