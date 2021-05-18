@@ -59,6 +59,11 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode +1)
 
+;; Elisp indent using spaces
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil)))
+
 ;; Buffer predicate
 (add-to-list 'default-frame-alist
              '(buffer-predicate . buffer-file-name))
@@ -151,12 +156,12 @@
 (global-set-key (kbd "C-c g") #'magit-status)
 
 (straight-use-package 'diff-hl)
-(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-
 (global-diff-hl-mode +1)
 (diff-hl-flydiff-mode +1)
 (diff-hl-margin-mode +1)
+
+(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 (with-eval-after-load "evil-terminal-cursor-changer"
   (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor))
