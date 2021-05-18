@@ -195,6 +195,11 @@
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t)
 #+end_src
+** Smarter garbage collection
+#+begin_src emacs-lisp
+  (straight-use-package 'gcmh)
+  (add-hook 'emacs-startup-hook #'gcmh-mode)
+#+end_src
 ** TTY support
 *** Mouse support
 #+begin_src emacs-lisp
@@ -223,8 +228,3 @@
       (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor)))
 #+end_src
 
-** Smarter garbage collection
-#+begin_src emacs-lisp
-  (straight-use-package 'gcmh)
-  (add-hook 'emacs-startup-hook #'gcmh-mode)
-#+end_src
