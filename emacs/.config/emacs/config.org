@@ -173,8 +173,9 @@
 ** Language server protocol
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-  (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer"))
+  (with-eval-after-load "eglot"
+    (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+    (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
 #+end_src
 * Miscellany
 ** Clean file system
