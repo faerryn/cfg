@@ -1,18 +1,22 @@
 #+TITLE: config.org
 #+STARTUP: indent overview
 
-* Disable garbage collection
+* Prologue
+** Disable default garbage collection
 #+begin_src emacs-lisp
   (setq gc-cons-threshold most-positive-fixnum)
 #+end_src
-* Change user-emacs-directory
+** Disable defautt package manager
+#+begin_src emacs-lisp
+  (setq package-enable-at-startup nil)
+#+end_src
+** Change user-emacs-directory
 #+begin_src emacs-lisp
   (setq user-emacs-directory
         (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
 #+end_src
-* Install package manager
+** Install package manager
 #+begin_src emacs-lisp
-  (setq package-enable-at-startup nil)
   (setq straight-use-symlinks t)
   (defvar bootstrap-version)
   (let ((bootstrap-file (expand-file-name
@@ -30,7 +34,34 @@
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
 #+end_src
-* Disable extra user interface
+** Install smarter garbage collection
+#+begin_src emacs-lisp
+  (straight-use-package 'gcmh)
+  (add-hook 'emacs-startup-hook #'gcmh-mode)
+#+end_src
+* User Interface
+** Completion user interface
+*** Vertical completion
+#+begin_src emacs-lisp
+  (straight-use-package 'selectrum)
+  (selectrum-mode +1)
+#+end_src
+*** Completion margin information
+#+begin_src emacs-lisp
+  (straight-use-package 'marginalia)
+  (marginalia-mode +1)
+#+end_src
+** Dark theme
+#+begin_src emacs-lisp
+  (straight-use-package 'doom-themes)
+  (load-theme 'doom-one t)
+#+end_src
+** Default font
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist
+               '(font . "monospace-12"))
+#+end_src
+** Disable extra user interface
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
   (setq use-dialog-box nil)
@@ -39,17 +70,60 @@
   (tool-bar-mode -1)
   (tooltip-mode -1)
 #+end_src
-* Dark theme
+** Highlight matching parenthesis
 #+begin_src emacs-lisp
-  (straight-use-package 'doom-themes)
-  (load-theme 'doom-one t)
+  (show-paren-mode +1)
 #+end_src
-* Default font
+** Relative line numbers
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist
-               '(font . "monospace-12"))
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode +1)
 #+end_src
-* Clean file system
+** Show key chords
+#+begin_src emacs-lisp
+  (straight-use-package 'which-key)
+  (which-key-mode +1)
+#+end_src
+** Show whitespace as characters
+#+begin_src emacs-lisp
+  (global-whitespace-mode +1)
+#+end_src
+** Wrap lines
+#+begin_src emacs-lisp
+  (global-visual-line-mode +1)
+#+end_src
+* Editing
+** Autocomplete paired characters
+#+begin_src emacs-lisp
+  (electric-pair-mode +1)
+#+end_src
+** Tab complete
+#+begin_src emacs-lisp
+  (setq tab-always-indent 'complete)
+#+end_src
+** Vim emulation
+#+begin_src emacs-lisp
+  (straight-use-package 'evil)
+
+  (setq evil-want-Y-yank-to-eol t
+        evil-want-keybinding nil)
+  (add-hook 'emacs-startup-hook #'evil-mode)
+#+end_src
+*** Boring-but-efficient undo
+#+begin_src emacs-lisp
+  (straight-use-package 'undo-fu)
+  (straight-use-package 'undo-fu-session)
+
+  (setq evil-undo-system 'undo-fu)
+  (add-hook 'evil-mode-hook #'global-undo-fu-session-mode)
+  #+end_src
+*** Vim bindings for other packages
+#+begin_src emacs-lisp
+  (straight-use-package 'evil-collection)
+  (evil-collection-init)
+#+end_src
+* Miscellany
+** Clean file system
 #+begin_src emacs-lisp
   (setq backup-directory-alist
         `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
@@ -61,49 +135,11 @@
           `((".*" ,auto-save-file-name-directory t))))
   (setq create-lockfiles nil)
 #+end_src
-* Follow symlinks
-#+begin_src emacs-lisp
-  (setq find-file-visit-truename t)
-#+end_src
-* Disable saving passwords
-#+begin_src emacs-lisp
-  (setq auth-source-save-behavior nil)
-#+end_src
-* Autocomplete paired characters
-#+begin_src emacs-lisp
-  (electric-pair-mode +1)
-#+end_src
-* Tab complete
-#+begin_src emacs-lisp
-  (setq tab-always-indent 'complete)
-#+end_src
-* Highlight matching parenthesis
-#+begin_src emacs-lisp
-  (show-paren-mode +1)
-#+end_src
-* Wrap lines
-#+begin_src emacs-lisp
-  (global-visual-line-mode +1)
-#+end_src
-* Relative line numbers
-#+begin_src emacs-lisp
-  (setq display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode +1)
-#+end_src
-* Show whitespace as characters
-#+begin_src emacs-lisp
-  (global-whitespace-mode +1)
-#+end_src
-* Don't cycle into non-file buffers
-#+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist
-               '(buffer-predicate . buffer-file-name))
-#+end_src
-* Configure dired
+** Configure dired
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
 #+end_src
-* Condifure woman
+** Configure woman
 #+begin_src emacs-lisp
   (when (executable-find "manpath")
     (with-eval-after-load "woman"
@@ -111,74 +147,27 @@
             (woman-parse-colon-path
              (string-trim-right (shell-command-to-string "manpath -q") "\n")))))
 #+end_src
-* Make elisp indent with spaces
+** Disable saving passwords
 #+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (setq indent-tabs-mode nil)))
+  (setq auth-source-save-behavior nil)
 #+end_src
-* Completion user interface
-** Vertical completion
+** Don't cycle into non-file buffers
 #+begin_src emacs-lisp
-  (straight-use-package 'selectrum)
-  (selectrum-mode +1)
+  (add-to-list 'default-frame-alist
+               '(buffer-predicate . buffer-file-name))
 #+end_src
-** Completion margin information
+** Follow symlinks
 #+begin_src emacs-lisp
-  (straight-use-package 'marginalia)
-  (marginalia-mode +1)
+  (setq find-file-visit-truename t)
 #+end_src
-* Smarter garbage collection
-#+begin_src emacs-lisp
-  (straight-use-package 'gcmh)
-  (add-hook 'emacs-startup-hook #'gcmh-mode)
-#+end_src
-* Show key chords
-#+begin_src emacs-lisp
-  (straight-use-package 'which-key)
-  (which-key-mode +1)
-#+end_src
-* Language server protocol
-#+begin_src emacs-lisp
-  (straight-use-package 'eglot)
-#+end_src
-* Major modes
-#+begin_src emacs-lisp
-  (straight-use-package 'lua-mode)
-  (straight-use-package 'markdown-mode)
-  (straight-use-package 'rust-mode)
-  (straight-use-package 'vimrc-mode)
-  (straight-use-package 'zig-mode)
-#+end_src
-* Vim emulation
-#+begin_src emacs-lisp
-  (straight-use-package 'evil)
-
-  (setq evil-want-Y-yank-to-eol t
-        evil-want-keybinding nil)
-  (add-hook 'emacs-startup-hook #'evil-mode)
-#+end_src
-** Boring-but-efficient undo
-#+begin_src emacs-lisp
-  (straight-use-package 'undo-fu)
-  (straight-use-package 'undo-fu-session)
-
-  (setq evil-undo-system 'undo-fu)
-  (add-hook 'evil-mode-hook #'global-undo-fu-session-mode)
-  #+end_src
-** Vim bindings for other packages
-#+begin_src emacs-lisp
-  (straight-use-package 'evil-collection)
-  (evil-collection-init)
-#+end_src
-* Git integration
-** Git client
+** Git integration
+*** Git client
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
   (setq magit-define-global-key-bindings nil)
   (global-set-key (kbd "C-c g") #'magit-status)
 #+end_src
-** Git gutter
+*** Git gutter
 #+begin_src emacs-lisp
   (straight-use-package 'diff-hl)
   (setq diff-hl-show-staged-changes nil)
@@ -186,33 +175,53 @@
   (diff-hl-flydiff-mode +1)
   (diff-hl-margin-mode +1)
 #+end_src
-** diff-hl + magit synced refresh
+*** diff-hl + magit synced refresh
 #+begin_src emacs-lisp
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 #+end_src
-* TTY support
-** Mouse support
+** Language server protocol
+#+begin_src emacs-lisp
+  (straight-use-package 'eglot)
+#+end_src
+** Major modes
+#+begin_src emacs-lisp
+  (straight-use-package 'lua-mode)
+  (straight-use-package 'markdown-mode)
+  (straight-use-package 'rust-mode)
+  (straight-use-package 'vimrc-mode)
+  (straight-use-package 'zig-mode)
+#+end_src
+** Make elisp indent with spaces
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil)))
+#+end_src
+** TTY support
+*** Mouse support
 #+begin_src emacs-lisp
   (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
-** X11 clipboard support
+*** X11 clipboard support
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
-** Evil cursor shape
+*** Evil cursor shape
 #+begin_src emacs-lisp
   (straight-use-package 'evil-terminal-cursor-changer)
   (add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
-  (with-eval-after-load "evil-terminal-cursor-changer"
-    (add-hook 'kill-emacs-hook
-              (lambda ()
-                (evil-set-cursor t)
-                (etcc--evil-set-cursor))))
+  (with-eval-after-load "evil"
+    (with-eval-after-load "evil-terminal-cursor-changer"
+      (add-hook 'kill-emacs-hook
+                (lambda ()
+                  (evil-set-cursor t)
+                  (etcc--evil-set-cursor)))))
 #+end_src
-** diff-hl patch
+*** diff-hl patch
 #+begin_src emacs-lisp
-  (with-eval-after-load "evil-terminal-cursor-changer"
-    (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor))
+  (with-eval-after-load "diff-hl"
+    (with-eval-after-load "evil-terminal-cursor-changer"
+      (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor)))
 #+end_src
