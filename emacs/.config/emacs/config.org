@@ -125,6 +125,12 @@
   (evil-collection-init)
 #+end_src
 * Major modes
+** C/C++
+#+begin_src emacs-lisp
+  (with-eval-after-load "cc-mode"
+    (define-key c-mode-map (kbd "TAB") #'indent-for-tab-command)
+    (define-key c++-mode-map (kbd "TAB") #'indent-for-tab-command))
+#+end_src
 ** Dired
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
