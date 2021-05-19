@@ -6,10 +6,6 @@
 #+begin_src emacs-lisp
   ;;; init.el -*- lexical-binding: t; -*-
 #+end_src
-** Disable default package manager
-#+begin_src emacs-lisp
-  (setq package-enable-at-startup nil)
-#+end_src
 ** Install package manager
 *** Bugfix hack
 #+begin_src emacs-lisp

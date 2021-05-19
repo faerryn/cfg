@@ -3,6 +3,9 @@
 ;; Disable default garbage collection
 (setq gc-cons-threshold most-positive-fixnum)
 
+;; Disable default package manager
+(setq package-enable-at-startup nil)
+
 ;; Load init.org
 (let* ((init (expand-file-name "init" (file-name-directory load-file-name)))
        (init.org (concat init ".org"))
