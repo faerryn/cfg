@@ -7,9 +7,17 @@
   (setq package-enable-at-startup nil)
 #+end_src
 ** Install package manager
+*** Bugfix hack
+#+begin_src emacs-lisp
+  (defvaralias 'comp-deferred-compilation-deny-list 'native-comp-deferred-compilation-deny-list)
+#+end_src
+*** Configure straight.el
 #+begin_src emacs-lisp
   (setq straight-use-symlinks t
         straight-disable-autoloads t)
+#+end_src
+*** Bootstrap straight.el
+#+begin_src emacs-lisp
   (defvar bootstrap-version)
   (let ((bootstrap-file (expand-file-name
                          "straight/repos/straight.el/bootstrap.el"
