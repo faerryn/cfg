@@ -2,6 +2,10 @@
 #+STARTUP: indent overview
 
 * Prologue
+** Enable Lexical Binding
+#+begin_src emacs-lisp
+  ;;; init.el -*- lexical-binding: t; -*-
+#+end_src
 ** Disable default package manager
 #+begin_src emacs-lisp
   (setq package-enable-at-startup nil)
