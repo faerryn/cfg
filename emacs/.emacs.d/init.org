@@ -8,7 +8,8 @@
 #+end_src
 ** Install package manager
 #+begin_src emacs-lisp
-  (setq straight-use-symlinks t)
+  (setq straight-use-symlinks t
+        straight-disable-autoloads t)
   (defvar bootstrap-version)
   (let ((bootstrap-file (expand-file-name
                          "straight/repos/straight.el/bootstrap.el"
@@ -28,16 +29,19 @@
 *** Vertical completion
 #+begin_src emacs-lisp
   (straight-use-package 'selectrum)
+  (require 'selectrum)
   (selectrum-mode +1)
 #+end_src
 *** Completion margin information
 #+begin_src emacs-lisp
   (straight-use-package 'marginalia)
+  (require 'marginalia)
   (marginalia-mode +1)
 #+end_src
 *** Completion sorting
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
+  (require 'orderless)
   (setq completion-styles '(orderless))
 #+end_src
 **** selectrum + orderless patch
@@ -48,6 +52,7 @@
 ** Dark theme
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
+  (require 'doom-themes)
   (load-theme 'doom-one t)
 #+end_src
 ** Default font
@@ -76,6 +81,7 @@
 ** Show key chords
 #+begin_src emacs-lisp
   (straight-use-package 'which-key)
+  (require 'which-key)
   (which-key-mode +1)
 #+end_src
 ** Show whitespace
@@ -105,6 +111,7 @@
 ** Vim emulation
 #+begin_src emacs-lisp
   (straight-use-package 'evil)
+  (autoload 'evil-mode "evil" "Toggle Evil-Local mode in all buffers." t)
 
   (setq evil-want-Y-yank-to-eol t
         evil-want-keybinding nil
@@ -114,9 +121,16 @@
 *** Vim-style everything
 #+begin_src emacs-lisp
   (straight-use-package 'evil-collection)
+  (autoload
+    'evil-collection-init "evil-collection"
+    "Register the Evil bindings for all modes in ‘evil-collection-mode-list’." t)
 
-  (with-eval-after-load "webkit"
-    (advice-add 'evil-collection-init :after #'evil-collection-xwidget-setup))
+  (advice-add 'evil-collection-init :after
+              (lambda ()
+                (interactive)
+                (with-eval-after-load "webkit"
+                  (evil-collection-xwidget-setup))))
+
 
   (add-hook 'evil-mode-hook #'evil-collection-init)
 #+end_src
@@ -148,10 +162,23 @@
 ** Sundry
 #+begin_src emacs-lisp
   (straight-use-package 'lua-mode)
+  (autoload 'lua-mode "lua-mode" "Major mode for editing lua code." t)
+  (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
+  (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+
   (straight-use-package 'markdown-mode)
+  (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files." t)
+  (add-to-list
+   'auto-mode-alist
+   '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
+
   (straight-use-package 'rust-mode)
-  (straight-use-package 'vimrc-mode)
+  (autoload 'rust-mode "rust-mode" "Major mode for Rust code." t)
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
   (straight-use-package 'zig-mode)
+  (autoload 'zig-mode "zig-mode" "Major mode for the Zig programming language." t)
+  (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 #+end_src
 * Tools
 ** Emacs webkit
@@ -161,12 +188,14 @@
             :branch "main"
             :files (:defaults "*.js" "*.css" "*.so")
             :pre-build (("make"))))
+  (autoload 'webkit "webkit" "Fetch URL and render the page." t)
   (setq webkit-browse-url-force-new t)
 #+end_src
 ** Git integration
 *** Git client
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
+  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
   (setq magit-define-global-key-bindings nil)
 #+end_src
 *** Git gutter
@@ -174,6 +203,9 @@
   (straight-use-package 'diff-hl)
   (setq diff-hl-command-prefix nil
         diff-hl-show-staged-changes nil)
+  (require 'diff-hl)
+  (require 'diff-hl-flydiff)
+  (require 'diff-hl-margin)
   (global-diff-hl-mode +1)
   (diff-hl-flydiff-mode +1)
   (diff-hl-margin-mode +1)
@@ -186,6 +218,7 @@
 ** Language server protocol
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
+  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
   (with-eval-after-load "eglot"
     (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
     (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
@@ -219,6 +252,7 @@
 ** Smarter garbage collection
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
+  (autoload 'gcmh-mode "gcmh" "Minor mode to tweak Garbage Collection strategy." t)
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
 ** TTY support
@@ -229,12 +263,14 @@
 *** X11 clipboard support
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
+  (autoload 'xclip-mode "xclip" "Minor mode to use the ‘xclip’ program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
 *** Evil cursor shape
 #+begin_src emacs-lisp
   (straight-use-package 'evil-terminal-cursor-changer)
-  (add-hook 'tty-setup-hook #'evil-terminal-cursor-changer-activate)
+  (autoload 'etcc-mode "evil-terminal-cursor-changer")
+  (add-hook 'tty-setup-hook #'etcc-mode)
   (with-eval-after-load "evil"
     (with-eval-after-load "evil-terminal-cursor-changer"
       (add-hook 'kill-emacs-hook
