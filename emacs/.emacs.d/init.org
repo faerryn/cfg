@@ -124,7 +124,6 @@
   (require 'evil-collection)
 
   (evil-collection-init)
-  (with-eval-after-load "webkit" (evil-collection-xwidget-setup))
 #+end_src
 * Major modes
 ** C/C++
@@ -173,16 +172,6 @@
   (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 #+end_src
 * Tools
-** Emacs webkit
-#+begin_src emacs-lisp
-  (straight-use-package
-   '(webkit :type git :host github :repo "akirakyle/emacs-webkit"
-            :branch "main"
-            :files (:defaults "*.js" "*.css" "*.so")
-            :pre-build (("make"))))
-  (autoload 'webkit "webkit" "Fetch URL and render the page." t)
-  (setq webkit-browse-url-force-new t)
-#+end_src
 ** Git integration
 *** Git client
 #+begin_src emacs-lisp
