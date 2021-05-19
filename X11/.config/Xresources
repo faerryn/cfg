@@ -24,14 +24,16 @@ st.borderpx: 0
 ! dmenu is a dynamic menu for X
 dmenu.font: monospace-12
 
-dmenu.background: #282c34
-dmenu.foreground: #dcdfe4
+dmenu.normbgcolor: #282c34
+dmenu.normfgcolor: #dcdfe4
 
-dmenu.selbackground: #98c379
-dmenu.selforeground: #282c34
+dmenu.selbgcolor: #98c379
+dmenu.selfgcolor: #282c34
 
-dmenu.outbackground: #61afef
-dmenu.outforeground: #282c34
+dmenu.outbgcolor: #61afef
+dmenu.outfgcolor: #282c34
+
+dmenu.barheight: 24
 
 ! dwm is a dynamic window manager for X
 dwm.font: monospace-12
@@ -42,6 +44,8 @@ dwm.normfgcolor: #dcdfe4
 dwm.selbgcolor: #98c379
 dwm.selfgcolor: #282c34
 dwm.selbordercolor: #98c379
+
+dwm.barheight: 24
 
 dwm.focusonwheel: 1
 
