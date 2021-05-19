@@ -136,12 +136,6 @@
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
 #+end_src
-** Emacs Lisp
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (setq indent-tabs-mode nil)))
-#+end_src
 ** Woman
 #+begin_src emacs-lisp
   (when (executable-find "manpath")
