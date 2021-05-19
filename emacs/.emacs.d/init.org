@@ -104,6 +104,14 @@
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
+** Indentation
+#+begin_src emacs-lisp
+  (setq-default indent-tabs-mode nil
+                tab-width 4)
+  (straight-use-package 'dtrt-indent)
+  (require 'dtrt-indent)
+  (dtrt-indent-global-mode +1)
+#+end_src
 ** Tab complete
 #+begin_src emacs-lisp
   (setq tab-always-indent 'complete)
