@@ -111,28 +111,20 @@
 ** Vim emulation
 #+begin_src emacs-lisp
   (straight-use-package 'evil)
-  (autoload 'evil-mode "evil" "Toggle Evil-Local mode in all buffers." t)
-
   (setq evil-want-Y-yank-to-eol t
         evil-want-keybinding nil
         evil-undo-system 'undo-redo)
-  (add-hook 'emacs-startup-hook #'evil-mode)
+
+  (require 'evil)
+  (evil-mode +1)
 #+end_src
 *** Vim-style everything
 #+begin_src emacs-lisp
   (straight-use-package 'evil-collection)
-  (autoload
-    'evil-collection-init "evil-collection"
-    "Register the Evil bindings for all modes in ‘evil-collection-mode-list’." t)
+  (require 'evil-collection)
 
-  (advice-add 'evil-collection-init :after
-              (lambda ()
-                (interactive)
-                (with-eval-after-load "webkit"
-                  (evil-collection-xwidget-setup))))
-
-
-  (add-hook 'evil-mode-hook #'evil-collection-init)
+  (evil-collection-init)
+  (with-eval-after-load "webkit" (evil-collection-xwidget-setup))
 #+end_src
 * Major modes
 ** C/C++
@@ -252,8 +244,8 @@
 ** Smarter garbage collection
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
-  (autoload 'gcmh-mode "gcmh" "Minor mode to tweak Garbage Collection strategy." t)
-  (add-hook 'emacs-startup-hook #'gcmh-mode)
+  (require 'gcmh)
+  (gcmh-mode +1)
 #+end_src
 ** TTY support
 *** Mouse support
