@@ -18,6 +18,9 @@ vim.bo.expandtab = true
 vim.o.undofile = true
 vim.bo.undofile = true
 
+-- show tabline
+vim.o.showtabline = 2
+
 -- relative line numbers
 vim.wo.number = true
 vim.wo.relativenumber = true
@@ -183,15 +186,6 @@ use {
     "sonph/onehalf",
     subdir = "vim",
     config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
-}
-
--- A light statusline
-use {
-    "itchyny/lightline.vim",
-    config = function()
-        vim.g.lightline = { colorscheme = vim.g.colors_name or "default" }
-        vim.api.nvim_command("autocmd custom ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
-    end,
 }
 
 -- c of the future
