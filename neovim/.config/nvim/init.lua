@@ -3,11 +3,16 @@
 -- autocmd group
 vim.api.nvim_command("augroup custom | autocmd! | augroup END")
 
--- modeline can be a security risk
-vim.o.modeline = false
-
 -- switch buffers without writing to disk
 vim.o.hidden = true
+
+-- indentation
+vim.o.tabstop = 4
+vim.bo.tabstop = 4
+vim.o.shiftwidth = 4
+vim.bo.shiftwidth = 4
+vim.o.expandtab = true
+vim.bo.expandtab = true
 
 -- yes undofiles
 vim.o.undofile = true
@@ -59,8 +64,8 @@ vim.o.termguicolors = (os.getenv("COLORTERM") == "truecolor")
 
 -- ripgrep for :grep
 if vim.fn.executable("rg") == 1 then
-	vim.o.grepprg = "rg --hidden --vimgrep"
-	vim.o.grepformat = "%f:%l:%c:%m"
+    vim.o.grepprg = "rg --hidden --vimgrep"
+    vim.o.grepformat = "%f:%l:%c:%m"
 end
 
 -- Y to eol
@@ -114,7 +119,7 @@ vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
 -- bootstrap user.nvim
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/faerryn/user.nvim/default/default"
 if vim.fn.empty(vim.fn.glob(user_install_path)) > 0 then
-	os.execute([[git clone --depth 1 https://github.com/faerryn/user.nvim.git "]]..user_install_path..[["]])
+    os.execute([[git clone --depth 1 https://github.com/faerryn/user.nvim.git "]]..user_install_path..[["]])
 end
 vim.api.nvim_command("packadd faerryn/user.nvim/default/default")
 
@@ -138,20 +143,20 @@ use "nvim-lua/plenary.nvim"
 
 -- see what is modified
 use {
-	"lewis6991/gitsigns.nvim",
-	after = "nvim-lua/plenary.nvim",
-	config = function()
-		require("gitsigns").setup {
-			signs = {
-				add          = { hl = "GitGutterAdd",    text = "+" },
-				change       = { hl = "GitGutterChange", text = "~" },
-				delete       = { hl = "GitGutterDelete", text = "_" },
-				topdelete    = { hl = "GitGutterDelete", text = "‾" },
-				changedelete = { hl = "GitGutterChange", text = "~" },
-			},
-			keymaps = {},
-		}
-	end,
+    "lewis6991/gitsigns.nvim",
+    after = "nvim-lua/plenary.nvim",
+    config = function()
+        require("gitsigns").setup {
+            signs = {
+                add          = { hl = "GitGutterAdd",    text = "+" },
+                change       = { hl = "GitGutterChange", text = "~" },
+                delete       = { hl = "GitGutterDelete", text = "_" },
+                topdelete    = { hl = "GitGutterDelete", text = "‾" },
+                changedelete = { hl = "GitGutterChange", text = "~" },
+            },
+            keymaps = {},
+        }
+    end,
 }
 
 -- comment code in and out
@@ -162,41 +167,44 @@ use "tommcdo/vim-lion"
 
 -- correct syntax highlighting
 use {
-	"nvim-treesitter/nvim-treesitter",
-	update = function() vim.api.nvim_command("TSUpdate") end,
-	config = function()
-		require("nvim-treesitter.configs").setup {
-			ensure_installed = "maintained",
-			highlight = { enable = true },
-			indent = { enable = true },
-		}
-	end,
+    "nvim-treesitter/nvim-treesitter",
+    update = function() vim.api.nvim_command("TSUpdate") end,
+    config = function()
+        require("nvim-treesitter.configs").setup {
+            ensure_installed = "maintained",
+            highlight = { enable = true },
+            indent = { enable = true },
+        }
+    end,
 }
 
 -- Atom's one theme is noice
 use {
-	"sonph/onehalf",
-	subdir = "vim",
-	config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
+    "sonph/onehalf",
+    subdir = "vim",
+    config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
 }
 
 -- A light statusline
 use {
-	"itchyny/lightline.vim",
-	config = function()
-		vim.g.lightline = { colorscheme = vim.g.colors_name or "default" }
-		vim.api.nvim_command("autocmd custom ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
-	end,
+    "itchyny/lightline.vim",
+    config = function()
+        vim.g.lightline = { colorscheme = vim.g.colors_name or "default" }
+        vim.api.nvim_command("autocmd custom ColorScheme * let g:lightline.colorscheme = g:colors_name | call lightline#enable()")
+    end,
 }
 
 -- c of the future
 use {
-	"ziglang/zig.vim",
-	init = function() vim.g.zig_fmt_autosave = false end,
+    "ziglang/zig.vim",
+    init = function() vim.g.zig_fmt_autosave = false end,
 }
 
 -- tpope's search and replace
 use "tpope/vim-abolish"
+
+-- tpope's indentation detector
+use "tpope/vim-sleuth"
 
 -- wait for all installation and configs to finish
 user.startup()
