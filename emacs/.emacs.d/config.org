@@ -2,11 +2,6 @@
 #+STARTUP: indent overview
 
 * Prologue
-** Change user-emacs-directory
-#+begin_src emacs-lisp
-  (setq user-emacs-directory
-        (expand-file-name "emacs/" (getenv "XDG_DATA_HOME")))
-#+end_src
 ** Disable default package manager
 #+begin_src emacs-lisp
   (setq package-enable-at-startup nil)
@@ -164,6 +159,16 @@
   (straight-use-package 'zig-mode)
 #+end_src
 * Tools
+** Emacs webkit
+#+begin_src emacs-lisp
+  (straight-use-package
+   '(webkit :type git :host github :repo "akirakyle/emacs-webkit"
+            :branch "main"
+            :files (:defaults "*.js" "*.css" "*.so")
+            :pre-build (("make"))))
+  (setq webkit-browse-url-force-new t
+        webkit-dark-mode t)
+#+end_src
 ** Git integration
 *** Git client
 #+begin_src emacs-lisp
