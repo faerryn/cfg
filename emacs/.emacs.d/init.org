@@ -1,4 +1,4 @@
-#+TITLE: config.org
+#+TITLE: init.org
 #+STARTUP: indent overview
 
 * Prologue
@@ -107,23 +107,18 @@
   (straight-use-package 'evil)
 
   (setq evil-want-Y-yank-to-eol t
-        evil-want-keybinding nil)
+        evil-want-keybinding nil
+        evil-undo-system 'undo-redo)
   (add-hook 'emacs-startup-hook #'evil-mode)
-#+end_src
-*** Vim undo
-#+begin_src emacs-lisp
-  (straight-use-package 'undo-fu)
-  (setq evil-undo-system 'undo-fu)
-#+end_src
-**** Remember undos
-#+begin_src emacs-lisp
-  (straight-use-package 'undo-fu-session)
-  (global-undo-fu-session-mode +1)
 #+end_src
 *** Vim-style everything
 #+begin_src emacs-lisp
   (straight-use-package 'evil-collection)
-  (evil-collection-init)
+
+  (with-eval-after-load "webkit"
+    (advice-add 'evil-collection-init :after #'evil-collection-xwidget-setup))
+
+  (add-hook 'evil-mode-hook #'evil-collection-init)
 #+end_src
 * Major modes
 ** C/C++
@@ -166,8 +161,7 @@
             :branch "main"
             :files (:defaults "*.js" "*.css" "*.so")
             :pre-build (("make"))))
-  (setq webkit-browse-url-force-new t
-        webkit-dark-mode t)
+  (setq webkit-browse-url-force-new t)
 #+end_src
 ** Git integration
 *** Git client
@@ -202,13 +196,11 @@
   (setq backup-directory-alist
         `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
   (setq tramp-backup-directory-alist backup-directory-alist)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (let ((auto-save-file-name-directory
-                     (expand-file-name "auto-saves/" user-emacs-directory)))
-                (mkdir auto-save-file-name-directory t)
-                (setq auto-save-file-name-transforms
-                      `((".*" ,auto-save-file-name-directory t))))))
+  (let ((auto-save-file-name-directory
+         (expand-file-name "auto-saves/" user-emacs-directory)))
+    (mkdir auto-save-file-name-directory t)
+    (setq auto-save-file-name-transforms
+          `((".*" ,auto-save-file-name-directory t))))
   (setq create-lockfiles nil)
 #+end_src
 ** Disable saving passwords

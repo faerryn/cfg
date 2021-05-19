@@ -3,20 +3,17 @@
 ;; Disable default garbage collection
 (setq gc-cons-threshold most-positive-fixnum)
 
-;; Load config.org
-(let* ((config (expand-file-name "config" (file-name-directory load-file-name)))
-       (config.org (concat config ".org"))
-       (config.el  (concat config ".el"))
-       (config.elc (concat config ".elc"))
-       (config.eln (concat config ".eln")))
-  (when (file-newer-than-file-p config.org config.el)
+;; Load init.org
+(let* ((init (expand-file-name "init" (file-name-directory load-file-name)))
+       (init.org (concat init ".org"))
+       (init.el  (concat init ".el"))
+       (init.elc (concat init ".elc"))
+       (init.eln (concat init ".eln")))
+  (when (file-newer-than-file-p init.org init.el)
     (require 'ob-tangle)
-    (org-babel-tangle-file config.org config.el "emacs-lisp"))
+    (org-babel-tangle-file init.org init.el "emacs-lisp"))
   (if (featurep 'native-compile)
-      (progn
-        (when (file-newer-than-file-p config.el config.eln)
-          (native-compile config.el config.eln))
-        (load config.eln nil nil t))
-    (when (file-newer-than-file-p config.el config.elc)
-      (byte-compile-file config.el))
-    (load config.elc nil nil t)))
+      (when (file-newer-than-file-p init.el init.eln)
+        (native-compile init.el init.eln))
+    (when (file-newer-than-file-p init.el init.elc)
+      (byte-compile-file init.el))))
