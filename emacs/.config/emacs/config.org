@@ -88,6 +88,12 @@
   (setq whitespace-style '(face trailing indentation big-indent))
   (global-whitespace-mode +1)
 #+end_src
+** Tab Bar
+#+begin_src emacs-lisp
+  (setq tab-bar-close-button nil)
+  (setq tab-bar-new-button nil)
+  (tab-bar-mode +1)
+#+end_src
 ** Wrap lines
 #+begin_src emacs-lisp
   (global-visual-line-mode +1)
