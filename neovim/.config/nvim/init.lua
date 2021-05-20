@@ -49,10 +49,11 @@ vim.o.completeopt = "menuone,noinsert"
 -- highlight matches incrementally
 vim.o.inccommand = "nosplit"
 
--- X11 integration
+-- clipboard
 vim.o.clipboard = "unnamedplus"
-vim.o.mouse = "ar"
 
+-- mouse
+vim.o.mouse = "ar"
 vim.api.nvim_set_keymap("", "<ScrollWheelUp>",     "<C-Y>", { noremap = true })
 vim.api.nvim_set_keymap("", "<S-ScrollWheelUp>",   "<C-U>", { noremap = true })
 vim.api.nvim_set_keymap("", "<ScrollWheelDown>",   "<C-E>", { noremap = true })
@@ -82,27 +83,27 @@ vim.g.mapleader = " "
 vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
 
 -- unimpaired bindings
-vim.api.nvim_set_keymap("n", "]a",        "<Cmd>next<CR>",      { noremap = true })
-vim.api.nvim_set_keymap("n", "[a",        "<Cmd>previous<CR>",  { noremap = true })
-vim.api.nvim_set_keymap("n", "]A",        "<Cmd>last<CR>",      { noremap = true })
-vim.api.nvim_set_keymap("n", "[A",        "<Cmd>first<CR>",     { noremap = true })
+vim.api.nvim_set_keymap("n", "]a", "<Cmd>next<CR>",      { noremap = true })
+vim.api.nvim_set_keymap("n", "[a", "<Cmd>previous<CR>",  { noremap = true })
+vim.api.nvim_set_keymap("n", "]A", "<Cmd>last<CR>",      { noremap = true })
+vim.api.nvim_set_keymap("n", "[A", "<Cmd>first<CR>",     { noremap = true })
 
-vim.api.nvim_set_keymap("n", "]b",        "<Cmd>bnext<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[b",        "<Cmd>bprevious<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "]B",        "<Cmd>blast<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[B",        "<Cmd>bfirst<CR>",    { noremap = true })
+vim.api.nvim_set_keymap("n", "]b", "<Cmd>bnext<CR>",     { noremap = true })
+vim.api.nvim_set_keymap("n", "[b", "<Cmd>bprevious<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "]B", "<Cmd>blast<CR>",     { noremap = true })
+vim.api.nvim_set_keymap("n", "[B", "<Cmd>bfirst<CR>",    { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<Leader>q", "<Cmd>copen<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "]q",        "<Cmd>cnext<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[q",        "<Cmd>cprevious<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "]Q",        "<Cmd>clast<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[Q",        "<Cmd>cfirst<CR>",    { noremap = true })
+vim.api.nvim_set_keymap("n", "]q", "<Cmd>cnext<CR>",     { noremap = true })
+vim.api.nvim_set_keymap("n", "[q", "<Cmd>cprevious<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "]Q", "<Cmd>clast<CR>",     { noremap = true })
+vim.api.nvim_set_keymap("n", "[Q", "<Cmd>cfirst<CR>",    { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>lopen<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "]l",        "<Cmd>lnext<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[l",        "<Cmd>lprevious<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "]L",        "<Cmd>llast<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[L",        "<Cmd>lfirst<CR>",    { noremap = true })
+vim.api.nvim_set_keymap("n", "]l", "<Cmd>lnext<CR>",     { noremap = true })
+vim.api.nvim_set_keymap("n", "[l", "<Cmd>lprevious<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "]L", "<Cmd>llast<CR>",     { noremap = true })
+vim.api.nvim_set_keymap("n", "[L", "<Cmd>lfirst<CR>",    { noremap = true })
 
 -- netrw
 vim.g.netrw_banner    = 0
@@ -113,7 +114,7 @@ vim.g.netrw_winsize   = 25
 
 -- shell split commands
 vim.api.nvim_command("command! Shell  edit           term://"..vim.o.shell)
-vim.api.nvim_command("command! Hshell vsplit         term://"..vim.o.shell)
+vim.api.nvim_command("command! Hshell split          term://"..vim.o.shell)
 vim.api.nvim_command("command! Lshell topleft vsplit term://"..vim.o.shell)
 vim.api.nvim_command("command! Sshell split          term://"..vim.o.shell)
 vim.api.nvim_command("command! Vshell vsplit         term://"..vim.o.shell)
