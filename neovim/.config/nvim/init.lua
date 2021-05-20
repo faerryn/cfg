@@ -18,6 +18,9 @@ vim.bo.expandtab = true
 vim.o.undofile = true
 vim.bo.undofile = true
 
+-- set terminal title
+vim.o.title = true
+
 -- show tabline
 vim.o.showtabline = 2
 
