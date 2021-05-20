@@ -8,7 +8,7 @@ alias diff='\diff --color=auto'
 alias grep='\grep --color=auto'
 
 alias fd='\fd --hidden'
-alias rg='\rg --hidden'
+alias rg='\rg --hidden --color=auto'
 
 alias ls='\ls -hvFX --color=auto --group-directories-first'
 alias ll='ls -g'
