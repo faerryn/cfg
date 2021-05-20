@@ -92,7 +92,7 @@
 #+end_src
 ** Show whitespace
 #+begin_src emacs-lisp
-  (setq whitespace-style '(face trailing indentation big-indent))
+  (setq whitespace-style '(face tabs trailing tab-mark))
   (global-whitespace-mode +1)
 #+end_src
 ** Tab Bar
