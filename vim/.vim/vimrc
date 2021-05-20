@@ -1,0 +1,97 @@
+set nocompatible
+
+syntax on
+filetype plugin indent on
+
+if !has("nvim") && exists("+viminfo")
+	set viminfofile=~/.vim/viminfo
+endif
+
+set hidden
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+set undofile
+
+set showtabline=2
+
+set number
+set relativenumber
+
+set signcolumn=yes
+
+set splitbelow
+set splitright
+
+set linebreak
+set wrap
+
+set list
+
+set nrformats=alpha,octal,hex,bin
+
+set completeopt=menuone,noinsert
+
+if exists('+X11')
+	set clipboard=unnamedplus
+endif
+
+set mouse=ar
+noremap <ScrollWheelUp> <C-Y>
+noremap <S-ScrollWheelUp> <C-U>
+noremap <ScrollWheelDown> <C-E>
+noremap <S-ScrollWheelDown> <C-D>
+
+set lazyredraw
+
+set background=dark
+if getenv("COLORTERM") == "truecolor"
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set t_Co=256
+	set termguicolors
+endif
+
+if executable("rg")
+    let &grepprg = "rg --hidden --vimgrep"
+    let &grepformat = "%f:%l:%c:%m"
+endif
+
+noremap Y y$
+
+nnoremap ]a <Cmd>next<CR>
+nnoremap [a <Cmd>previous<CR>
+nnoremap ]A <Cmd>last<CR>
+nnoremap [A <Cmd>first<CR>
+
+nnoremap ]b <Cmd>bnext<CR>
+nnoremap [b <Cmd>bprevious<CR>
+nnoremap ]B <Cmd>blast<CR>
+nnoremap [B <Cmd>bfirst<CR>
+
+nnoremap <Leader>q <Cmd>copen<CR>
+nnoremap ]q <Cmd>cnext<CR>
+nnoremap [q <Cmd>cprevious<CR>
+nnoremap ]Q <Cmd>clast<CR>
+nnoremap [Q <Cmd>cfirst<CR>
+
+nnoremap <Leader>l <Cmd>lopen<CR>
+nnoremap ]l <Cmd>lnext<CR>
+nnoremap [l <Cmd>lprevious<CR>
+nnoremap ]L <Cmd>llast<CR>
+nnoremap [L <Cmd>lfirst<CR>
+
+let g:netrw_banner    = 0
+let g:netrw_hide      = 1
+let g:netrw_keepdir   = 0
+let g:netrw_list_hide = "^\\.\\.\\?/$"
+let g:netrw_winsize   = 25
+
+command! Shell  terminal ++curwin
+command! Hshell terminal
+command! Lshell topleft vertical terminal
+command! Sshell terminal
+command! Vshell vertical terminal
+command! Tshell tab terminal
