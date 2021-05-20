@@ -152,7 +152,7 @@ use {
     update = function() vim.api.nvim_command("TSUpdate") end,
     config = function()
         require("nvim-treesitter.configs").setup {
-            ensure_installed = "maintained",
+            ensure_installed = { "bash", "c", "cpp", "lua" },
             highlight = { enable = true },
             indent = { enable = true },
         }
@@ -164,12 +164,6 @@ use {
     "sonph/onehalf",
     subdir = "vim",
     config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
-}
-
--- c of the future
-use {
-    "ziglang/zig.vim",
-    init = function() vim.g.zig_fmt_autosave = false end,
 }
 
 -- tpope's search and replace

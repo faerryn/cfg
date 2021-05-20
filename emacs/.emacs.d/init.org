@@ -7,14 +7,15 @@
   ;;; init.el -*- lexical-binding: t; -*-
 #+end_src
 ** Install package manager
-*** Bugfix hack
-#+begin_src emacs-lisp
-  (defvaralias 'comp-deferred-compilation-deny-list 'native-comp-deferred-compilation-deny-list)
-#+end_src
 *** Configure straight.el
 #+begin_src emacs-lisp
   (setq straight-use-symlinks t
         straight-disable-autoloads t)
+#+end_src
+*** straight.el patch
+#+begin_src emacs-lisp
+  (defvaralias 'comp-deferred-compilation-deny-list
+    'native-comp-deferred-compilation-deny-list)
 #+end_src
 *** Bootstrap straight.el
 #+begin_src emacs-lisp
@@ -158,27 +159,6 @@
       (setq woman-manpath
             (woman-parse-colon-path
              (string-trim-right (shell-command-to-string "manpath -q") "\n")))))
-#+end_src
-** Sundry
-#+begin_src emacs-lisp
-  (straight-use-package 'lua-mode)
-  (autoload 'lua-mode "lua-mode" "Major mode for editing lua code." t)
-  (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
-  (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
-
-  (straight-use-package 'markdown-mode)
-  (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files." t)
-  (add-to-list
-   'auto-mode-alist
-   '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
-
-  (straight-use-package 'rust-mode)
-  (autoload 'rust-mode "rust-mode" "Major mode for Rust code." t)
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-
-  (straight-use-package 'zig-mode)
-  (autoload 'zig-mode "zig-mode" "Major mode for the Zig programming language." t)
-  (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 #+end_src
 * Tools
 ** Git integration
