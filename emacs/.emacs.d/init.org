@@ -12,7 +12,7 @@ straight.el is a declarative package manager for Emacs.
   (setq straight-use-symlinks t
         straight-disable-autoloads t)
 #+end_src
-*** straight.el patch
+*** straight.el hack
 #+begin_src emacs-lisp
   (defvaralias 'comp-deferred-compilation-deny-list
     'native-comp-deferred-compilation-deny-list)
@@ -61,7 +61,7 @@ Smarter sorting in completion buffers.
   (require 'orderless)
   (setq completion-styles '(orderless))
 #+end_src
-**** selectrum + orderless patch
+**** selectrum + orderless hack
 #+begin_src emacs-lisp
   (setq selectrum-refine-candidates-function #'orderless-filter)
   (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
@@ -222,7 +222,7 @@ diff-hl shows unstaged changes in a git repository.
   (diff-hl-flydiff-mode +1)
   (diff-hl-margin-mode +1)
 #+end_src
-*** diff-hl + magit patch
+*** diff-hl + magit hack
 #+begin_src emacs-lisp
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
@@ -251,7 +251,7 @@ Change the cursor shape for evil mode in the TTY.
                   (evil-set-cursor t)
                   (etcc--evil-set-cursor)))))
 #+end_src
-**** etcc + diff-hl patch
+**** etcc + diff-hl hack
 #+begin_src emacs-lisp
   (with-eval-after-load "diff-hl"
     (with-eval-after-load "evil-terminal-cursor-changer"
