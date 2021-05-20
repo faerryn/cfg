@@ -2,12 +2,12 @@
 #+STARTUP: indent overview
 
 * Prologue
-** Enable Lexical Binding
+** Lexical Binding
 #+begin_src emacs-lisp
   ;;; init.el -*- lexical-binding: t; -*-
 #+end_src
-** Install package manager
-*** Configure straight.el
+** straight.el
+straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (setq straight-use-symlinks t
         straight-disable-autoloads t)
@@ -31,21 +31,31 @@
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
+** GCMH
+GCMH is an intelligent garbage collector scheduler for Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'gcmh)
+  (require 'gcmh)
+  (gcmh-mode +1)
+#+end_src
 * User Interface
-** Completion user interface
-*** Vertical completion
+** Completion
+*** selectrum
+Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (straight-use-package 'selectrum)
   (require 'selectrum)
   (selectrum-mode +1)
 #+end_src
-*** Completion margin information
+*** marginalia
+Marginal information in completion buffers.
 #+begin_src emacs-lisp
   (straight-use-package 'marginalia)
   (require 'marginalia)
   (marginalia-mode +1)
 #+end_src
-*** Completion sorting
+*** orderless
+Smarter sorting in completion buffers.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
   (require 'orderless)
@@ -96,7 +106,8 @@
   (setq whitespace-style '(face tabs trailing tab-mark))
   (global-whitespace-mode +1)
 #+end_src
-** Tab Bar
+** Tab bar
+Like vim tabs.
 #+begin_src emacs-lisp
   (setq tab-bar-close-button nil)
   (setq tab-bar-new-button nil)
@@ -123,7 +134,8 @@
 #+begin_src emacs-lisp
   (setq tab-always-indent 'complete)
 #+end_src
-** Vim emulation
+** Evil mode
+Vim emulation for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'evil)
   (setq evil-want-Y-yank-to-eol t
@@ -132,14 +144,6 @@
 
   (require 'evil)
   (evil-mode +1)
-#+end_src
-*** Vim-style everything
-#+begin_src emacs-lisp
-  (straight-use-package 'evil-collection)
-  (setq evil-collection-want-unimpaired-p nil)
-
-  (require 'evil-collection)
-  (evil-collection-init)
 #+end_src
 * Major modes
 ** C/C++
@@ -160,40 +164,7 @@
             (woman-parse-colon-path
              (string-trim-right (shell-command-to-string "manpath -q") "\n")))))
 #+end_src
-* Tools
-** Git integration
-*** Git client
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
-  (setq magit-define-global-key-bindings nil)
-#+end_src
-*** Git gutter
-#+begin_src emacs-lisp
-  (straight-use-package 'diff-hl)
-  (setq diff-hl-command-prefix nil
-        diff-hl-show-staged-changes nil)
-  (require 'diff-hl)
-  (require 'diff-hl-flydiff)
-  (require 'diff-hl-margin)
-  (global-diff-hl-mode +1)
-  (diff-hl-flydiff-mode +1)
-  (diff-hl-margin-mode +1)
-#+end_src
-*** diff-hl + magit patch
-#+begin_src emacs-lisp
-  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-#+end_src
-** Language server protocol
-#+begin_src emacs-lisp
-  (straight-use-package 'eglot)
-  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
-  (with-eval-after-load "eglot"
-    (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-    (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
-#+end_src
-* Miscellany
+* Sundry
 ** Clean file system
 #+begin_src emacs-lisp
   (setq backup-directory-alist
@@ -210,28 +181,65 @@
 #+begin_src emacs-lisp
   (setq auth-source-save-behavior nil)
 #+end_src
+** Eglot
+Eglot is a language server protocol (LSP) client for Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'eglot)
+  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
+  (with-eval-after-load "eglot"
+    (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+    (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
+#+end_src
+** Evil collection
+Vim emulation everywhere.
+#+begin_src emacs-lisp
+  (straight-use-package 'evil-collection)
+  (setq evil-collection-want-unimpaired-p nil)
+  (require 'evil-collection)
+  (evil-collection-init)
+#+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t)
 #+end_src
-** Smarter garbage collection
+** Magit
+Magit is a git client for Emacs.
 #+begin_src emacs-lisp
-  (straight-use-package 'gcmh)
-  (require 'gcmh)
-  (gcmh-mode +1)
+  (straight-use-package 'magit)
+  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
+  (setq magit-define-global-key-bindings nil)
+#+end_src
+*** diff-hl
+diff-hl shows unstaged changes in a git repository.
+#+begin_src emacs-lisp
+  (straight-use-package 'diff-hl)
+  (setq diff-hl-command-prefix nil
+        diff-hl-show-staged-changes nil)
+  (require 'diff-hl)
+  (require 'diff-hl-flydiff)
+  (require 'diff-hl-margin)
+  (global-diff-hl-mode +1)
+  (diff-hl-flydiff-mode +1)
+  (diff-hl-margin-mode +1)
+#+end_src
+*** diff-hl + magit patch
+#+begin_src emacs-lisp
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 #+end_src
 ** TTY support
 *** Mouse support
 #+begin_src emacs-lisp
   (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
-*** X11 clipboard support
+*** Xclip support
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
   (autoload 'xclip-mode "xclip" "Minor mode to use the ‘xclip’ program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
-*** Evil cursor shape
+*** ETCC
+Change the cursor shape for evil mode in the TTY.
 #+begin_src emacs-lisp
   (straight-use-package 'evil-terminal-cursor-changer)
   (autoload 'etcc-mode "evil-terminal-cursor-changer")
@@ -243,10 +251,9 @@
                   (evil-set-cursor t)
                   (etcc--evil-set-cursor)))))
 #+end_src
-*** etcc + diff-hl patch
+**** etcc + diff-hl patch
 #+begin_src emacs-lisp
   (with-eval-after-load "diff-hl"
     (with-eval-after-load "evil-terminal-cursor-changer"
       (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor)))
 #+end_src
-
