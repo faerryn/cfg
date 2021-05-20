@@ -34,6 +34,9 @@ set nrformats=alpha,octal,hex,bin
 
 set completeopt=menuone,noinsert
 
+set incsearch
+set hlsearch
+
 if exists('+X11')
 	set clipboard=unnamedplus
 endif
