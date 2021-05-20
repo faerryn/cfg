@@ -82,29 +82,6 @@ vim.api.nvim_command("autocmd custom TextYankPost * lua vim.highlight.on_yank()"
 vim.g.mapleader = " "
 vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
 
--- unimpaired bindings
-vim.api.nvim_set_keymap("n", "]a", "<Cmd>next<CR>",      { noremap = true })
-vim.api.nvim_set_keymap("n", "[a", "<Cmd>previous<CR>",  { noremap = true })
-vim.api.nvim_set_keymap("n", "]A", "<Cmd>last<CR>",      { noremap = true })
-vim.api.nvim_set_keymap("n", "[A", "<Cmd>first<CR>",     { noremap = true })
-
-vim.api.nvim_set_keymap("n", "]b", "<Cmd>bnext<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[b", "<Cmd>bprevious<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "]B", "<Cmd>blast<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[B", "<Cmd>bfirst<CR>",    { noremap = true })
-
-vim.api.nvim_set_keymap("n", "<Leader>q", "<Cmd>copen<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "]q", "<Cmd>cnext<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[q", "<Cmd>cprevious<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "]Q", "<Cmd>clast<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[Q", "<Cmd>cfirst<CR>",    { noremap = true })
-
-vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>lopen<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "]l", "<Cmd>lnext<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[l", "<Cmd>lprevious<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "]L", "<Cmd>llast<CR>",     { noremap = true })
-vim.api.nvim_set_keymap("n", "[L", "<Cmd>lfirst<CR>",    { noremap = true })
-
 -- netrw
 vim.g.netrw_banner    = 0
 vim.g.netrw_hide      = 1

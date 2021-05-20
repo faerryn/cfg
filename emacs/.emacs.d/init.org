@@ -135,8 +135,9 @@
 *** Vim-style everything
 #+begin_src emacs-lisp
   (straight-use-package 'evil-collection)
-  (require 'evil-collection)
+  (setq evil-collection-want-unimpaired-p nil)
 
+  (require 'evil-collection)
   (evil-collection-init)
 #+end_src
 * Major modes
@@ -228,11 +229,6 @@
 ** Disable saving passwords
 #+begin_src emacs-lisp
   (setq auth-source-save-behavior nil)
-#+end_src
-** Don't cycle into non-file buffers
-#+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist
-               '(buffer-predicate . buffer-file-name))
 #+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
