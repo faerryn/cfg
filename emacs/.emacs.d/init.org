@@ -10,7 +10,8 @@
 straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (setq straight-use-symlinks t
-        straight-disable-autoloads t)
+        straight-disable-autoloads t
+        straight-vc-git-default-clone-depth 1)
 #+end_src
 *** straight.el hack
 #+begin_src emacs-lisp
@@ -22,7 +23,7 @@ straight.el is a declarative package manager for Emacs.
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
-      (call-process "git" nil nil nil "clone" repo dest))
+      (call-process "git" nil nil nil "clone" "--depth" "1" repo dest))
     (require 'straight (expand-file-name "straight.el" dest))
     (with-temp-buffer
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
