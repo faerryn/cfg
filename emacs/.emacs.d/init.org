@@ -119,7 +119,7 @@ Like vim tabs.
   (global-visual-line-mode +1)
 #+end_src
 * Editing
-** Autocomplete paired characters
+** Electric pairs mode
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
