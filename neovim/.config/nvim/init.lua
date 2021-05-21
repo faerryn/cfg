@@ -81,10 +81,6 @@ vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 -- highlight yank
 vim.api.nvim_command("autocmd custom TextYankPost * lua vim.highlight.on_yank()")
 
--- SPC as mapleader
-vim.g.mapleader = " "
-vim.api.nvim_set_keymap("n", "<Leader>", "", { noremap = true })
-
 -- netrw
 vim.g.netrw_banner    = 0
 vim.g.netrw_hide      = 1
@@ -102,7 +98,7 @@ vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
 
 -- bootstrap user.nvim
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/faerryn/user.nvim/default/default"
-if vim.fn.empty(vim.fn.glob(user_install_path)) > 0 then
+if vim.fn.isdirectory(user_install_path) == 0 then
     os.execute([[git clone --depth 1 https://github.com/faerryn/user.nvim.git "]]..user_install_path..[["]])
 end
 vim.api.nvim_command("packadd faerryn/user.nvim/default/default")
