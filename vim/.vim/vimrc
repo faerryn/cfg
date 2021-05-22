@@ -3,7 +3,7 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-if !has("nvim") && exists("+viminfo")
+if !has("nvim")
     set viminfofile=~/.vim/viminfo
 endif
 
@@ -40,9 +40,7 @@ set completeopt=menuone,noinsert
 set incsearch
 set hlsearch
 
-if exists('+X11')
-    set clipboard=unnamedplus
-endif
+set clipboard=unnamedplus
 
 set mouse=ar
 noremap <ScrollWheelUp> <C-Y>
@@ -79,3 +77,32 @@ command! Lshell topleft vertical terminal
 command! Sshell terminal
 command! Vshell vertical terminal
 command! Tshell tab terminal
+
+let s:user_packadd_path = "faerryn/user/default/default"
+let s:user_install_path = expand("~/.vim/pack/user/opt/"..s:user_packadd_path)
+if !isdirectory(s:user_install_path)
+    call system("git clone --depth 1 https://github.com/faerryn/user.vim.git "..fnameescape(s:user_install_path))
+endif
+execute "packadd" s:user_packadd_path
+
+call user#setup()
+
+call user#use("ryvnf/readline.vim")
+
+call user#use("tpope/vim-repeat")
+
+call user#use("tpope/vim-abolish")
+
+call user#use("tpope/vim-sleuth")
+
+call user#use("tommcdo/tcomment_vim")
+
+call user#use("tommcdo/vim-lion")
+
+call user#use({
+            \"name": "sonph/onehalf",
+            \"subdir": "vim",
+            \"config": {-> execute("colorscheme onehalfdark")},
+            \})
+
+call user#startup()

@@ -118,6 +118,26 @@ use "ryvnf/readline.vim"
 -- period (.) repeat for plugins
 use "tpope/vim-repeat"
 
+-- tpope's search and replace
+use "tpope/vim-abolish"
+
+-- tpope's indentation detector
+use "tpope/vim-sleuth"
+
+
+-- comment code in and out
+use "tomtom/tcomment_vim"
+
+-- align stuff
+use "tommcdo/vim-lion"
+
+-- Atom's one theme is noice
+use {
+    "sonph/onehalf",
+    subdir = "vim",
+    config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
+}
+
 -- nvim lua library
 use "nvim-lua/plenary.nvim"
 
@@ -138,13 +158,6 @@ use {
         }
     end,
 }
-
--- comment code in and out
-use "tomtom/tcomment_vim"
-
--- align stuff
-use "tommcdo/vim-lion"
-
 -- correct syntax highlighting
 use {
     "nvim-treesitter/nvim-treesitter",
@@ -157,19 +170,6 @@ use {
         }
     end,
 }
-
--- Atom's one theme is noice
-use {
-    "sonph/onehalf",
-    subdir = "vim",
-    config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
-}
-
--- tpope's search and replace
-use "tpope/vim-abolish"
-
--- tpope's indentation detector
-use "tpope/vim-sleuth"
 
 -- wait for all installation and configs to finish
 user.startup()
