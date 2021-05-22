@@ -203,9 +203,13 @@ Eglot is a language server protocol (LSP) client for Emacs.
         grep-program "rg")
   (with-eval-after-load "grep"
     (grep-apply-setting
+     'grep-command "rg --vimgrep -nH --null -e ")
+    (grep-apply-setting
+     'grep-template "rg <X> <C> --vimgrep -nH --null -e <R> <F>")
+    (grep-apply-setting
      'grep-find-command "rg --vimgrep -nH --null -e ")
     (grep-apply-setting
-     'grep-find-template "rg <C> <X> --vimgrep -nH --null -e <R> <D>"))
+     'grep-find-template "rg <X> <C> --vimgrep -nH --null -e <R> <D>"))
 #+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
