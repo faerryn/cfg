@@ -142,9 +142,16 @@ Vim emulation for Emacs.
   (setq evil-want-Y-yank-to-eol t
         evil-want-keybinding nil
         evil-undo-system 'undo-redo)
-
   (require 'evil)
   (evil-mode +1)
+#+end_src
+*** Evil collection
+Vim emulation everywhere.
+#+begin_src emacs-lisp
+  (straight-use-package 'evil-collection)
+  (setq evil-collection-want-unimpaired-p nil)
+  (require 'evil-collection)
+  (evil-collection-init)
 #+end_src
 * Major modes
 ** C/C++
@@ -190,13 +197,15 @@ Eglot is a language server protocol (LSP) client for Emacs.
     (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
     (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
 #+end_src
-** Evil collection
-Vim emulation everywhere.
+** Find and grep
 #+begin_src emacs-lisp
-  (straight-use-package 'evil-collection)
-  (setq evil-collection-want-unimpaired-p nil)
-  (require 'evil-collection)
-  (evil-collection-init)
+  (setq find-program "fd"
+        grep-program "rg")
+  (with-eval-after-load "grep"
+    (grep-apply-setting
+     'grep-find-command "rg --vimgrep -nH --null -e ")
+    (grep-apply-setting
+     'grep-find-template "rg <C> <X> --vimgrep -nH --null -e <R> <D>"))
 #+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
