@@ -3,9 +3,7 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-if !has("nvim")
-    set viminfofile=~/.vim/viminfo
-endif
+set viminfofile=~/.vim/viminfo
 
 set hidden
 
@@ -95,7 +93,7 @@ call user#use("tpope/vim-abolish")
 
 call user#use("tpope/vim-sleuth")
 
-call user#use("tommcdo/tcomment_vim")
+call user#use("tomtom/tcomment_vim")
 
 call user#use("tommcdo/vim-lion")
 
