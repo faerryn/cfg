@@ -52,8 +52,3 @@ dwm.focusonwheel: 1
 dwm.mfact: 0.5
 
 dwm.resizehints: 0
-
-! Simple X Image Viewer
-Sxiv.font: monospace-12
-Sxiv.background: #282c34
-Sxiv.foreground: #dcdfe4
