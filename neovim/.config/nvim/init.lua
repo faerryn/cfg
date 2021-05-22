@@ -21,7 +21,8 @@ vim.bo.undofile = true
 -- set terminal title
 vim.o.title = true
 
--- show tabline
+-- show statusline and tabline
+vim.o.laststatus = 2
 vim.o.showtabline = 2
 
 -- relative line numbers

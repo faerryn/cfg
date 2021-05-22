@@ -1,3 +1,5 @@
+""" vimrc
+
 set nocompatible
 
 syntax on
@@ -15,6 +17,7 @@ set undofile
 
 set title
 
+set laststatus=2
 set showtabline=2
 
 set number
