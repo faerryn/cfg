@@ -227,33 +227,3 @@ diff-hl shows unstaged changes in a git repository.
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 #+end_src
-** TTY support
-*** Mouse support
-#+begin_src emacs-lisp
-  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-#+end_src
-*** Xclip support
-#+begin_src emacs-lisp
-  (straight-use-package 'xclip)
-  (autoload 'xclip-mode "xclip" "Minor mode to use the ‘xclip’ program to copy&paste." t)
-  (add-hook 'tty-setup-hook #'xclip-mode)
-#+end_src
-*** ETCC
-Change the cursor shape for evil mode in the TTY.
-#+begin_src emacs-lisp
-  (straight-use-package 'evil-terminal-cursor-changer)
-  (autoload 'etcc-mode "evil-terminal-cursor-changer")
-  (add-hook 'tty-setup-hook #'etcc-mode)
-  (with-eval-after-load "evil"
-    (with-eval-after-load "evil-terminal-cursor-changer"
-      (add-hook 'kill-emacs-hook
-                (lambda ()
-                  (evil-set-cursor t)
-                  (etcc--evil-set-cursor)))))
-#+end_src
-**** etcc + diff-hl hack
-#+begin_src emacs-lisp
-  (with-eval-after-load "diff-hl"
-    (with-eval-after-load "evil-terminal-cursor-changer"
-      (advice-add 'diff-hl-flydiff-update :after #'etcc--evil-set-cursor)))
-#+end_src
