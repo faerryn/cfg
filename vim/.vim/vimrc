@@ -86,13 +86,13 @@ if !isdirectory(s:user_install_path)
 endif
 execute "packadd" s:user_packadd_path
 
-call user#setup()
+call user#use("faerryn/user.vim")
 
 call user#use("ryvnf/readline.vim")
 
 call user#use("tpope/vim-repeat")
 
-call user#use("tpope/vim-abolish")
+" call user#use("tpope/vim-abolish")
 
 call user#use("tpope/vim-sleuth")
 
@@ -100,10 +100,5 @@ call user#use("tomtom/tcomment_vim")
 
 call user#use("tommcdo/vim-lion")
 
-call user#use({
-            \"name": "sonph/onehalf",
-            \"subdir": "vim",
-            \"config": {-> execute("colorscheme onehalfdark")},
-            \})
-
-call user#startup()
+call user#use({ "name": "sonph/onehalf", "subdir": "vim" })
+colorscheme onehalfdark
