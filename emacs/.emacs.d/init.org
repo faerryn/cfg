@@ -89,9 +89,9 @@ Smarter sorting in completion buffers.
 #+begin_src emacs-lisp
   (show-paren-mode +1)
 #+end_src
-** Relative line numbers
+** Line numbers
 #+begin_src emacs-lisp
-  (setq display-line-numbers-type 'relative)
+  (setq display-line-numbers-type t)
   (global-display-line-numbers-mode +1)
 #+end_src
 ** Show key chords

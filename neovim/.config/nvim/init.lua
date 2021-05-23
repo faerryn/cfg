@@ -25,9 +25,8 @@ vim.o.title = true
 vim.o.laststatus = 2
 vim.o.showtabline = 2
 
--- relative line numbers
+-- line numbers
 vim.wo.number = true
-vim.wo.relativenumber = true
 
 -- always show signcolumn
 vim.wo.signcolumn = "yes"
