@@ -98,11 +98,12 @@ vim.api.nvim_command("command! Vshell vsplit         term://"..vim.o.shell)
 vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
 
 -- bootstrap user.nvim
-local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/faerryn/user.nvim/default/default"
+local user_packadd_path = "faerryn/user.nvim/default/default"
+local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
 if vim.fn.isdirectory(user_install_path) == 0 then
     os.execute([[git clone --depth 1 https://github.com/faerryn/user.nvim.git "]]..user_install_path..[["]])
 end
-vim.api.nvim_command("packadd faerryn/user.nvim/default/default")
+vim.api.nvim_command("packadd "..user_packadd_path)
 
 local user = require("user")
 user.setup()
@@ -124,7 +125,6 @@ use "tpope/vim-abolish"
 
 -- tpope's indentation detector
 use "tpope/vim-sleuth"
-
 
 -- comment code in and out
 use "tomtom/tcomment_vim"
@@ -159,6 +159,7 @@ use {
         }
     end,
 }
+
 -- correct syntax highlighting
 use {
     "nvim-treesitter/nvim-treesitter",

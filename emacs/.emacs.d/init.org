@@ -62,8 +62,8 @@ Smarter sorting in completion buffers.
 #+end_src
 **** selectrum + orderless hack
 #+begin_src emacs-lisp
-  (setq selectrum-refine-candidates-function #'orderless-filter)
-  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
+  (setq selectrum-refine-candidates-function #'orderless-filter
+        selectrum-highlight-candidates-function #'orderless-highlight-matches)
 #+end_src
 ** Dark theme
 #+begin_src emacs-lisp

@@ -92,7 +92,7 @@ call user#use("ryvnf/readline.vim")
 
 call user#use("tpope/vim-repeat")
 
-" call user#use("tpope/vim-abolish")
+call user#use("tpope/vim-abolish")
 
 call user#use("tpope/vim-sleuth")
 
