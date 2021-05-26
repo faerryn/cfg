@@ -163,8 +163,8 @@ Vim emulation everywhere.
 #+end_src
 ** Woman
 #+begin_src emacs-lisp
-  (when (executable-find "manpath")
-    (with-eval-after-load "woman"
+  (with-eval-after-load "woman"
+    (when (executable-find "manpath")
       (setq woman-manpath
             (woman-parse-colon-path
              (string-trim-right (shell-command-to-string "manpath -q") "\n")))))
