@@ -30,6 +30,13 @@ straight.el is a declarative package manager for Emacs.
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
+*** Clean up straight.el error log
+#+begin_src emacs-lisp
+  (add-hook 'kill-emacs-hook
+            (lambda ()
+              (when (= (nnheader-file-size straight--process-stderr) 0)
+                (delete-file straight--process-stderr))))
+#+end_src
 ** GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
