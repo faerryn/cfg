@@ -14,6 +14,10 @@ vim.bo.shiftwidth = 4
 vim.o.expandtab = true
 vim.bo.expandtab = true
 
+-- disable swapfile
+vim.o.swapfile = false
+vim.bo.swapfile = false
+
 -- yes undofiles
 vim.o.undofile = true
 vim.bo.undofile = true
@@ -70,7 +74,7 @@ vim.o.background = "dark"
 vim.o.termguicolors = (os.getenv("COLORTERM") == "truecolor")
 
 -- ripgrep for :grep
-if vim.fn.executable("rg") == 1 then
+if vim.fn.executable("rg") > 0 then
     vim.o.grepprg = "rg --hidden --vimgrep"
     vim.o.grepformat = "%f:%l:%c:%m"
 end

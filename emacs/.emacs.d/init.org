@@ -172,15 +172,9 @@ Vim emulation everywhere.
 * Sundry
 ** Clean file system
 #+begin_src emacs-lisp
-  (setq backup-directory-alist
-        `((".*" . ,(expand-file-name "backups/" user-emacs-directory))))
-  (setq tramp-backup-directory-alist backup-directory-alist)
-  (let ((auto-save-file-name-directory
-         (expand-file-name "auto-saves/" user-emacs-directory)))
-    (mkdir auto-save-file-name-directory t)
-    (setq auto-save-file-name-transforms
-          `((".*" ,auto-save-file-name-directory t))))
-  (setq create-lockfiles nil)
+  (setq auto-save-default nil
+        backup-inhibited t
+        create-lockfiles nil)
 #+end_src
 ** Disable saving passwords
 #+begin_src emacs-lisp

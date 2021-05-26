@@ -13,6 +13,8 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+set noswapfile
+
 set undofile
 
 set title
@@ -43,9 +45,9 @@ set hlsearch
 set clipboard=unnamedplus
 
 set mouse=ar
-noremap <ScrollWheelUp> <C-Y>
-noremap <S-ScrollWheelUp> <C-U>
-noremap <ScrollWheelDown> <C-E>
+noremap <ScrollWheelUp>     <C-Y>
+noremap <S-ScrollWheelUp>   <C-U>
+noremap <ScrollWheelDown>   <C-E>
 noremap <S-ScrollWheelDown> <C-D>
 
 set lazyredraw
@@ -56,11 +58,6 @@ if getenv("COLORTERM") == "truecolor"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set t_Co=256
     set termguicolors
-endif
-
-if executable("rg")
-    let &grepprg = "rg --hidden --vimgrep"
-    let &grepformat = "%f:%l:%c:%m"
 endif
 
 noremap Y y$
