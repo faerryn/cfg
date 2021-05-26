@@ -34,7 +34,8 @@ straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (add-hook 'kill-emacs-hook
             (lambda ()
-              (when (= (nnheader-file-size straight--process-stderr) 0)
+              (when (zerop (file-attribute-size
+                            (file-attributes straight--process-stderr)))
                 (delete-file straight--process-stderr))))
 #+end_src
 ** GCMH
