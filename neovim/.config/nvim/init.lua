@@ -138,27 +138,6 @@ use {
     config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
 }
 
--- nvim lua library
-use "nvim-lua/plenary.nvim"
-
--- see what is modified
-use {
-    "lewis6991/gitsigns.nvim",
-    after = "nvim-lua/plenary.nvim",
-    config = function()
-        require("gitsigns").setup {
-            signs = {
-                add          = { hl = "GitGutterAdd",    text = "+" },
-                change       = { hl = "GitGutterChange", text = "~" },
-                delete       = { hl = "GitGutterDelete", text = "_" },
-                topdelete    = { hl = "GitGutterDelete", text = "‾" },
-                changedelete = { hl = "GitGutterChange", text = "~" },
-            },
-            keymaps = {},
-        }
-    end,
-}
-
 -- correct syntax highlighting
 use {
     "nvim-treesitter/nvim-treesitter",

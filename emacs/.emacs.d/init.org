@@ -39,12 +39,20 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 * User Interface
 ** Completion
-*** selectrum
+*** vertico
 Minimal and compatible completion framework.
 #+begin_src emacs-lisp
-  (straight-use-package 'selectrum)
-  (require 'selectrum)
-  (selectrum-mode +1)
+  (straight-use-package 'vertico)
+  (require 'vertico)
+  (vertico-mode +1)
+#+end_src
+*** consult
+#+begin_src emacs-lisp
+  (straight-use-package 'consult)
+  (autoload
+    'consult-completion-in-region "consult"
+    "Prompt for completion of region in the minibuffer if non-unique.")
+  (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
 *** marginalia
 Marginal information in completion buffers.
@@ -161,14 +169,6 @@ Vim emulation everywhere.
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
 #+end_src
-** Woman
-#+begin_src emacs-lisp
-  (with-eval-after-load "woman"
-    (when (executable-find "manpath")
-      (setq woman-manpath
-            (woman-parse-colon-path
-             (string-trim-right (shell-command-to-string "manpath -q") "\n")))))
-#+end_src
 * Sundry
 ** Clean file system
 #+begin_src emacs-lisp
@@ -200,29 +200,4 @@ Eglot is a language server protocol (LSP) client for Emacs.
 ** Follow symlinks
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t)
-#+end_src
-** Magit
-Magit is a git client for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
-  (setq magit-define-global-key-bindings nil)
-#+end_src
-*** diff-hl
-diff-hl shows unstaged changes in a git repository.
-#+begin_src emacs-lisp
-  (straight-use-package 'diff-hl)
-  (setq diff-hl-command-prefix nil
-        diff-hl-show-staged-changes nil)
-  (require 'diff-hl)
-  (require 'diff-hl-flydiff)
-  (require 'diff-hl-margin)
-  (global-diff-hl-mode +1)
-  (diff-hl-flydiff-mode +1)
-  (diff-hl-margin-mode +1)
-#+end_src
-*** diff-hl + magit hack
-#+begin_src emacs-lisp
-  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 #+end_src
