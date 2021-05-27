@@ -73,12 +73,6 @@ vim.o.lazyredraw = true
 vim.o.background = "dark"
 vim.o.termguicolors = (os.getenv("COLORTERM") == "truecolor")
 
--- ripgrep for :grep
-if vim.fn.executable("rg") > 0 then
-    vim.o.grepprg = "rg --hidden --vimgrep"
-    vim.o.grepformat = "%f:%l:%c:%m"
-end
-
 -- Y to eol
 vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 
