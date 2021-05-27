@@ -57,17 +57,9 @@ Minimal and compatible completion framework.
 *** consult
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
-  (autoload
-    'consult-completion-in-region "consult"
+  (autoload 'consult-completion-in-region "consult"
     "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
-#+end_src
-*** marginalia
-Marginal information in completion buffers.
-#+begin_src emacs-lisp
-  (straight-use-package 'marginalia)
-  (require 'marginalia)
-  (marginalia-mode +1)
 #+end_src
 *** orderless
 Smarter sorting in completion buffers.
@@ -75,11 +67,6 @@ Smarter sorting in completion buffers.
   (straight-use-package 'orderless)
   (require 'orderless)
   (setq completion-styles '(orderless))
-#+end_src
-**** selectrum + orderless hack
-#+begin_src emacs-lisp
-  (setq selectrum-refine-candidates-function #'orderless-filter
-        selectrum-highlight-candidates-function #'orderless-highlight-matches)
 #+end_src
 ** Dark theme
 #+begin_src emacs-lisp
@@ -192,8 +179,7 @@ Vim emulation everywhere.
 Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
-  (autoload
-    'eglot "eglot"
+  (autoload 'eglot "eglot"
     "Manage a project with a Language Server Protocol (LSP) server" t)
   (with-eval-after-load "eglot"
     (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
