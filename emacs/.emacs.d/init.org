@@ -146,6 +146,13 @@ Vim emulation for Emacs.
   (require 'evil)
   (evil-mode +1)
 #+end_src
+*** Undo-Fu
+#+begin_src emacs-lisp
+  (unless (fboundp 'undo-redo)
+    (straight-use-package 'undo-fu)
+    (require 'undo-fu)
+    (customize-set-variable 'evil-undo-system 'undo-fu))
+#+end_src
 *** Evil collection
 Vim emulation everywhere.
 #+begin_src emacs-lisp
@@ -187,5 +194,6 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
-  (setq find-file-visit-truename t)
+  (setq find-file-visit-truename t
+        vc-follow-symlinks t)
 #+end_src
