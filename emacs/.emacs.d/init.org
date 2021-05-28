@@ -20,10 +20,12 @@ straight.el is a declarative package manager for Emacs.
 #+end_src
 *** Bootstrap straight.el
 #+begin_src emacs-lisp
-  (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
+  (let ((dest (expand-file-name
+               "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
-      (call-process "git" nil nil nil "clone" "--depth" "1" repo dest))
+      (call-process "git" nil nil nil
+                    "clone" "--depth" "1" repo dest))
     (require 'straight (expand-file-name "straight.el" dest))
     (with-temp-buffer
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
@@ -35,7 +37,8 @@ straight.el is a declarative package manager for Emacs.
   (add-hook 'kill-emacs-hook
             (lambda ()
               (when (zerop (file-attribute-size
-                            (file-attributes straight--process-stderr)))
+                            (file-attributes
+                             straight--process-stderr)))
                 (delete-file straight--process-stderr))))
 #+end_src
 ** GCMH
@@ -197,3 +200,4 @@ Eglot is a language server protocol (LSP) client for Emacs.
   (setq find-file-visit-truename t
         vc-follow-symlinks t)
 #+end_src
+
