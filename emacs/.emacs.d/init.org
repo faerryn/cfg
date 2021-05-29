@@ -84,12 +84,12 @@ Smarter sorting in completion buffers.
 #+end_src
 ** Disable extra user interface
 #+begin_src emacs-lisp
-  (setq inhibit-startup-screen t)
-  (setq use-dialog-box nil)
+  (setq inhibit-startup-screen t
+        use-dialog-box nil)
   (menu-bar-mode -1)
-  (when (featurep 'scroll-bar) (scroll-bar-mode -1))
+  (scroll-bar-mode -1)
   (tool-bar-mode -1)
-  (add-hook 'window-setup-hook (lambda () (tooltip-mode -1)))
+  (tooltip-mode -1)
 #+end_src
 ** Highlight matching parenthesis
 #+begin_src emacs-lisp
