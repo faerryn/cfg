@@ -45,10 +45,6 @@ set hlsearch
 set clipboard=unnamedplus
 
 set mouse=ar
-noremap <ScrollWheelUp>     <C-Y>
-noremap <S-ScrollWheelUp>   <C-U>
-noremap <ScrollWheelDown>   <C-E>
-noremap <S-ScrollWheelDown> <C-D>
 
 set lazyredraw
 

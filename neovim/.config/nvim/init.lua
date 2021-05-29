@@ -4,74 +4,64 @@
 vim.api.nvim_command("augroup custom | autocmd! | augroup END")
 
 -- switch buffers without writing to disk
-vim.o.hidden = true
+vim.opt.hidden = true
 
 -- indentation
-vim.o.tabstop = 4
-vim.bo.tabstop = 4
-vim.o.shiftwidth = 4
-vim.bo.shiftwidth = 4
-vim.o.expandtab = true
-vim.bo.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
 -- disable swapfile
-vim.o.swapfile = false
-vim.bo.swapfile = false
+vim.opt.swapfile = false
 
 -- yes undofiles
-vim.o.undofile = true
-vim.bo.undofile = true
+vim.opt.undofile = true
 
 -- set terminal title
-vim.o.title = true
+vim.opt.title = true
 
 -- show statusline and tabline
-vim.o.laststatus = 2
-vim.o.showtabline = 2
+vim.opt.laststatus = 2
+vim.opt.showtabline = 2
 
 -- line numbers
-vim.wo.number = true
+vim.opt.number = true
 
 -- always show signcolumn
-vim.wo.signcolumn = "yes"
+vim.opt.signcolumn = "yes"
 
 -- new splits go under and right
-vim.o.splitbelow = true
-vim.o.splitright = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
 -- nice line wrapping
-vim.wo.linebreak = true
-vim.wo.wrap = true
+vim.opt.linebreak = true
+vim.opt.wrap = true
 
 -- show tabs and trailing spaces
-vim.o.list = true
-vim.wo.list = true
+vim.opt.list = true
 
 -- increment and decrement everything
-vim.o.nrformats = "alpha,octal,hex,bin"
+vim.opt.nrformats = "alpha,octal,hex,bin"
 
 -- menus shouldn't cobble my text
-vim.o.completeopt = "menuone,noinsert"
+vim.opt.completeopt = "menuone,noinsert"
 
 -- highlight matches incrementally
-vim.o.inccommand = "nosplit"
+vim.opt.inccommand = "nosplit"
 
 -- clipboard
-vim.o.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 
 -- mouse
-vim.o.mouse = "ar"
-vim.api.nvim_set_keymap("", "<ScrollWheelUp>",     "<C-Y>", { noremap = true })
-vim.api.nvim_set_keymap("", "<S-ScrollWheelUp>",   "<C-U>", { noremap = true })
-vim.api.nvim_set_keymap("", "<ScrollWheelDown>",   "<C-E>", { noremap = true })
-vim.api.nvim_set_keymap("", "<S-ScrollWheelDown>", "<C-D>", { noremap = true })
+vim.opt.mouse = "ar"
 
 -- performance
-vim.o.lazyredraw = true
+vim.opt.lazyredraw = true
 
 -- colorscheme
-vim.o.background = "dark"
-vim.o.termguicolors = (os.getenv("COLORTERM") == "truecolor")
+vim.opt.background = "dark"
+vim.opt.termguicolors = (os.getenv("COLORTERM") == "truecolor")
 
 -- Y to eol
 vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
