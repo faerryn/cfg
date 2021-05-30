@@ -187,7 +187,8 @@ Vim emulation everywhere.
 #+end_src
 ** Don't show compilation warnings
 #+begin_src emacs-lisp
-  (add-to-list 'warning-suppress-log-types '(comp))
+  (with-eval-after-load "warnings"
+    (add-to-list 'warning-suppress-log-types '(comp)))
 #+end_src
 ** Eglot
 Eglot is a language server protocol (LSP) client for Emacs.
@@ -204,4 +205,3 @@ Eglot is a language server protocol (LSP) client for Emacs.
   (setq find-file-visit-truename t
         vc-follow-symlinks t)
 #+end_src
-
