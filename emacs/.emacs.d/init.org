@@ -15,17 +15,14 @@ straight.el is a declarative package manager for Emacs.
 #+end_src
 *** straight.el hack
 #+begin_src emacs-lisp
-  (defvaralias 'comp-deferred-compilation-deny-list
-    'native-comp-deferred-compilation-deny-list)
+  (defvaralias 'comp-deferred-compilation-deny-list 'native-comp-deferred-compilation-deny-list)
 #+end_src
 *** Bootstrap straight.el
 #+begin_src emacs-lisp
-  (let ((dest (expand-file-name
-               "straight/repos/straight.el/" user-emacs-directory))
+  (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
-      (call-process "git" nil nil nil
-                    "clone" "--depth" "1" repo dest))
+      (call-process "git" nil nil nil "clone" "--depth" "1" repo dest))
     (require 'straight (expand-file-name "straight.el" dest))
     (with-temp-buffer
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
@@ -36,9 +33,7 @@ straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (add-hook 'kill-emacs-hook
             (lambda ()
-              (when (zerop (file-attribute-size
-                            (file-attributes
-                             straight--process-stderr)))
+              (when (zerop (file-attribute-size (file-attributes straight--process-stderr)))
                 (delete-file straight--process-stderr))))
 #+end_src
 ** GCMH
@@ -60,8 +55,7 @@ Minimal and compatible completion framework.
 *** consult
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
-  (autoload 'consult-completion-in-region "consult"
-    "Prompt for completion of region in the minibuffer if non-unique.")
+  (require 'consult)
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
 *** orderless
@@ -79,8 +73,7 @@ Smarter sorting in completion buffers.
 #+end_src
 ** Default font
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist
-               '(font . "monospace-12"))
+  (add-to-list 'default-frame-alist '(font . "monospace-12"))
 #+end_src
 ** Disable extra user interface
 #+begin_src emacs-lisp
@@ -194,11 +187,16 @@ Vim emulation everywhere.
 Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
-  (autoload 'eglot "eglot"
-    "Manage a project with a Language Server Protocol (LSP) server" t)
+  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
   (with-eval-after-load "eglot"
     (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
     (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
+#+end_src
+** ERC
+#+begin_src emacs-lisp
+  (with-eval-after-load "erc"
+    (setq erc-default-server "irc.libera.chat"
+          erc-default-port 6697))
 #+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
