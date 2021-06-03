@@ -29,13 +29,6 @@ straight.el is a declarative package manager for Emacs.
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
-*** Clean up straight.el error log
-#+begin_src emacs-lisp
-  (add-hook 'kill-emacs-hook
-            (lambda ()
-              (when (zerop (file-attribute-size (file-attributes straight--process-stderr)))
-                (delete-file straight--process-stderr))))
-#+end_src
 ** GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
@@ -120,6 +113,31 @@ Like vim tabs.
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
+** Evil mode
+Vim emulation for Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'evil)
+  (setq evil-want-Y-yank-to-eol t
+        evil-want-keybinding nil
+        evil-undo-system 'undo-redo)
+  (require 'evil)
+  (evil-mode +1)
+#+end_src
+*** Evil collection
+Vim emulation everywhere.
+#+begin_src emacs-lisp
+  (straight-use-package 'evil-collection)
+  (setq evil-collection-want-unimpaired-p nil)
+  (require 'evil-collection)
+  (evil-collection-init)
+#+end_src
+*** Undo-Fu
+#+begin_src emacs-lisp
+  (unless (fboundp 'undo-redo)
+    (straight-use-package 'undo-fu)
+    (require 'undo-fu)
+    (customize-set-variable 'evil-undo-system 'undo-fu))
+#+end_src
 ** Indentation
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil
@@ -132,31 +150,6 @@ Like vim tabs.
 #+begin_src emacs-lisp
   (setq tab-always-indent 'complete)
 #+end_src
-** Evil mode
-Vim emulation for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'evil)
-  (setq evil-want-Y-yank-to-eol t
-        evil-want-keybinding nil
-        evil-undo-system 'undo-redo)
-  (require 'evil)
-  (evil-mode +1)
-#+end_src
-*** Undo-Fu
-#+begin_src emacs-lisp
-  (unless (fboundp 'undo-redo)
-    (straight-use-package 'undo-fu)
-    (require 'undo-fu)
-    (customize-set-variable 'evil-undo-system 'undo-fu))
-#+end_src
-*** Evil collection
-Vim emulation everywhere.
-#+begin_src emacs-lisp
-  (straight-use-package 'evil-collection)
-  (setq evil-collection-want-unimpaired-p nil)
-  (require 'evil-collection)
-  (evil-collection-init)
-#+end_src
 * Major modes
 ** C/C++
 #+begin_src emacs-lisp
@@ -167,16 +160,21 @@ Vim emulation everywhere.
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
 #+end_src
+** ERC
+#+begin_src emacs-lisp
+  (with-eval-after-load "erc"
+    (setq erc-default-server "irc.libera.chat"
+          erc-default-port 6697
+          erc-prompt-for-nickserv-password nil
+          erc-use-auth-source-for-nickserv-password t
+          erc-prompt-for-password nil))
+#+end_src
 * Sundry
 ** Clean file system
 #+begin_src emacs-lisp
   (setq auto-save-default nil
         backup-inhibited t
         create-lockfiles nil)
-#+end_src
-** Disable saving passwords
-#+begin_src emacs-lisp
-  (setq auth-source-save-behavior nil)
 #+end_src
 ** Don't show compilation warnings
 #+begin_src emacs-lisp
@@ -192,14 +190,14 @@ Eglot is a language server protocol (LSP) client for Emacs.
     (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
     (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
 #+end_src
-** ERC
-#+begin_src emacs-lisp
-  (with-eval-after-load "erc"
-    (setq erc-default-server "irc.libera.chat"
-          erc-default-port 6697))
-#+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t
         vc-follow-symlinks t)
+#+end_src
+
+** Magit
+#+begin_src emacs-lisp
+  (straight-use-package 'magit)
+  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
 #+end_src
