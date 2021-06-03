@@ -169,6 +169,11 @@ Vim emulation everywhere.
           erc-use-auth-source-for-nickserv-password t
           erc-prompt-for-password nil))
 #+end_src
+** Magit
+#+begin_src emacs-lisp
+  (straight-use-package 'magit)
+  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
+#+end_src
 * Sundry
 ** Clean file system
 #+begin_src emacs-lisp
@@ -194,10 +199,4 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t
         vc-follow-symlinks t)
-#+end_src
-
-** Magit
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
 #+end_src
