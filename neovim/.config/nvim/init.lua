@@ -8,7 +8,7 @@ vim.opt.hidden = true
 
 -- indentation
 vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = vim.o.tabstop
 vim.opt.expandtab = true
 
 -- disable swapfile
