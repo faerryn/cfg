@@ -58,12 +58,6 @@ Smarter sorting in completion buffers.
   (require 'orderless)
   (setq completion-styles '(orderless))
 #+end_src
-** Dark theme
-#+begin_src emacs-lisp
-  (straight-use-package 'doom-themes)
-  (require 'doom-themes)
-  (load-theme 'doom-one t)
-#+end_src
 ** Default font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "monospace-12"))
@@ -104,6 +98,12 @@ Like vim tabs.
   (setq tab-bar-new-button nil)
   (tab-bar-mode +1)
 #+end_src
+** Theme
+#+begin_src emacs-lisp
+  (straight-use-package 'doom-themes)
+  (require 'doom-themes)
+  (load-theme 'doom-one t)
+#+end_src
 ** Wrap lines
 #+begin_src emacs-lisp
   (global-visual-line-mode +1)
@@ -112,31 +112,6 @@ Like vim tabs.
 ** Electric pairs mode
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
-#+end_src
-** Evil mode
-Vim emulation for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'evil)
-  (setq evil-want-Y-yank-to-eol t
-        evil-want-keybinding nil
-        evil-undo-system 'undo-redo)
-  (require 'evil)
-  (evil-mode +1)
-#+end_src
-*** Evil collection
-Vim emulation everywhere.
-#+begin_src emacs-lisp
-  (straight-use-package 'evil-collection)
-  (setq evil-collection-want-unimpaired-p nil)
-  (require 'evil-collection)
-  (evil-collection-init)
-#+end_src
-*** Undo fu
-#+begin_src emacs-lisp
-  (unless (fboundp 'undo-redo)
-    (straight-use-package 'undo-fu)
-    (require 'undo-fu)
-    (customize-set-variable 'evil-undo-system 'undo-fu))
 #+end_src
 ** Indentation
 #+begin_src emacs-lisp
