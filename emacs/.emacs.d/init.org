@@ -36,7 +36,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (require 'gcmh)
   (gcmh-mode +1)
 #+end_src
-* User Interface
+* User interface
 ** Completion
 *** vertico
 Minimal and compatible completion framework.
@@ -48,7 +48,7 @@ Minimal and compatible completion framework.
 *** consult
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
-  (require 'consult)
+  (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
 *** orderless
@@ -131,7 +131,7 @@ Vim emulation everywhere.
   (require 'evil-collection)
   (evil-collection-init)
 #+end_src
-*** Undo-Fu
+*** Undo fu
 #+begin_src emacs-lisp
   (unless (fboundp 'undo-redo)
     (straight-use-package 'undo-fu)
@@ -151,7 +151,7 @@ Vim emulation everywhere.
   (setq tab-always-indent 'complete)
 #+end_src
 * Major modes
-** C/C++
+** Cc
 #+begin_src emacs-lisp
   (with-eval-after-load "cc-mode"
     (advice-add 'c-indent-command :override #'indent-for-tab-command))
@@ -160,7 +160,7 @@ Vim emulation everywhere.
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
 #+end_src
-** ERC
+** Erc
 #+begin_src emacs-lisp
   (with-eval-after-load "erc"
     (setq erc-default-server "irc.libera.chat"

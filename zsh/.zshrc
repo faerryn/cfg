@@ -7,7 +7,7 @@ HISTFILE="$XDG_DATA_HOME"/zhistory
 alias -g diff='\diff --color=auto'
 alias -g grep='\grep --color=auto'
 
-alias -g ls='\ls -hvFX --color=auto --group-directories-first'
+alias ls='\ls -hvFX --color=auto --group-directories-first'
 alias ll='ls -g'
 alias la='ls -gA'
 
