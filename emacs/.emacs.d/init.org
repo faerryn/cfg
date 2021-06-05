@@ -80,12 +80,6 @@ Smarter sorting in completion buffers.
   (setq display-line-numbers-type t)
   (global-display-line-numbers-mode +1)
 #+end_src
-** Show key chords
-#+begin_src emacs-lisp
-  (straight-use-package 'which-key)
-  (require 'which-key)
-  (which-key-mode +1)
-#+end_src
 ** Show whitespace
 #+begin_src emacs-lisp
   (setq whitespace-style '(face tabs trailing tab-mark))
@@ -143,11 +137,6 @@ Like vim tabs.
           erc-prompt-for-nickserv-password nil
           erc-use-auth-source-for-nickserv-password t
           erc-prompt-for-password nil))
-#+end_src
-** Magit
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
