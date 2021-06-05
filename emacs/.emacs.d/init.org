@@ -149,6 +149,12 @@ Like vim tabs.
   (straight-use-package 'magit)
   (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
 #+end_src
+** Markdown
+#+begin_src emacs-lisp
+  (straight-use-package 'markdown-mode)
+  (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files." t)
+  (add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
+#+end_src
 * Sundry
 ** Clean file system
 #+begin_src emacs-lisp
