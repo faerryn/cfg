@@ -160,7 +160,7 @@ Like vim tabs.
 ** Don't show compilation warnings
 #+begin_src emacs-lisp
   (with-eval-after-load "warnings"
-    (add-to-list 'warning-suppress-log-types '(comp)))
+    (add-to-list 'warning-suppress-types '(comp)))
 #+end_src
 ** Eglot
 Eglot is a language server protocol (LSP) client for Emacs.
