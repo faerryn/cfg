@@ -24,14 +24,12 @@ static char *colors[][3] = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const Rule rules[] = {
+static const Rule rules[0] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	/* class      instance    title       tags mask     isfloating   monitor */
 };
 
 /* layout(s) */
@@ -56,7 +54,6 @@ static char *const autorun[] = {
  "hsetroot", "-solid", normbgcolor, NULL,
 
  "gammastep", NULL,
- "lxpolkit", NULL,
  "picom", "--experimental-backends", NULL,
  "slstatus", NULL,
  "unclutter", NULL,
