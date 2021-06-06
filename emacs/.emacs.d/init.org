@@ -100,9 +100,9 @@ Like vim tabs.
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (straight-use-package 'atom-one-dark-theme)
-  (require 'atom-one-dark-theme)
-  (load-theme 'atom-one-dark t)
+  (straight-use-package 'doom-themes)
+  (require 'doom-themes)
+  (load-theme 'doom-one)
 #+end_src
 ** Wrap lines
 #+begin_src emacs-lisp
