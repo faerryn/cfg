@@ -38,18 +38,17 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 * User interface
 ** Completion
-*** vertico
-Minimal and compatible completion framework.
-#+begin_src emacs-lisp
-  (straight-use-package 'vertico)
-  (require 'vertico)
-  (vertico-mode +1)
-#+end_src
 *** consult
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
   (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
+#+end_src
+*** marginalia
+#+begin_src emacs-lisp
+  (straight-use-package 'marginalia)
+  (require 'marginalia)
+  (marginalia-mode +1)
 #+end_src
 *** orderless
 Smarter sorting in completion buffers.
@@ -57,6 +56,13 @@ Smarter sorting in completion buffers.
   (straight-use-package 'orderless)
   (require 'orderless)
   (setq completion-styles '(orderless))
+#+end_src
+*** vertico
+Minimal and compatible completion framework.
+#+begin_src emacs-lisp
+  (straight-use-package 'vertico)
+  (require 'vertico)
+  (vertico-mode +1)
 #+end_src
 ** Default font
 #+begin_src emacs-lisp
