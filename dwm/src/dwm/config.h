@@ -5,6 +5,7 @@ static unsigned int borderpx  = 1;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
+static int barheight          = 0;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will barheight as bar height */
 static int focusonwheel       = 0;
 static char font[]            = "monospace:size=10";
 static const char *fonts[]          = { font };
@@ -94,6 +95,7 @@ ResourcePref resources[] = {
 		{ "snap",               INTEGER, &snap },
 		{ "showbar",            INTEGER, &showbar },
 		{ "topbar",             INTEGER, &topbar },
+		{ "barheight",          INTEGER, &barheight },
 		{ "focusonwheel",       INTEGER, &focusonwheel },
 		{ "nmaster",            INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },

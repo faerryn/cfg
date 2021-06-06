@@ -6,14 +6,14 @@
 #+begin_src emacs-lisp
   ;;; init.el -*- lexical-binding: t; -*-
 #+end_src
-** straight.el
-straight.el is a declarative package manager for Emacs.
+** Straight.el
+Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (setq straight-use-symlinks t
         straight-disable-autoloads t
         straight-vc-git-default-clone-depth 1)
 #+end_src
-*** straight.el hack
+*** Straight.el hack
 #+begin_src emacs-lisp
   (defvaralias 'comp-deferred-compilation-deny-list 'native-comp-deferred-compilation-deny-list)
 #+end_src
@@ -38,26 +38,26 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 * User interface
 ** Completion
-*** consult
+*** Consult
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
   (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
-*** marginalia
+*** Marginalia
 #+begin_src emacs-lisp
   (straight-use-package 'marginalia)
   (require 'marginalia)
   (marginalia-mode +1)
 #+end_src
-*** orderless
+*** Orderless
 Smarter sorting in completion buffers.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
   (require 'orderless)
   (setq completion-styles '(orderless))
 #+end_src
-*** vertico
+*** Vertico
 Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (straight-use-package 'vertico)
