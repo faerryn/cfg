@@ -15,9 +15,6 @@ export PAGER='less --mouse'
 # inputrc
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
-# X11
-export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
-
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 
