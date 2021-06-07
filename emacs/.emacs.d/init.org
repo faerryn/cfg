@@ -167,9 +167,6 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
   (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
-  (with-eval-after-load "eglot"
-    (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-    (add-to-list 'eglot-server-programs '(rust-mode "rust-analyzer")))
 #+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
