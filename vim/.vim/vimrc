@@ -91,3 +91,6 @@ call user#use("tommcdo/vim-lion")
 
 call user#use({ "name": "sonph/onehalf", "subdir": "vim" })
 colorscheme onehalfdark
+
+call user#use("ziglang/zig")
+let g:zig_fmt_autosave = 0

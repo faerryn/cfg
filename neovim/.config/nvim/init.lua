@@ -128,11 +128,17 @@ use {
     update = function() vim.api.nvim_command("TSUpdate") end,
     config = function()
         require("nvim-treesitter.configs").setup {
-            ensure_installed = { "bash", "c", "cpp", "lua" },
+            ensure_installed = { "bash", "c", "cpp", "lua", "zig" },
             highlight = { enable = true },
             indent = { enable = true },
         }
     end,
+}
+
+-- zig is the c of the future
+use {
+    "ziglang/zig.vim",
+    init = function() vim.g.zig_fmt_autosave = 0 end,
 }
 
 -- wait for all installation and configs to finish
