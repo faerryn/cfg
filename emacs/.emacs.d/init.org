@@ -13,7 +13,7 @@ Straight.el is a declarative package manager for Emacs.
         straight-disable-autoloads t
         straight-vc-git-default-clone-depth 1)
 #+end_src
-*** Straight.el hack
+*** Straight.el Emacs 28 hack
 #+begin_src emacs-lisp
   (defvaralias 'comp-deferred-compilation-deny-list 'native-comp-deferred-compilation-deny-list)
 #+end_src

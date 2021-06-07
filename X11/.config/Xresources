@@ -50,5 +50,3 @@ dwm.barheight: 24
 dwm.focusonwheel: 1
 
 dwm.mfact: 0.5
-
-dwm.resizehints: 0

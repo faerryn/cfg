@@ -24,12 +24,13 @@ static char *colors[][3] = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const Rule rules[0] = {
+static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
+	{ "Emacs",    NULL,       NULL,       0,            1,           0 },
 };
 
 /* layout(s) */
@@ -71,7 +72,7 @@ static char *const autorun[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 #define BRICTL(sign, mag) { .v = (const char*[]){ "brightnessctl", "set", mag sign "%", NULL } }
-#define VOLCTL(sign, mag) { .v = (const char*[]){ "pulsemixer", "--change-volume", sign mag, NULL } }
+#define VOLCTL(sign, mag) { .v = (const char*[]){ "pactl", "set-sink-volume", "@DEFAULT_SINK@", sign mag "%", NULL } }
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };

@@ -34,10 +34,6 @@ vim.opt.signcolumn = "yes"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- nice line wrapping
-vim.opt.linebreak = true
-vim.opt.wrap = true
-
 -- show tabs and trailing spaces
 vim.opt.list = true
 

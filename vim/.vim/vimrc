@@ -29,9 +29,6 @@ set signcolumn=yes
 set splitbelow
 set splitright
 
-set linebreak
-set wrap
-
 set list
 let &listchars = "tab:> ,trail:-,nbsp:+"
 
