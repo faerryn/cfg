@@ -100,13 +100,13 @@ Like vim tabs.
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (straight-use-package 'doom-themes)
-  (require 'doom-themes)
-  (load-theme 'doom-one t)
+  (straight-use-package 'atom-one-dark-theme)
+  (require 'atom-one-dark-theme)
+  (load-theme 'atom-one-dark t)
 #+end_src
-** Wrap lines
+** Truncate lines
 #+begin_src emacs-lisp
-  (global-visual-line-mode +1)
+  (setq-default truncate-lines t)
 #+end_src
 * Editing
 ** Electric pairs mode
