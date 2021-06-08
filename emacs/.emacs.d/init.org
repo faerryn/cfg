@@ -145,6 +145,11 @@ Like vim tabs.
           erc-use-auth-source-for-nickserv-password t
           erc-prompt-for-password nil))
 #+end_src
+** Magit
+#+begin_src emacs-lisp
+  (straight-use-package 'magit)
+  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
+#+end_src
 ** Markdown
 #+begin_src emacs-lisp
   (straight-use-package 'markdown-mode)
