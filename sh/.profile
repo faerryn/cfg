@@ -24,6 +24,9 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 # Python
 export PYTHONSTARTUP="$XDG_CONFIG_HOME"/pythonstartup.py
 
+# KDE4
+export KDEHOME="$XDG_CONFIG_HOME"/kde
+
 # terminfo
 export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$TERMINFO":/usr/share/terminfo
