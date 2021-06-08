@@ -134,6 +134,7 @@ Like vim tabs.
 ** Dired
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
+  (require 'dired-x)
 #+end_src
 ** Erc
 #+begin_src emacs-lisp
