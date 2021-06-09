@@ -103,24 +103,8 @@ use "ryvnf/readline.vim"
 -- period (.) repeat for plugins
 use "tpope/vim-repeat"
 
--- tpope's search and replace
-use "tpope/vim-abolish"
-
 -- tpope's indentation detector
 use "tpope/vim-sleuth"
-
--- comment code in and out
-use "tomtom/tcomment_vim"
-
--- align stuff
-use "tommcdo/vim-lion"
-
--- Atom's one theme is noice
-use {
-    "sonph/onehalf",
-    subdir = "vim",
-    config = function() vim.api.nvim_command("colorscheme onehalfdark") end,
-}
 
 -- correct syntax highlighting
 use {
