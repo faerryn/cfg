@@ -98,12 +98,6 @@ Like vim tabs.
   (setq tab-bar-new-button nil)
   (tab-bar-mode +1)
 #+end_src
-** Theme
-#+begin_src emacs-lisp
-  (straight-use-package 'atom-one-dark-theme)
-  (require 'atom-one-dark-theme)
-  (load-theme 'atom-one-dark t)
-#+end_src
 ** Truncate lines
 #+begin_src emacs-lisp
   (setq-default truncate-lines t)
