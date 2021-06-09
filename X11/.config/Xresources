@@ -1,5 +1,5 @@
 ! st is a simple terminal for X
-st.font: monospace-12
+st.font: Source Code Pro-12
 
 st.color0: #282c34
 st.color1: #e06c75
@@ -22,7 +22,7 @@ st.color15: #dcdfe4
 st.borderpx: 0
 
 ! dmenu is a dynamic menu for X
-dmenu.font: monospace-12
+dmenu.font: Source Code Pro-12
 
 dmenu.normbgcolor: #282c34
 dmenu.normfgcolor: #dcdfe4
@@ -36,7 +36,7 @@ dmenu.outfgcolor: #282c34
 dmenu.barheight: 24
 
 ! dwm is a dynamic window manager for X
-dwm.font: monospace-12
+dwm.font: Source Code Pro-12
 
 dwm.normbgcolor: #282c34
 dwm.normfgcolor: #dcdfe4
