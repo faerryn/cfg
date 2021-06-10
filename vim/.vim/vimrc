@@ -83,5 +83,5 @@ call user#use("tpope/vim-repeat")
 
 call user#use("tpope/vim-sleuth")
 
-call user#use("ziglang/zig")
+call user#use("ziglang/zig.vim")
 let g:zig_fmt_autosave = 0
