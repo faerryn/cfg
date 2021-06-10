@@ -6,11 +6,6 @@ vim.api.nvim_command("augroup custom | autocmd! | augroup END")
 -- switch buffers without writing to disk
 vim.opt.hidden = true
 
--- indentation
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = vim.o.tabstop
-vim.opt.expandtab = true
-
 -- disable swapfile
 vim.opt.swapfile = false
 
