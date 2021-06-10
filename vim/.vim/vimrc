@@ -68,6 +68,8 @@ command! Sshell terminal
 command! Vshell vertical terminal
 command! Tshell tab terminal
 
+let &guifont="Source Code Pro 12"
+
 let s:user_packadd_path = "faerryn/user/default/default"
 let s:user_install_path = expand("~/.vim/pack/user/opt/"..s:user_packadd_path)
 if !isdirectory(s:user_install_path)

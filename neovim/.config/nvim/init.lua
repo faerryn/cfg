@@ -80,6 +80,9 @@ vim.api.nvim_command("command! Sshell split          term://"..vim.o.shell)
 vim.api.nvim_command("command! Vshell vsplit         term://"..vim.o.shell)
 vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
 
+-- gui font
+vim.opt.guifont = "Source Code Pro 12"
+
 -- bootstrap user.nvim
 local user_packadd_path = "faerryn/user.nvim/default/default"
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
