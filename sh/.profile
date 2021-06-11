@@ -6,7 +6,7 @@ export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_DATA_DIRS=/usr/local/share:/usr/share:"$XDG_DATA_DIRS"
 
 # PATH
-export PATH="$HOME"/Local/bin:"$PATH"
+export PATH="$HOME"/local/bin:"$PATH"
 
 # less
 export LESSHISTFILE=-
@@ -25,7 +25,3 @@ export PYTHONSTARTUP="$XDG_CONFIG_HOME"/pythonstartup.py
 
 # KDE4
 export KDEHOME="$XDG_CONFIG_HOME"/kde
-
-# terminfo
-export TERMINFO="$XDG_DATA_HOME"/terminfo
-export TERMINFO_DIRS="$TERMINFO":/usr/share/terminfo
