@@ -64,10 +64,6 @@ Minimal and compatible completion framework.
   (require 'vertico)
   (vertico-mode +1)
 #+end_src
-** Default font
-#+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "Source Code Pro-12")
-#+end_src
 ** Disable extra user interface
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t
