@@ -94,6 +94,12 @@ Like vim tabs.
   (setq tab-bar-new-button nil)
   (tab-bar-mode +1)
 #+end_src
+** Theme
+#+begin_src emacs-lisp
+  (straight-use-package 'modus-themes)
+  (require 'modus-themes)
+  (load-theme 'modus-vivendi t)
+#+end_src
 ** Truncate lines
 #+begin_src emacs-lisp
   (setq-default truncate-lines t)
