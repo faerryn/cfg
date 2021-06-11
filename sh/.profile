@@ -10,7 +10,6 @@ export PATH="$HOME"/Local/bin:"$PATH"
 
 # less
 export LESSHISTFILE=-
-export PAGER='less --mouse'
 
 # inputrc
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc

@@ -92,9 +92,6 @@ local use = user.use
 
 use "faerryn/user.nvim"
 
--- Fixes neovim#12587
-use "antoinemadec/FixCursorHold.nvim"
-
 -- command mode shortcuts
 use "ryvnf/readline.vim"
 
@@ -103,6 +100,15 @@ use "tpope/vim-repeat"
 
 -- tpope's indentation detector
 use "tpope/vim-sleuth"
+
+-- zig is the c of the future
+use {
+    "ziglang/zig.vim",
+    init = function() vim.g.zig_fmt_autosave = 0 end,
+}
+
+-- Fixes neovim#12587
+use "antoinemadec/FixCursorHold.nvim"
 
 -- correct syntax highlighting
 use {
@@ -115,12 +121,6 @@ use {
             indent = { enable = true },
         }
     end,
-}
-
--- zig is the c of the future
-use {
-    "ziglang/zig.vim",
-    init = function() vim.g.zig_fmt_autosave = 0 end,
 }
 
 -- wait for all installation and configs to finish
