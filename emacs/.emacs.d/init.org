@@ -98,7 +98,7 @@ Like vim tabs.
   (setq-default truncate-lines t)
 #+end_src
 * Editing
-** Electric pairs mode
+** Electric pairs
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
