@@ -1,6 +1,0 @@
-$include /etc/inputrc
-
-set menu-complete-display-prefix On
-set visible-stats On
-
-TAB: menu-complete

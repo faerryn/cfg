@@ -4,9 +4,6 @@ HISTSIZE=10000
 SAVEHIST="$HISTSIZE"
 HISTFILE="$XDG_DATA_HOME"/zhistory
 
-alias -g diff='\diff --color=auto'
-alias -g grep='\grep --color=auto'
-
 alias ls='\ls -hvFX --color=auto --group-directories-first'
 alias ll='ls -g'
 alias la='ls -gA'
