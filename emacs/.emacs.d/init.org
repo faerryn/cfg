@@ -132,13 +132,6 @@ Like vim tabs.
           erc-use-auth-source-for-nickserv-password t
           erc-prompt-for-password nil))
 #+end_src
-** Magit
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (setq magit-define-global-key-bindings nil)
-  (autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
-  (global-set-key (kbd "C-c g") #'magit-status)
-#+end_src
 ** Markdown
 #+begin_src emacs-lisp
   (straight-use-package 'markdown-mode)
@@ -174,11 +167,4 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t
         vc-follow-symlinks t)
-#+end_src
-** Projectile
-#+begin_src emacs-lisp
-  (straight-use-package 'projectile)
-  (require 'projectile)
-  (define-key projectile-mode-map (kbd "C-c p") #'projectile-command-map)
-  (projectile-mode +1)
 #+end_src
