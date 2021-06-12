@@ -25,6 +25,9 @@ vim.opt.number = true
 -- always show signcolumn
 vim.opt.signcolumn = "yes"
 
+-- no wrap
+vim.opt.wrap = false
+
 -- new splits go under and right
 vim.opt.splitbelow = true
 vim.opt.splitright = true
