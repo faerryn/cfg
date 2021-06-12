@@ -127,4 +127,4 @@ use {
 }
 
 -- wait for all installation and configs to finish
-user.startup()
+user.flush()
