@@ -12,13 +12,6 @@ Straight.el is a declarative package manager for Emacs.
   (setq straight-use-symlinks t
         straight-disable-autoloads t
         straight-vc-git-default-clone-depth 1)
-#+end_src
-*** Straight.el Emacs 28 hack
-#+begin_src emacs-lisp
-  (defvaralias 'comp-deferred-compilation-deny-list 'native-comp-deferred-compilation-deny-list)
-#+end_src
-*** Bootstrap straight.el
-#+begin_src emacs-lisp
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
@@ -142,7 +135,9 @@ Like vim tabs.
 ** Magit
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
-  (autoload 'magit "magit" "An alias for ‘magit-status’ for better discoverability." t)
+  (setq magit-define-global-key-bindings nil)
+  (autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
+  (global-set-key (kbd "C-c g") #'magit-status)
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
@@ -179,4 +174,11 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t
         vc-follow-symlinks t)
+#+end_src
+** Projectile
+#+begin_src emacs-lisp
+  (straight-use-package 'projectile)
+  (require 'projectile)
+  (define-key projectile-mode-map (kbd "C-c p") #'projectile-command-map)
+  (projectile-mode +1)
 #+end_src
