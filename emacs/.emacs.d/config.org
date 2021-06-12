@@ -138,6 +138,17 @@ Like vim tabs.
   (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files." t)
   (add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
 #+end_src
+** Org
+#+begin_src emacs-lisp
+  (with-eval-after-load "org"
+    (plist-put org-format-latex-options :scale 1.5))
+#+end_src
+** Rust
+#+begin_src emacs-lisp
+  (straight-use-package 'rust-mode)
+  (autoload 'rust-mode "rust-mode" "Major mode for Rust code." t)
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+#+end_src
 ** Zig
 #+begin_src emacs-lisp
   (straight-use-package 'zig-mode)
