@@ -57,7 +57,7 @@ Minimal and compatible completion framework.
   (require 'vertico)
   (vertico-mode +1)
 #+end_src
-** Disable extra user interface
+** Minimal interface
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t
         use-dialog-box nil)
@@ -65,7 +65,7 @@ Minimal and compatible completion framework.
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
 #+end_src
-** Highlight matching parenthesis
+** Show paren
 #+begin_src emacs-lisp
   (show-paren-mode +1)
 #+end_src
@@ -74,7 +74,7 @@ Minimal and compatible completion framework.
   (setq display-line-numbers-type t)
   (global-display-line-numbers-mode +1)
 #+end_src
-** Show whitespace
+** Whitespace
 #+begin_src emacs-lisp
   (setq whitespace-style '(face tabs trailing tab-mark))
   (global-whitespace-mode +1)
@@ -101,7 +101,7 @@ Like vim tabs.
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
-** Indentation
+** Dtrt indent
 #+begin_src emacs-lisp
   (straight-use-package 'dtrt-indent)
   (require 'dtrt-indent)
@@ -162,7 +162,7 @@ Like vim tabs.
         backup-inhibited t
         create-lockfiles nil)
 #+end_src
-** Don't show compilation warnings
+** Suppress comp warnings
 #+begin_src emacs-lisp
   (with-eval-after-load "warnings"
     (add-to-list 'warning-suppress-types '(comp)))
@@ -172,6 +172,8 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
   (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
+  (with-eval-after-load "eglot"
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
 ** Follow symlinks
 #+begin_src emacs-lisp
