@@ -3,3 +3,5 @@
 	email = alexandre.liao@gmail.com
 [clean]
 	requireForce = false
+[core]
+	pager = less --mouse

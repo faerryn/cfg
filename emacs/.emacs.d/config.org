@@ -64,7 +64,6 @@ Minimal and compatible completion framework.
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
-  (tooltip-mode -1)
 #+end_src
 ** Highlight matching parenthesis
 #+begin_src emacs-lisp
