@@ -21,6 +21,10 @@ Straight.el is a declarative package manager for Emacs.
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (kill-buffer straight-process-buffer)
+              (delete-file straight--process-stderr)))
 #+end_src
 ** GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
