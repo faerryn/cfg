@@ -1,8 +1,5 @@
 --- init.lua
 
--- autocmd group
-vim.api.nvim_command("augroup custom | autocmd! | augroup END")
-
 -- switch buffers without writing to disk
 vim.opt.hidden = true
 
@@ -61,7 +58,7 @@ vim.opt.termguicolors = (os.getenv("COLORTERM") == "truecolor")
 vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 
 -- highlight yank
-vim.api.nvim_command("autocmd custom TextYankPost * lua vim.highlight.on_yank()")
+vim.api.nvim_command("autocmd! TextYankPost * lua vim.highlight.on_yank()")
 
 -- netrw
 vim.g.netrw_banner    = 0
