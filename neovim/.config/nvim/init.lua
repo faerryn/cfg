@@ -36,7 +36,7 @@ vim.opt.list = true
 vim.opt.nrformats = "alpha,octal,hex,bin"
 
 -- menus shouldn't cobble my text
-vim.opt.completeopt = "menuone,noinsert"
+vim.opt.completeopt = "menuone,preview,noinsert"
 
 -- highlight matches incrementally
 vim.opt.inccommand = "nosplit"
