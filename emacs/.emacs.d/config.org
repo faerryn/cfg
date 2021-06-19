@@ -61,6 +61,11 @@ Minimal and compatible completion framework.
   (require 'vertico)
   (vertico-mode +1)
 #+end_src
+** Line numbers
+#+begin_src emacs-lisp
+  (setq display-line-numbers-type t)
+  (global-display-line-numbers-mode +1)
+#+end_src
 ** Minimal interface
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t
@@ -72,16 +77,6 @@ Minimal and compatible completion framework.
 ** Show paren
 #+begin_src emacs-lisp
   (show-paren-mode +1)
-#+end_src
-** Line numbers
-#+begin_src emacs-lisp
-  (setq display-line-numbers-type t)
-  (global-display-line-numbers-mode +1)
-#+end_src
-** Whitespace
-#+begin_src emacs-lisp
-  (setq whitespace-style '(face tabs trailing tab-mark))
-  (global-whitespace-mode +1)
 #+end_src
 ** Tab bar
 Like vim tabs.
@@ -100,16 +95,21 @@ Like vim tabs.
 #+begin_src emacs-lisp
   (setq-default truncate-lines t)
 #+end_src
-* Editing
-** Electric pairs
+** Whitespace
 #+begin_src emacs-lisp
-  (electric-pair-mode +1)
+  (setq whitespace-style '(face tabs trailing tab-mark))
+  (global-whitespace-mode +1)
 #+end_src
+* Editing
 ** Dtrt indent
 #+begin_src emacs-lisp
   (straight-use-package 'dtrt-indent)
   (require 'dtrt-indent)
   (dtrt-indent-global-mode +1)
+#+end_src
+** Electric pairs
+#+begin_src emacs-lisp
+  (electric-pair-mode +1)
 #+end_src
 ** Tab complete
 #+begin_src emacs-lisp
@@ -166,11 +166,6 @@ Like vim tabs.
         backup-inhibited t
         create-lockfiles nil)
 #+end_src
-** Suppress comp warnings
-#+begin_src emacs-lisp
-  (with-eval-after-load "warnings"
-    (add-to-list 'warning-suppress-types '(comp)))
-#+end_src
 ** Eglot
 Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
@@ -183,4 +178,9 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (setq find-file-visit-truename t
         vc-follow-symlinks t)
+#+end_src
+** Suppress comp warnings
+#+begin_src emacs-lisp
+  (with-eval-after-load "warnings"
+    (add-to-list 'warning-suppress-types '(comp)))
 #+end_src
