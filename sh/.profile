@@ -5,6 +5,6 @@ export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_DATA_DIRS=/usr/local/share:/usr/share:"$XDG_DATA_DIRS"
 
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
-export LESSHISTFILE="$XDG_DATA_HOME"/lesshst
 
-export PATH="$HOME"/local/bin:"$PATH"
+export LESS="-R --mouse"
+export LESSHISTFILE="$XDG_DATA_HOME"/lesshst
