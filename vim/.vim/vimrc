@@ -1,0 +1,59 @@
+set nocompatible
+set viminfofile=~/.vim/viminfo
+syntax on
+filetype indent on 
+
+set hidden
+
+set noswapfile
+
+set undofile
+set undodir=~/.vim/undo
+call mkdir(&undodir, "p")
+
+set title
+
+set laststatus=2
+set showtabline=2
+
+set number
+
+set signcolumn=yes
+
+set nowrap
+
+set splitbelow
+set splitright
+
+set list
+
+set completeopt=menuone,preview,noinsert
+
+set clipboard=unnamedplus
+
+set mouse=ar
+
+set lazyredraw
+
+set background=dark
+let &termguicolors = (getenv("COLORTERM") == "truecolor")
+
+noremap Y y$
+
+let s:user_packadd_path = "faerryn/user.vim/default/default"
+let s:user_install_path = expand("~/.vim/pack/user/opt/".s:user_packadd_path)
+if !isdirectory(s:user_install_path)
+	call system("git clone --quiet --depth 1 https://github.com/faerryn/user.vim.git \"".s:user_install_path."\"")
+endif
+execute "packadd" s:user_packadd_path
+
+call user#use("faerryn/user.vim")
+
+call user#use("ryvnf/readline.vim")
+
+call user#use("tpope/vim-repeat")
+
+call user#use("tpope/vim-sleuth")
+
+let g:zig_fmt_autosave = 0
+call user#use("ziglang/zig.vim")
