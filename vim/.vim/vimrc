@@ -26,6 +26,7 @@ set splitbelow
 set splitright
 
 set list
+let &listchars = "eol:$,tab:> ,trail:-"
 
 set completeopt=menuone,preview,noinsert
 

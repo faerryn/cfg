@@ -75,7 +75,8 @@ Minimal and compatible completion framework.
   (setq inhibit-startup-screen t
         use-dialog-box nil)
   (menu-bar-mode -1)
-  (scroll-bar-mode -1)
+  (when (featurep 'scroll-bar)
+    (scroll-bar-mode -1))
   (tool-bar-mode -1)
 #+end_src
 ** Show paren
@@ -118,6 +119,10 @@ Like vim tabs.
 ** Tab complete
 #+begin_src emacs-lisp
   (setq tab-always-indent 'complete)
+#+end_src
+** Xterm mouse
+#+begin_src emacs-lisp
+  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
 * Major modes
 ** Cc
