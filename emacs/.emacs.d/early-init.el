@@ -1,4 +1,4 @@
-;;; early-config.el -*- lexical-binding: t; -*-
+;;; early-init.el -*- lexical-binding: t; -*-
 
 ;; Disable default garbage collection
 (setq gc-cons-threshold most-positive-fixnum)

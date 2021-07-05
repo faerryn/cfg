@@ -4,7 +4,7 @@
 * Prologue
 ** Lexical Binding
 #+begin_src emacs-lisp
-  ;;; init.el -*- lexical-binding: t; -*-
+  ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
 ** Straight.el
 Straight.el is a declarative package manager for Emacs.
