@@ -2,6 +2,7 @@ PS1='%F{green}%1~%f %(?..%F{red})%)%f '
 
 HISTSIZE=10000
 SAVEHIST="$HISTSIZE"
+HISTFILE="$HOME"/.zhistory
 
 alias ls='\ls -hvFX --color=auto --group-directories-first'
 alias ll='ls -g'

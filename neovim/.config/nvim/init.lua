@@ -32,9 +32,6 @@ vim.opt.splitright = true
 -- show tabs and trailing spaces
 vim.opt.list = true
 
--- increment and decrement everything
-vim.opt.nrformats = "alpha,octal,hex,bin"
-
 -- menus shouldn't cobble my text
 vim.opt.completeopt = "menuone,preview,noinsert"
 
@@ -74,9 +71,6 @@ vim.api.nvim_command("command! Lshell topleft vsplit term://"..vim.o.shell)
 vim.api.nvim_command("command! Sshell split          term://"..vim.o.shell)
 vim.api.nvim_command("command! Vshell vsplit         term://"..vim.o.shell)
 vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
-
--- gui font
-vim.opt.guifont = "Source Code Pro 12"
 
 -- bootstrap user.nvim
 local user_packadd_path = "faerryn/user.nvim/default/default"

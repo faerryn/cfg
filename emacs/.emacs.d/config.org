@@ -135,10 +135,7 @@ Like vim tabs.
 #+begin_src emacs-lisp
   (with-eval-after-load "erc"
     (setq erc-default-server "irc.libera.chat"
-          erc-default-port 6697
-          erc-prompt-for-nickserv-password nil
-          erc-use-auth-source-for-nickserv-password t
-          erc-prompt-for-password nil))
+          erc-default-port 6697))
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
