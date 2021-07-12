@@ -61,10 +61,6 @@ Minimal and compatible completion framework.
   (require 'vertico)
   (vertico-mode +1)
 #+end_src
-** Font
-#+begin_src emacs-lisp
-  (set-face-attribute 'default nil :height 120)
-#+end_src
 ** Line numbers
 #+begin_src emacs-lisp
   (setq display-line-numbers-type t)
