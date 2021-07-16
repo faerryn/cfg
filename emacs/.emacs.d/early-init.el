@@ -1,11 +1,5 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
-;; Disable default garbage collection
-(setq gc-cons-threshold most-positive-fixnum)
-
-;; Disable default package manager
-(setq package-enable-at-startup nil)
-
 ;; Load config.org
 (let* ((config (expand-file-name "config" (file-name-directory load-file-name)))
        (config.org (concat config ".org"))
