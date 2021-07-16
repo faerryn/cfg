@@ -76,7 +76,7 @@ vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
 local user_packadd_path = "faerryn/user.nvim/default/default"
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
 if vim.fn.isdirectory(user_install_path) == 0 then
-    os.execute([[git clone --depth 1 https://github.com/faerryn/user.nvim.git "]]..user_install_path..[["]])
+    os.execute([[git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "]]..user_install_path..[["]])
 end
 vim.api.nvim_command("packadd "..user_packadd_path)
 
