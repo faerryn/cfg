@@ -89,9 +89,9 @@ Like vim tabs.
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
-  (straight-use-package 'modus-themes)
-  (require 'modus-themes)
-  (load-theme 'modus-vivendi t)
+  (straight-use-package 'doom-themes)
+  (require 'doom-themes)
+  (load-theme 'doom-one t)
 #+end_src
 ** Truncate lines
 #+begin_src emacs-lisp
