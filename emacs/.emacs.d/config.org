@@ -107,7 +107,8 @@ Like vim tabs.
 #+begin_src emacs-lisp
   (straight-use-package 'dtrt-indent)
   (require 'dtrt-indent)
-  (dtrt-indent-global-mode +1)
+  (add-hook 'find-file-hook #'dtrt-indent-mode)
+  (add-hook 'find-file-hook #'dtrt-indent-adapt)
 #+end_src
 ** Electric pairs
 #+begin_src emacs-lisp

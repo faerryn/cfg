@@ -101,6 +101,22 @@ use {
     init = function() vim.g.zig_fmt_autosave = 0 end,
 }
 
+-- nice colorscheme
+use {
+    "joshdick/onedark.vim",
+    config = function() vim.api.nvim_command("colorscheme onedark") end,
+}
+
+use {
+    "itchyny/lightline.vim",
+    config = function()
+        vim.g.lightline = {
+            colorscheme = vim.g.colors_name,
+            tabline = { right = {} },
+        }
+    end,
+}
+
 -- Fixes neovim#12587
 use "antoinemadec/FixCursorHold.nvim"
 
@@ -110,7 +126,7 @@ use {
     update = function() vim.api.nvim_command("TSUpdate") end,
     config = function()
         require("nvim-treesitter.configs").setup {
-            ensure_installed = { "bash", "c", "cpp", "lua", "zig" },
+            ensure_installed = { "bash", "c", "cpp", "lua", "latex", "zig" },
             highlight = { enable = true },
             indent = { enable = true },
         }
