@@ -76,6 +76,12 @@ Minimal and compatible completion framework.
     (scroll-bar-mode -1))
   (tool-bar-mode -1)
 #+end_src
+** Modeline
+#+begin_src emacs-lisp
+  (straight-use-package 'mood-line)
+  (require 'mood-line)
+  (mood-line-mode +1)
+#+end_src
 ** Show paren
 #+begin_src emacs-lisp
   (show-paren-mode +1)
