@@ -76,7 +76,7 @@ vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
 local user_packadd_path = "faerryn/user.nvim/default/default"
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
 if vim.fn.isdirectory(user_install_path) == 0 then
-    os.execute([[git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "]]..user_install_path..[["]])
+    os.execute("git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "..vim.fn.fnameescape(user_install_path))
 end
 vim.api.nvim_command("packadd "..user_packadd_path)
 
@@ -129,7 +129,6 @@ use {
 }
 
 -- colorize hexes
-vim.g.loaded_colorizer = 1
 use {
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -144,6 +143,7 @@ use {
             css_fn = false,
             mode = "background",
         })
+        vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
         vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
     end,
 }
