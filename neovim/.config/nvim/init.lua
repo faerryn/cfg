@@ -107,6 +107,7 @@ use {
     config = function() vim.api.nvim_command("colorscheme onedark") end,
 }
 
+-- cool bar
 use {
     "itchyny/lightline.vim",
     config = function()
@@ -130,6 +131,26 @@ use {
             highlight = { enable = true },
             indent = { enable = true },
         }
+    end,
+}
+
+-- colorize hexes
+vim.g.loaded_colorizer = 1
+use {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+        require("colorizer").setup({}, {
+            RGB = true,
+            RRGGBB = true,
+            names = false,
+            RRGGBBAA = true,
+            rgb_fn = false,
+            hsl_fn = false,
+            css = false,
+            css_fn = false,
+            mode = "background",
+        })
+        vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
     end,
 }
 
