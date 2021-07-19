@@ -101,17 +101,6 @@ use {
     config = function() vim.api.nvim_command("colorscheme onedark") end,
 }
 
--- cool bar
-use {
-    "itchyny/lightline.vim",
-    config = function()
-        vim.g.lightline = {
-            colorscheme = vim.g.colors_name,
-            tabline = { right = {} },
-        }
-    end,
-}
-
 -- Fixes neovim#12587
 use "antoinemadec/FixCursorHold.nvim"
 
