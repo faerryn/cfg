@@ -95,12 +95,6 @@ use "tpope/vim-repeat"
 -- tpope's indentation detector
 use "tpope/vim-sleuth"
 
--- zig is the c of the future
-use {
-    "ziglang/zig.vim",
-    init = function() vim.g.zig_fmt_autosave = 0 end,
-}
-
 -- nice colorscheme
 use {
     "joshdick/onedark.vim",
@@ -121,13 +115,13 @@ use {
 -- Fixes neovim#12587
 use "antoinemadec/FixCursorHold.nvim"
 
--- correct syntax highlighting
+-- good syntax highlighting
 use {
     "nvim-treesitter/nvim-treesitter",
     update = function() vim.api.nvim_command("TSUpdate") end,
     config = function()
         require("nvim-treesitter.configs").setup {
-            ensure_installed = { "bash", "c", "cpp", "lua", "latex", "zig" },
+            ensure_installed = { "bash", "c", "cpp", "lua", "latex" },
             highlight = { enable = true },
             indent = { enable = true },
         }
