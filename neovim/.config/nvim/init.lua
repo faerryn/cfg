@@ -122,7 +122,7 @@ use {
     "norcalli/nvim-colorizer.lua",
     config = function()
         require("colorizer").setup({}, {
-            RGB = true,
+            RGB = false,
             RRGGBB = true,
             names = false,
             RRGGBBAA = true,
