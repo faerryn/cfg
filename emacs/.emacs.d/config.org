@@ -32,36 +32,52 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
   (require 'gcmh)
-  (gcmh-mode +1)
+  (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
-* User interface
-** Completion
-*** Consult
+* Completion
+** Consult
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
   (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
-*** Marginalia
+** Marginalia
 #+begin_src emacs-lisp
   (straight-use-package 'marginalia)
   (require 'marginalia)
   (marginalia-mode +1)
 #+end_src
-*** Orderless
+** Orderless
 Smarter sorting in completion buffers.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
   (require 'orderless)
   (setq completion-styles '(orderless))
 #+end_src
-*** Vertico
+** Vertico
 Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (straight-use-package 'vertico)
   (require 'vertico)
   (vertico-mode +1)
 #+end_src
+* Editing
+** Dtrt indent
+#+begin_src emacs-lisp
+  (straight-use-package 'dtrt-indent)
+  (require 'dtrt-indent)
+  (add-hook 'find-file-hook #'dtrt-indent-mode)
+  (add-hook 'find-file-hook #'dtrt-indent-adapt)
+#+end_src
+** Electric pairs
+#+begin_src emacs-lisp
+  (electric-pair-mode +1)
+#+end_src
+** Tab complete
+#+begin_src emacs-lisp
+  (setq tab-always-indent 'complete)
+#+end_src
+* Looks
 ** Line numbers
 #+begin_src emacs-lisp
   (setq display-line-numbers-type t)
@@ -86,13 +102,6 @@ Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (show-paren-mode +1)
 #+end_src
-** Tab bar
-Like vim tabs.
-#+begin_src emacs-lisp
-  (setq tab-bar-close-button nil)
-  (setq tab-bar-new-button nil)
-  (tab-bar-mode +1)
-#+end_src
 ** Theme
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
@@ -107,26 +116,6 @@ Like vim tabs.
 #+begin_src emacs-lisp
   (setq whitespace-style '(face tabs trailing tab-mark))
   (global-whitespace-mode +1)
-#+end_src
-* Editing
-** Dtrt indent
-#+begin_src emacs-lisp
-  (straight-use-package 'dtrt-indent)
-  (require 'dtrt-indent)
-  (add-hook 'find-file-hook #'dtrt-indent-mode)
-  (add-hook 'find-file-hook #'dtrt-indent-adapt)
-#+end_src
-** Electric pairs
-#+begin_src emacs-lisp
-  (electric-pair-mode +1)
-#+end_src
-** Tab complete
-#+begin_src emacs-lisp
-  (setq tab-always-indent 'complete)
-#+end_src
-** Xterm mouse
-#+begin_src emacs-lisp
-  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
 * Major modes
 ** Cc
@@ -161,4 +150,15 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (with-eval-after-load "warnings"
     (add-to-list 'warning-suppress-types '(comp)))
+#+end_src
+** Tab bar
+Like vim tabs.
+#+begin_src emacs-lisp
+  (setq tab-bar-close-button nil)
+  (setq tab-bar-new-button nil)
+  (tab-bar-mode +1)
+#+end_src
+** Xterm mouse
+#+begin_src emacs-lisp
+  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
