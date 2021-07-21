@@ -9,9 +9,9 @@
 ** Straight.el
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
-  (setq package-enable-at-startup nil)
-  (setq straight-use-symlinks t
+  (setq straight-check-for-modifications '(find-when-checking)
         straight-disable-autoloads t
+        straight-use-symlinks t
         straight-vc-git-default-clone-depth 1)
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
@@ -22,10 +22,6 @@ Straight.el is a declarative package manager for Emacs.
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (kill-buffer straight-process-buffer)
-              (delete-file straight--process-stderr)))
 #+end_src
 ** GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
