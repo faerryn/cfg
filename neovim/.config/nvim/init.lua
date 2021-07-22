@@ -65,18 +65,18 @@ vim.g.netrw_list_hide = [[^\.\.\?/$]]
 vim.g.netrw_winsize   = 25
 
 -- shell split commands
-vim.api.nvim_command("command! Shell  edit           term://"..vim.o.shell)
-vim.api.nvim_command("command! Hshell split          term://"..vim.o.shell)
-vim.api.nvim_command("command! Lshell topleft vsplit term://"..vim.o.shell)
-vim.api.nvim_command("command! Sshell split          term://"..vim.o.shell)
-vim.api.nvim_command("command! Vshell vsplit         term://"..vim.o.shell)
-vim.api.nvim_command("command! Tshell tabnew         term://"..vim.o.shell)
+vim.api.nvim_command("command! Shell  edit           term://"..vim.opt.shell:get())
+vim.api.nvim_command("command! Hshell split          term://"..vim.opt.shell:get())
+vim.api.nvim_command("command! Lshell topleft vsplit term://"..vim.opt.shell:get())
+vim.api.nvim_command("command! Sshell split          term://"..vim.opt.shell:get())
+vim.api.nvim_command("command! Vshell vsplit         term://"..vim.opt.shell:get())
+vim.api.nvim_command("command! Tshell tabnew         term://"..vim.opt.shell:get())
 
 -- bootstrap user.nvim
 local user_packadd_path = "faerryn/user.nvim/default/default"
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
 if vim.fn.isdirectory(user_install_path) == 0 then
-    os.execute("git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "..vim.fn.fnameescape(user_install_path))
+  os.execute("git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "..vim.fn.fnameescape(user_install_path))
 end
 vim.api.nvim_command("packadd "..user_packadd_path)
 
@@ -92,112 +92,109 @@ use "ryvnf/readline.vim"
 -- period (.) repeat for plugins
 use "tpope/vim-repeat"
 
--- tpope's indentation detector
-use "tpope/vim-sleuth"
-
 -- nice colorscheme
 use {
-    "joshdick/onedark.vim",
-    config = function() vim.api.nvim_command("colorscheme onedark") end,
+  "joshdick/onedark.vim",
+  config = function() vim.api.nvim_command("colorscheme onedark") end,
 }
 
 
 -- cool statusline
 use {
-    "glepnir/galaxyline.nvim",
-    config = function()
-        local galaxyline = require("galaxyline")
-        local colors = require('galaxyline.theme').default
+  "glepnir/galaxyline.nvim",
+  config = function()
+    local galaxyline = require("galaxyline")
+    local colors = require('galaxyline.theme').default
 
-        local comment_fg = string.format("#%x", vim.api.nvim_get_hl_by_name("Comment", true).foreground)
+    local comment_fg = string.format("#%x", vim.api.nvim_get_hl_by_name("Comment", true).foreground)
 
-        galaxyline.section.left[1] = {
-            LeftSpace = {
-                provider = "WhiteSpace",
-                highlight = { "NONE", colors.bg },
-                separator = " ",
-                separator_highlight = { "NONE", colors.bg },
-            }
-        }
-        galaxyline.section.left[2] = {
-            Modified = {
-                provider = function()
-                    if not vim.bo.modified then
-                        return "  "
-                    end
-                        return "● "
-                end,
-                highlight = { colors.red, colors.bg, "bold" },
-            }
-        }
-        galaxyline.section.left[3] = {
-            FileName = {
-                provider = function()
-                    local bufname = vim.api.nvim_buf_get_name(0)
-                    if bufname:len() > 0 then
-                        return vim.fn.fnamemodify(bufname, ":t")
-                    else
-                        return "[No Name]"
-                    end
-                end,
-                highlight = { colors.fg, colors.bg, "bold" },
-                separator = "  ",
-                separator_highlight = { "NONE", colors.bg },
-            }
-        }
-        galaxyline.section.left[4] = {
-            LineColumn = {
-                provider = function()
-                    local cursor = vim.api.nvim_win_get_cursor(0)
-                    return tostring(cursor[1])..":"..tostring(cursor[2])
-                end,
-                highlight = { colors.fg, colors.bg },
-                separator = " ",
-                separator_highlight = { "NONE", colors.bg },
-            }
-        }
-        galaxyline.section.left[5] = {
-            LinePercent = {
-                provider = function()
-                    local wintop = vim.fn.line("w0")
-                    if wintop == 1 then
-                        return "Top"
-                    end
+    galaxyline.section.left[1] = {
+      LeftSpace = {
+        provider = "WhiteSpace",
+        highlight = { "NONE", colors.bg },
+        separator = " ",
+        separator_highlight = { "NONE", colors.bg },
+      }
+    }
+    galaxyline.section.left[2] = {
+      Modified = {
+        provider = function()
+          if not vim.opt.modified:get() then
+            return "  "
+          end
+          return "● "
+        end,
+        highlight = { colors.red, colors.bg, "bold" },
+      }
+    }
+    galaxyline.section.left[3] = {
+      FileName = {
+        provider = function()
+          local bufname = vim.api.nvim_buf_get_name(0)
+          if bufname:len() > 0 then
+            return vim.fn.fnamemodify(bufname, ":t")
+          else
+            return "[No Name]"
+          end
+        end,
+        highlight = { colors.fg, colors.bg, "bold" },
+        separator = "  ",
+        separator_highlight = { "NONE", colors.bg },
+      }
+    }
+    galaxyline.section.left[4] = {
+      LineColumn = {
+        provider = function()
+          local cursor = vim.api.nvim_win_get_cursor(0)
+          return tostring(cursor[1])..":"..tostring(cursor[2])
+        end,
+        highlight = { colors.fg, colors.bg },
+        separator = " ",
+        separator_highlight = { "NONE", colors.bg },
+      }
+    }
+    galaxyline.section.left[5] = {
+      LinePercent = {
+        provider = function()
+          local wintop = vim.fn.line("w0")
+          if wintop == 1 then
+            return "Top"
+          end
 
-                    local line_count = vim.api.nvim_buf_line_count(0)
-                    if vim.fn.line("w$") >= line_count then
-                        return "Bottom"
-                    end
+          local line_count = vim.api.nvim_buf_line_count(0)
+          if vim.fn.line("w$") >= line_count then
+            return "Bottom"
+          end
 
-                    return string.format("%d%%", 100 * wintop / line_count)
-                end,
-                highlight = { comment_fg, colors.bg },
-            }
-        }
+          return string.format("%d%%", 100 * wintop / line_count)
+        end,
+        highlight = { comment_fg, colors.bg },
+      }
+    }
 
-        galaxyline.section.right[1] = {
-            GitBranch = {
-                provider = "GitBranch",
-                highlight = { comment_fg, colors.bg },
-            }
-        }
-        galaxyline.section.right[2] = {
-            FileTypeName = {
-                provider = "FileTypeName",
-                highlight = { colors.fg, colors.bg, "bold" },
-                separator = "  ",
-                separator_highlight = { "NONE", colors.bg },
-            }
-        }
-        galaxyline.section.right[3] = {
-            RightSpace = {
-                provider = "WhiteSpace",
-                highlight = { "NONE", colors.bg },
-                separator = "   ",
-                separator_highlight = { "NONE", colors.bg },
-            }
-        }
-    end,
+    galaxyline.section.right[1] = {
+      GitBranch = {
+        provider = "GitBranch",
+        highlight = { comment_fg, colors.bg },
+      }
+    }
+    galaxyline.section.right[2] = {
+      FileTypeName = {
+        provider = "FileTypeName",
+        highlight = { colors.fg, colors.bg, "bold" },
+        separator = "  ",
+        separator_highlight = { "NONE", colors.bg },
+      }
+    }
+    galaxyline.section.right[3] = {
+      RightSpace = {
+        provider = "WhiteSpace",
+        highlight = { "NONE", colors.bg },
+        separator = "   ",
+        separator_highlight = { "NONE", colors.bg },
+      }
+    }
+  end,
 }
 
 -- Fixes neovim#12587
@@ -205,35 +202,35 @@ use "antoinemadec/FixCursorHold.nvim"
 
 -- good syntax highlighting
 use {
-    "nvim-treesitter/nvim-treesitter",
-    update = function() vim.api.nvim_command("TSUpdate") end,
-    config = function()
-        require("nvim-treesitter.configs").setup {
-            ensure_installed = { "bash", "c", "cpp", "lua", "latex" },
-            highlight = { enable = true },
-            indent = { enable = true },
-        }
-    end,
+  "nvim-treesitter/nvim-treesitter",
+  update = function() vim.api.nvim_command("TSUpdate") end,
+  config = function()
+    require("nvim-treesitter.configs").setup {
+      ensure_installed = { "bash", "c", "cpp", "lua", "latex" },
+      highlight = { enable = true },
+      indent = { enable = true },
+    }
+  end,
 }
 
 -- colorize hexes
 use {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-        require("colorizer").setup({}, {
-            RGB = false,
-            RRGGBB = true,
-            names = false,
-            RRGGBBAA = true,
-            rgb_fn = false,
-            hsl_fn = false,
-            css = false,
-            css_fn = false,
-            mode = "background",
-        })
-        vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
-        vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
-    end,
+  "norcalli/nvim-colorizer.lua",
+  config = function()
+    require("colorizer").setup({}, {
+      RGB = false,
+      RRGGBB = true,
+      names = false,
+      RRGGBBAA = true,
+      rgb_fn = false,
+      hsl_fn = false,
+      css = false,
+      css_fn = false,
+      mode = "background",
+    })
+    vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
+    vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
+  end,
 }
 
 -- wait for all installation and configs to finish
