@@ -58,13 +58,6 @@ Minimal and compatible completion framework.
   (vertico-mode +1)
 #+end_src
 * Editing
-** Dtrt indent
-#+begin_src emacs-lisp
-  (straight-use-package 'dtrt-indent)
-  (require 'dtrt-indent)
-  (add-hook 'find-file-hook #'dtrt-indent-mode)
-  (add-hook 'find-file-hook #'dtrt-indent-adapt)
-#+end_src
 ** Electric pairs
 #+begin_src emacs-lisp
   (electric-pair-mode +1)

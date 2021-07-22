@@ -3,6 +3,9 @@
 ;; Disable garbage collection
 (setq gc-cons-threshold most-positive-fixnum)
 
+;; Disable package.el
+(setq package-enable-at-startup nil)
+
 ;; Load config.org
 (let* ((config (expand-file-name "config" (file-name-directory load-file-name)))
        (config.org (concat config ".org"))
