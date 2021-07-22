@@ -113,6 +113,17 @@ Minimal and compatible completion framework.
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
   (require 'dired-x)
 #+end_src
+* Text Terminal
+** Xterm mouse
+#+begin_src emacs-lisp
+  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
+#+end_src
+** Xclip
+#+begin_src emacs-lisp
+  (straight-use-package 'xclip)
+  (autoload 'xclip-mode "xclip" "Minor mode to use the `xclip' program to copy&paste." t)
+  (add-hook 'tty-setup-hook #'xclip-mode)
+#+end_src
 * Truncate lines
 #+begin_src emacs-lisp
   (setq-default truncate-lines t)
@@ -145,8 +156,4 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+begin_src emacs-lisp
   (with-eval-after-load "warnings"
     (add-to-list 'warning-suppress-types '(comp)))
-#+end_src
-* Xterm mouse
-#+begin_src emacs-lisp
-  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
