@@ -1,12 +1,11 @@
 #+TITLE: Faerryn's Emacs Config
 #+STARTUP: indent overview
 
-* Prologue
-** Lexical Binding
+* Lexical Binding
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
-** Straight.el
+* Straight.el
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (setq straight-check-for-modifications '(find-when-checking)
@@ -23,7 +22,7 @@ Straight.el is a declarative package manager for Emacs.
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
-** GCMH
+* GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
@@ -57,22 +56,20 @@ Minimal and compatible completion framework.
   (require 'vertico)
   (vertico-mode +1)
 #+end_src
-* Editing
-** Electric pairs
+* Electric pairs
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
-** Tab complete
+* Tab complete
 #+begin_src emacs-lisp
   (setq tab-always-indent 'complete)
 #+end_src
-* Looks
-** Line numbers
+* Line numbers
 #+begin_src emacs-lisp
   (setq display-line-numbers-type t)
   (global-display-line-numbers-mode +1)
 #+end_src
-** Minimal interface
+* Minimal interface
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t
         use-dialog-box nil)
@@ -81,73 +78,71 @@ Minimal and compatible completion framework.
     (scroll-bar-mode -1))
   (tool-bar-mode -1)
 #+end_src
-** Modeline
+* Modeline
 #+begin_src emacs-lisp
   (straight-use-package 'mood-line)
   (require 'mood-line)
   (mood-line-mode +1)
 #+end_src
-** Show paren
+* Show paren
 #+begin_src emacs-lisp
   (show-paren-mode +1)
 #+end_src
-** Theme
+* Theme
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
   (require 'doom-themes)
   (load-theme 'doom-one t)
 #+end_src
-** Truncate lines
+* Truncate lines
 #+begin_src emacs-lisp
   (setq-default truncate-lines t)
 #+end_src
-** Whitespace
+* Whitespace
 #+begin_src emacs-lisp
   (setq whitespace-style '(face tabs trailing tab-mark))
   (global-whitespace-mode +1)
 #+end_src
-* Major modes
-** Cc
+* Cc mode
 #+begin_src emacs-lisp
   (with-eval-after-load "cc-mode"
     (advice-add 'c-indent-command :override #'indent-for-tab-command))
 #+end_src
-** Dired
+* Dired mode
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
   (require 'dired-x)
 #+end_src
-* Sundry
-** Clean file system
-#+begin_src emacs-lisp
-  (setq auto-save-default nil
-        backup-inhibited t
-        create-lockfiles nil)
-#+end_src
-** Eglot
-Eglot is a language server protocol (LSP) client for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'eglot)
-  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
-#+end_src
-** Follow symlinks
-#+begin_src emacs-lisp
-  (setq find-file-visit-truename t
-        vc-follow-symlinks t)
-#+end_src
-** Suppress comp warnings
-#+begin_src emacs-lisp
-  (with-eval-after-load "warnings"
-    (add-to-list 'warning-suppress-types '(comp)))
-#+end_src
-** Tab bar
+* Tab bar
 Like vim tabs.
 #+begin_src emacs-lisp
   (setq tab-bar-close-button nil)
   (setq tab-bar-new-button nil)
   (tab-bar-mode +1)
 #+end_src
-** Xterm mouse
+* Clean file system
+#+begin_src emacs-lisp
+  (setq auto-save-default nil
+        backup-inhibited t
+        create-lockfiles nil)
+#+end_src
+* Eglot
+Eglot is a language server protocol (LSP) client for Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'eglot)
+  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
+#+end_src
+* Follow symlinks
+#+begin_src emacs-lisp
+  (setq find-file-visit-truename t
+        vc-follow-symlinks t)
+#+end_src
+* Suppress comp warnings
+#+begin_src emacs-lisp
+  (with-eval-after-load "warnings"
+    (add-to-list 'warning-suppress-types '(comp)))
+#+end_src
+* Xterm mouse
 #+begin_src emacs-lisp
   (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
