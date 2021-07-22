@@ -54,8 +54,9 @@ vim.opt.termguicolors = (os.getenv("COLORTERM") == "truecolor")
 -- Y to eol
 vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 
--- highlight yank
-vim.api.nvim_command("autocmd! TextYankPost * lua vim.highlight.on_yank()")
+-- highlight on yank
+vim.api.nvim_command("augroup faerryn | autocmd! | augroup END")
+vim.api.nvim_command("autocmd! faerryn TextYankPost * lua vim.highlight.on_yank()")
 
 -- netrw
 vim.g.netrw_banner    = 0
