@@ -1,10 +1,10 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
 ;; Disable garbage collection
-(setq gc-cons-threshold most-positive-fixnum)
+(custom-set-variables '(gc-cons-threshold most-positive-fixnum))
 
 ;; Disable package.el
-(setq package-enable-at-startup nil)
+(custom-set-variables '(package-enable-at-startup nil))
 
 ;; Load config.org
 (let* ((config (expand-file-name "config" (file-name-directory load-file-name)))
