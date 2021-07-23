@@ -8,10 +8,11 @@
 * Straight.el
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
-  (setq straight-check-for-modifications '(find-when-checking)
-        straight-disable-autoloads t
-        straight-use-symlinks t
-        straight-vc-git-default-clone-depth 1)
+  (custom-set-variables
+   '(straight-check-for-modifications '(find-when-checking))
+   '(straight-disable-autoloads t)
+   '(straight-use-symlinks t)
+   '(straight-vc-git-default-clone-depth 1))
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
@@ -32,12 +33,12 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 * Appearance
 ** Minimal interface
 #+begin_src emacs-lisp
-  (setq inhibit-startup-screen t
-        use-dialog-box nil
-        menu-bar-mode nil
-        tool-bar-mode nil)
-  (when (featurep 'scroll-bar)
-    (scroll-bar-mode -1))
+  (custom-set-variables
+   '(inhibit-startup-screen t)
+   '(use-dialog-box nil))
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
@@ -58,12 +59,12 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 ** Tab complete
 #+begin_src emacs-lisp
-  (setq tab-always-indent 'complete)
+  (custom-set-variables '(tab-always-indent 'complete))
 #+end_src
 * Guides
 ** Line numbers
 #+begin_src emacs-lisp
-  (setq display-line-numbers-type t)
+  (custom-set-variables '(display-line-numbers-type t))
   (global-display-line-numbers-mode +1)
 #+end_src
 ** Show paren
@@ -72,7 +73,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 ** Whitespace
 #+begin_src emacs-lisp
-  (setq whitespace-style '(face tabs trailing tab-mark))
+  (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
   (global-whitespace-mode +1)
 #+end_src
 * Major Modes
@@ -83,7 +84,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 ** Dired mode
 #+begin_src emacs-lisp
-  (setq dired-listing-switches "-l -hgvAFX --group-directories-first")
+  (custom-set-variables '(dired-listing-switches "-l -hgvAFX --group-directories-first"))
   (require 'dired-x)
 #+end_src
 * Minibuffer
@@ -104,7 +105,7 @@ Smarter sorting in completion buffers.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
   (require 'orderless)
-  (setq completion-styles '(orderless))
+  (custom-set-variables '(completion-styles (orderless)))
 #+end_src
 ** Vertico
 Minimal and compatible completion framework.
@@ -126,9 +127,10 @@ Minimal and compatible completion framework.
 #+end_src
 * Clean File System
 #+begin_src emacs-lisp
-  (setq auto-save-default nil
-        backup-inhibited t
-        create-lockfiles nil)
+  (custom-set-variables
+   '(auto-save-default nil)
+   '(backup-inhibited t)
+   '(create-lockfiles nil))
 #+end_src
 * Eglot
 Eglot is a language server protocol (LSP) client for Emacs.
@@ -138,17 +140,19 @@ Eglot is a language server protocol (LSP) client for Emacs.
 #+end_src
 * Follow Symlinks
 #+begin_src emacs-lisp
-  (setq find-file-visit-truename t
-        vc-follow-symlinks t)
+  (custom-set-variables
+   '(find-file-visit-truename t)
+   '(vc-follow-symlinks t))
 #+end_src
 * Tab Bar
 Like vim tabs.
 #+begin_src emacs-lisp
-  (setq tab-bar-mode t
-        tab-bar-close-button nil
-        tab-bar-new-button nil)
+  (custom-set-variables
+   '(tab-bar-mode t)
+   '(tab-bar-close-button nil)
+   '(tab-bar-new-button nil))
 #+end_src
 * Truncate Lines
 #+begin_src emacs-lisp
-  (setq-default truncate-lines t)
+  (custom-set-variables '(truncate-lines t))
 #+end_src
