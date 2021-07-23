@@ -144,9 +144,9 @@ Eglot is a language server protocol (LSP) client for Emacs.
 * Tab Bar
 Like vim tabs.
 #+begin_src emacs-lisp
-  (setq tab-bar-close-button nil)
-  (setq tab-bar-new-button nil)
-  (tab-bar-mode +1)
+  (setq tab-bar-mode t
+        tab-bar-close-button nil
+        tab-bar-new-button nil)
 #+end_src
 * Truncate Lines
 #+begin_src emacs-lisp
