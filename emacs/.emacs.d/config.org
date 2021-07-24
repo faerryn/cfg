@@ -31,7 +31,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
 * Appearance
-** Minimal interface
+** Minimal Interface
 #+begin_src emacs-lisp
   (custom-set-variables
    '(inhibit-startup-screen t)
@@ -53,21 +53,21 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (load-theme 'doom-one t)
 #+end_src
 * Editing
-** Electric pairs
+** Electric Pairs
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
-** Tab complete
+** Tab Complete
 #+begin_src emacs-lisp
   (custom-set-variables '(tab-always-indent 'complete))
 #+end_src
 * Guides
-** Line numbers
+** Line Numbers
 #+begin_src emacs-lisp
   (custom-set-variables '(display-line-numbers-type t))
   (global-display-line-numbers-mode +1)
 #+end_src
-** Show paren
+** Show Paren
 #+begin_src emacs-lisp
   (show-paren-mode +1)
 #+end_src
@@ -77,12 +77,12 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (global-whitespace-mode +1)
 #+end_src
 * Major Modes
-** Cc mode
+** Cc Mode
 #+begin_src emacs-lisp
   (with-eval-after-load "cc-mode"
     (advice-add 'c-indent-command :override #'indent-for-tab-command))
 #+end_src
-** Dired mode
+** Dired Mode
 #+begin_src emacs-lisp
   (custom-set-variables '(dired-listing-switches "-l -hgvAFX --group-directories-first"))
   (require 'dired-x)
@@ -105,7 +105,7 @@ Smarter sorting in completion buffers.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
   (require 'orderless)
-  (custom-set-variables '(completion-styles (orderless)))
+  (custom-set-variables '(completion-styles '(orderless)))
 #+end_src
 ** Vertico
 Minimal and compatible completion framework.
@@ -115,7 +115,7 @@ Minimal and compatible completion framework.
   (vertico-mode +1)
 #+end_src
 * Text Terminal
-** Xterm mouse
+** Xterm Mouse
 #+begin_src emacs-lisp
   (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
