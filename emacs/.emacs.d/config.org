@@ -125,19 +125,6 @@ Minimal and compatible completion framework.
   (autoload 'xclip-mode "xclip" "Minor mode to use the `xclip' program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
-* Clean File System
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(auto-save-default nil)
-   '(backup-inhibited t)
-   '(create-lockfiles nil))
-#+end_src
-* Eglot
-Eglot is a language server protocol (LSP) client for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'eglot)
-  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server" t)
-#+end_src
 * Follow Symlinks
 #+begin_src emacs-lisp
   (custom-set-variables
