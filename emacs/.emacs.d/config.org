@@ -84,7 +84,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 ** Dired Mode
 #+begin_src emacs-lisp
-  (custom-set-variables '(dired-listing-switches "-l -hgvAFX --group-directories-first"))
+  (custom-set-variables '(dired-listing-switches "-l -ABFXhgv --group-directories-first"))
   (require 'dired-x)
 #+end_src
 * Minibuffer

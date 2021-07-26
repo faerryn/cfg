@@ -4,7 +4,7 @@ HISTSIZE=10000
 SAVEHIST="$HISTSIZE"
 HISTFILE="$HOME"/.zhistory
 
-alias ls='\ls -hvFX --color=auto --group-directories-first'
+alias ls='\ls -BFXhv --color=auto --group-directories-first'
 alias ll='ls -g'
 alias la='ls -gA'
 
