@@ -44,6 +44,9 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
   (display-time-mode +1)
   (display-battery-mode +1)
+  (straight-use-package 'doom-modeline)
+  (require 'doom-modeline)
+  (doom-modeline-mode +1)
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
@@ -83,7 +86,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 ** Dired Mode
 #+begin_src emacs-lisp
-  (custom-set-variables '(dired-listing-switches "-l -ABFXhgv --group-directories-first"))
+  (custom-set-variables '(dired-listing-switches "-AFhlvX --group-directories-first"))
   (require 'dired-x)
 #+end_src
 * Minibuffer
@@ -135,7 +138,7 @@ Minimal and compatible completion framework.
 * Async Shell Command
 #+begin_src emacs-lisp
   (custom-set-variables '(async-shell-command-buffer 'new-buffer))
-  (let ((async-shell-command-regexp "\\`\\*Async Shell Command\\*\\(?:<[[:digit:]]+>\\)?\\'"))
+  (let ((async-shell-command-regexp (rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))))
     (add-to-list 'display-buffer-alist `(,async-shell-command-regexp display-buffer-no-window allow-no-window))
     (with-eval-after-load "consult"
       (add-to-list 'consult-buffer-filter async-shell-command-regexp)))
@@ -147,9 +150,8 @@ Minimal and compatible completion framework.
   (with-eval-after-load "exwm"
     (custom-set-variables '(exwm-mode-map nil))
     (defun faerryn/exwm-buffer-name ()
-      (exwm-workspace-rename-buffer (concat "*EXWM* " (or exwm-title exwm-class-name))))
-    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name)
-    (add-hook 'exwm-update-title-hook #'faerryn/exwm-buffer-name))
+      (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
+    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name))
 #+end_src
 * Follow Symlinks
 #+begin_src emacs-lisp
