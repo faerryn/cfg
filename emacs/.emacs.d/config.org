@@ -23,23 +23,7 @@ Straight.el is a declarative package manager for Emacs.
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
-* GCMH
-GCMH is an intelligent garbage collector scheduler for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'gcmh)
-  (require 'gcmh)
-  (add-hook 'emacs-startup-hook #'gcmh-mode)
-#+end_src
 * Appearance
-** Minimal Interface
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(inhibit-startup-screen t)
-   '(use-dialog-box nil))
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-#+end_src
 ** Modeline
 #+begin_src emacs-lisp
   (display-time-mode +1)
@@ -48,13 +32,21 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (require 'doom-modeline)
   (doom-modeline-mode +1)
 #+end_src
+** Tab Bar
+Like vim tabs.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(tab-bar-mode t)
+   '(tab-bar-close-button nil)
+   '(tab-bar-new-button nil))
+#+end_src
 ** Theme
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
   (require 'doom-themes)
   (load-theme 'doom-one t)
 #+end_src
-* Editing
+* Editor
 ** Electric Pairs
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
@@ -63,7 +55,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables '(tab-always-indent 'complete))
 #+end_src
-* Guides
+* Visual Aids
 ** Line Numbers
 #+begin_src emacs-lisp
   (custom-set-variables '(display-line-numbers-type t))
@@ -77,6 +69,33 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
   (global-whitespace-mode +1)
+#+end_src
+* Hated Things
+** Buffers
+#+begin_src emacs-lisp
+  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
+  (let ((async-shell-command-regexp (rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))))
+    (add-to-list 'display-buffer-alist `(,async-shell-command-regexp display-buffer-no-window allow-no-window))
+    (with-eval-after-load "consult"
+      (add-to-list 'consult-buffer-filter async-shell-command-regexp)))
+  (with-eval-after-load "consult"
+    (add-to-list 'consult-buffer-filter (rx string-start "*" (or "Backtrace" "Help" "Messages") "*" string-end))
+    (add-to-list 'consult-buffer-filter (rx string-start "*" (or (seq "changes to " (* anychar) "/") "log-edit-files" "vc" "vc-dir") "*" string-end))
+    (add-to-list 'consult-buffer-filter (rx string-start "magit" (or "-diff" "-process" "-revision" "") ": "))
+    (add-to-list 'consult-buffer-filter (rx string-start "*straight" (or "-byte-compilation" "-process") "*" string-end)))
+#+end_src
+** Line Wrap
+#+begin_src emacs-lisp
+  (custom-set-variables '(truncate-lines t))
+#+end_src
+** Widgets
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(inhibit-startup-screen t)
+   '(use-dialog-box nil))
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
 #+end_src
 * Major Modes
 ** Cc Mode
@@ -145,20 +164,12 @@ Minimal and compatible completion framework.
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name))
 #+end_src
-* Hated Buffers
+* GCMH
+GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
-  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
-  (let ((async-shell-command-regexp (rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))))
-    (add-to-list 'display-buffer-alist `(,async-shell-command-regexp display-buffer-no-window allow-no-window))
-    (with-eval-after-load "consult"
-      (add-to-list 'consult-buffer-filter async-shell-command-regexp)))
-  (with-eval-after-load "consult"
-    (add-to-list 'consult-buffer-filter (rx string-start "*Backtrace*" string-end))
-    (add-to-list 'consult-buffer-filter (rx string-start "*Help*" string-end))
-    (add-to-list 'consult-buffer-filter (rx string-start "*Messages*" string-end))
-    (add-to-list 'consult-buffer-filter (rx string-start "*" (or (seq "changes to " (* anychar) "/") "log-edit-files" "vc" "vc-dir") "*" string-end))
-    (add-to-list 'consult-buffer-filter (rx string-start "magit" (or "-diff" "-process" "-revision" "") ": "))
-    (add-to-list 'consult-buffer-filter (rx string-start "*straight" (or "-byte-compilation" "-process") "*" string-end)))
+  (straight-use-package 'gcmh)
+  (require 'gcmh)
+  (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
 * Follow Symlinks
 #+begin_src emacs-lisp
@@ -172,16 +183,4 @@ Minimal and compatible completion framework.
   (custom-set-variables '(magit-define-global-key-bindings nil))
   (autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
-#+end_src
-* Tab Bar
-Like vim tabs.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(tab-bar-mode t)
-   '(tab-bar-close-button nil)
-   '(tab-bar-new-button nil))
-#+end_src
-* Truncate Lines
-#+begin_src emacs-lisp
-  (custom-set-variables '(truncate-lines t))
 #+end_src
