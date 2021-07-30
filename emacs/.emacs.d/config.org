@@ -105,14 +105,20 @@ Smarter sorting in completion buffers.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
   (require 'orderless)
-  (custom-set-variables '(completion-styles '(orderless)))
+  (custom-set-variables
+   '(completion-styles '(orderless))
+   '(completion-category-defaults nil)
+   '(completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 ** Vertico
 Minimal and compatible completion framework.
 #+begin_src emacs-lisp
-  (straight-use-package 'vertico)
+  (straight-use-package
+   `(vertico :files ,(cons "extensions/*.el" straight-default-files-directive)))
   (require 'vertico)
+  (require 'vertico-mouse)
   (vertico-mode +1)
+  (vertico-mouse-mode +1)
 #+end_src
 * Text Terminal
 ** Xterm Mouse
