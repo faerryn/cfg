@@ -159,6 +159,13 @@ Minimal and compatible completion framework.
    '(find-file-visit-truename t)
    '(vc-follow-symlinks t))
 #+end_src
+* Magit
+#+begin_src emacs-lisp
+  (straight-use-package 'magit)
+  (custom-set-variables '(magit-define-global-key-bindings nil))
+  (autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
+  (define-key (current-global-map) (kbd "C-c g") #'magit-status)
+#+end_src
 * Tab Bar
 Like vim tabs.
 #+begin_src emacs-lisp
