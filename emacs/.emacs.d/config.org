@@ -42,9 +42,8 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
-  (straight-use-package 'mood-line)
-  (require 'mood-line)
-  (mood-line-mode +1)
+  (display-time-mode +1)
+  (display-battery-mode +1)
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
@@ -93,6 +92,8 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (straight-use-package 'consult)
   (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
+  (autoload 'consult-buffer "consult" "Enhanced ‘switch-to-buffer’ command with support for virtual buffers." t)
+  (define-key (current-global-map) (kbd "C-x b") #'consult-buffer)
 #+end_src
 ** Marginalia
 #+begin_src emacs-lisp
@@ -130,6 +131,25 @@ Minimal and compatible completion framework.
   (straight-use-package 'xclip)
   (autoload 'xclip-mode "xclip" "Minor mode to use the `xclip' program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
+#+end_src
+* Async Shell Command
+#+begin_src emacs-lisp
+  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
+  (let ((async-shell-command-regexp "\\`\\*Async Shell Command\\*\\(?:<[[:digit:]]+>\\)?\\'"))
+    (add-to-list 'display-buffer-alist `(,async-shell-command-regexp display-buffer-no-window allow-no-window))
+    (with-eval-after-load "consult"
+      (add-to-list 'consult-buffer-filter async-shell-command-regexp)))
+#+end_src
+* EXWM
+#+begin_src emacs-lisp
+  (straight-use-package 'exwm)
+  (autoload 'exwm-init "exwm" "Initialize EXWM." t)
+  (with-eval-after-load "exwm"
+    (custom-set-variables '(exwm-mode-map nil))
+    (defun faerryn/exwm-buffer-name ()
+      (exwm-workspace-rename-buffer (concat "*EXWM* " (or exwm-title exwm-class-name))))
+    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name)
+    (add-hook 'exwm-update-title-hook #'faerryn/exwm-buffer-name))
 #+end_src
 * Follow Symlinks
 #+begin_src emacs-lisp
