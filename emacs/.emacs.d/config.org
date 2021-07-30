@@ -135,14 +135,6 @@ Minimal and compatible completion framework.
   (autoload 'xclip-mode "xclip" "Minor mode to use the `xclip' program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
-* Async Shell Command
-#+begin_src emacs-lisp
-  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
-  (let ((async-shell-command-regexp (rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))))
-    (add-to-list 'display-buffer-alist `(,async-shell-command-regexp display-buffer-no-window allow-no-window))
-    (with-eval-after-load "consult"
-      (add-to-list 'consult-buffer-filter async-shell-command-regexp)))
-#+end_src
 * EXWM
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
@@ -152,6 +144,21 @@ Minimal and compatible completion framework.
     (defun faerryn/exwm-buffer-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name))
+#+end_src
+* Hated Buffers
+#+begin_src emacs-lisp
+  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
+  (let ((async-shell-command-regexp (rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))))
+    (add-to-list 'display-buffer-alist `(,async-shell-command-regexp display-buffer-no-window allow-no-window))
+    (with-eval-after-load "consult"
+      (add-to-list 'consult-buffer-filter async-shell-command-regexp)))
+  (with-eval-after-load "consult"
+    (add-to-list 'consult-buffer-filter (rx string-start "*Backtrace*" string-end))
+    (add-to-list 'consult-buffer-filter (rx string-start "*Help*" string-end))
+    (add-to-list 'consult-buffer-filter (rx string-start "*Messages*" string-end))
+    (add-to-list 'consult-buffer-filter (rx string-start "*" (or (seq "changes to " (* anychar) "/") "log-edit-files" "vc" "vc-dir") "*" string-end))
+    (add-to-list 'consult-buffer-filter (rx string-start "magit" (or "-diff" "-process" "-revision" "") ": "))
+    (add-to-list 'consult-buffer-filter (rx string-start "*straight" (or "-byte-compilation" "-process") "*" string-end)))
 #+end_src
 * Follow Symlinks
 #+begin_src emacs-lisp
