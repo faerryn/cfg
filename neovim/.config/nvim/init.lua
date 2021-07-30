@@ -99,7 +99,6 @@ use {
   config = function() vim.api.nvim_command("colorscheme onedark") end,
 }
 
-
 -- cool statusline
 use {
   "glepnir/galaxyline.nvim",
