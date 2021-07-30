@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -euf
+
+exec emacs --batch -l "$(dirname "$0")"/early-init.el -f all-the-icons-install-fonts
