@@ -30,6 +30,7 @@ Straight.el is a declarative package manager for Emacs.
   (display-battery-mode +1)
   (straight-use-package 'doom-modeline)
   (require 'doom-modeline)
+  (custom-set-variables '(doom-modeline-icon t))
   (doom-modeline-mode +1)
 #+end_src
 ** Tab Bar
