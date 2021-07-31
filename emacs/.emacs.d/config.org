@@ -23,6 +23,16 @@ Straight.el is a declarative package manager for Emacs.
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
+* Custom Symbols
+#+begin_src emacs-lisp
+  (defvar faerryn/before-minibuffer-hook nil
+    "Normal hook run just before entry to minibuffer")
+  (defun faerryn/run-before-minibuffer-hooks (&rest ignored)
+    (run-hooks 'faerryn/before-minibuffer-hook))
+  (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
+  (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
+  (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
+#+end_src
 * Appearance
 ** Modeline
 #+begin_src emacs-lisp
@@ -169,10 +179,16 @@ Minimal and compatible completion framework.
   (autoload 'exwm-init "exwm" "Initialize EXWM." t)
   (with-eval-after-load "exwm"
     (custom-set-variables
-     '(exwm-mode-map (make-sparse-keymap))
+     '(exwm-mode-map
+       (let ((map (make-sparse-keymap)))
+         (define-key map (kbd "C-q") #'exwm-input-send-next-key)
+         (define-key map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
+         (define-key map (kbd "C-c SPC") #'exwm-floating-toggle-floating)
+         map))
      '(exwm-input-prefix-keys
        (list (kbd "C-g")
              (kbd "C-h")
+             (kbd "C-u")
              (kbd "C-x")
              (kbd "M-x")
              (kbd "M-!")
@@ -199,7 +215,19 @@ Minimal and compatible completion framework.
                               (,(kbd "C-c 2") . ,(kbd "C-t"))
                               (,(kbd "C-c o") . ,(kbd "C-<tab>")))
                             exwm-input-simulation-keys)))))
-    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-simulation-keys))
+    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-simulation-keys)
+    (defun faerryn/exwm-restore-mode (&rest ignored)
+      (when (eq 'line-mode exwm--selected-input-mode)
+        (exwm-input--grab-keyboard exwm--id)))
+    (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-mode)
+    (add-hook 'exwm-init-hook
+              (lambda ()
+                (add-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
+                (add-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen)))
+    (add-hook 'exwm-exit-hook
+              (lambda ()
+                (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
+                (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))))
 #+end_src
 * GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
