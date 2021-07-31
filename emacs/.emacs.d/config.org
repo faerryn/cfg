@@ -15,17 +15,6 @@
   (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
   (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
 #+end_src
-* Define Keys
-#+begin_src emacs-lisp
-  (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
-  (define-key (current-global-map) (kbd "C-z") nil)
-#+end_src
-* Set Variables
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(find-file-visit-truename t)
-   '(vc-follow-symlinks t))
-#+end_src
 * Straight.el
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
@@ -68,6 +57,11 @@ Like vim tabs.
   (require 'doom-themes)
   (load-theme 'doom-one t)
 #+end_src
+* Define Keys
+#+begin_src emacs-lisp
+  (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
+  (define-key (current-global-map) (kbd "C-z") nil)
+#+end_src
 * Editor
 ** Electric Pairs
 #+begin_src emacs-lisp
@@ -76,21 +70,6 @@ Like vim tabs.
 ** Tab Complete
 #+begin_src emacs-lisp
   (custom-set-variables '(tab-always-indent 'complete))
-#+end_src
-* Visual Aids
-** Line Numbers
-#+begin_src emacs-lisp
-  (custom-set-variables '(display-line-numbers-type t))
-  (global-display-line-numbers-mode +1)
-#+end_src
-** Show Paren
-#+begin_src emacs-lisp
-  (show-paren-mode +1)
-#+end_src
-** Whitespace
-#+begin_src emacs-lisp
-  (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
-  (global-whitespace-mode +1)
 #+end_src
 * Hated Things
 ** Async Shell Command
@@ -157,6 +136,21 @@ Minimal and compatible completion framework.
   (require 'vertico-mouse)
   (vertico-mode +1)
   (vertico-mouse-mode +1)
+#+end_src
+* Visual Aids
+** Line Numbers
+#+begin_src emacs-lisp
+  (custom-set-variables '(display-line-numbers-type t))
+  (global-display-line-numbers-mode +1)
+#+end_src
+** Show Paren
+#+begin_src emacs-lisp
+  (show-paren-mode +1)
+#+end_src
+** Whitespace
+#+begin_src emacs-lisp
+  (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
+  (global-whitespace-mode +1)
 #+end_src
 * Text Terminal
 ** Xterm Mouse
@@ -228,6 +222,12 @@ Minimal and compatible completion framework.
       (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
       (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
     (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
+#+end_src
+* Follow Symlinks
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(find-file-visit-truename t)
+   '(vc-follow-symlinks t))
 #+end_src
 * GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
