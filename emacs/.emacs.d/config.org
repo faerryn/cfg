@@ -206,6 +206,7 @@ Minimal and compatible completion framework.
        `((,(kbd "C-y") . ,(kbd "C-v"))
          (,(kbd "C-w") . ,(kbd "C-x"))
          (,(kbd "M-w") . ,(kbd "C-c"))
+         (,(kbd "C-/") . ,(kbd "C-z"))
          (,(kbd "C-f") . ,(kbd "<right>"))
          (,(kbd "C-p") . ,(kbd "<up>"))
          (,(kbd "C-b") . ,(kbd "<left>"))
@@ -218,6 +219,7 @@ Minimal and compatible completion framework.
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-name)
     (defun faerryn/exwm-buffer-local-simulation-keys ()
       (pcase exwm-class-name
+        ("Emacs" (exwm-input-set-local-simulation-keys nil))
         ("Firefox" (exwm-input-set-local-simulation-keys
                     (append `((,(kbd "C-s") . ,(kbd "C-f"))
                               (,(kbd "C-c 0") . ,(kbd "C-w"))
