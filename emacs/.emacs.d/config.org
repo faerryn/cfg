@@ -159,10 +159,30 @@ Minimal and compatible completion framework.
   (straight-use-package 'exwm)
   (autoload 'exwm-init "exwm" "Initialize EXWM." t)
   (with-eval-after-load "exwm"
-    (custom-set-variables '(exwm-mode-map nil))
-    (defun faerryn/exwm-buffer-name ()
-      (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
-    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name))
+    (custom-set-variables
+     '(exwm-mode-map (make-sparse-keymap))
+     '(exwm-input-prefix-keys
+       (list (kbd "C-c")
+             (kbd "C-g")
+             (kbd "C-h")
+             (kbd "C-x")
+             (kbd "M-x")
+             (kbd "M-!")
+             (kbd "M-&")
+             (kbd "M-:")))
+     '(exwm-input-simulation-keys
+       `((,(kbd "C-y") . ,(kbd "C-v"))
+         (,(kbd "C-w") . ,(kbd "C-x"))
+         (,(kbd "M-w") . ,(kbd "C-c"))
+         (,(kbd "C-f") . ,(kbd "<right>"))
+         (,(kbd "C-p") . ,(kbd "<up>"))
+         (,(kbd "C-b") . ,(kbd "<left>"))
+         (,(kbd "C-n") . ,(kbd "<down>"))
+         (,(kbd "C-a") . ,(kbd "<home>"))
+         (,(kbd "C-e") . ,(kbd "<end>")))))
+    (add-hook 'exwm-update-class-hook
+              (lambda ()
+                (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))))
 #+end_src
 * GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
