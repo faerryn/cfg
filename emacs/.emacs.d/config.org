@@ -93,18 +93,13 @@ Like vim tabs.
   (global-whitespace-mode +1)
 #+end_src
 * Hated Things
-** Buffers
+** Async Shell Command
 #+begin_src emacs-lisp
   (custom-set-variables '(async-shell-command-buffer 'new-buffer))
-  (let ((async-shell-command-regexp (rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))))
-    (add-to-list 'display-buffer-alist `(,async-shell-command-regexp display-buffer-no-window allow-no-window))
-    (with-eval-after-load "consult"
-      (add-to-list 'consult-buffer-filter async-shell-command-regexp)))
-  (with-eval-after-load "consult"
-    (add-to-list 'consult-buffer-filter (rx string-start "*" (or "Backtrace" "Help" "Messages") "*" string-end))
-    (add-to-list 'consult-buffer-filter (rx string-start "*" (or (seq "changes to " (* anychar) "/") "log-edit-files" "vc" "vc-dir") "*" string-end))
-    (add-to-list 'consult-buffer-filter (rx string-start "magit" (or "-diff" "-process" "-revision" "") ": "))
-    (add-to-list 'consult-buffer-filter (rx string-start "*straight" (or "-byte-compilation" "-process") "*" string-end)))
+  (add-to-list 'display-buffer-alist
+               `(,(rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))
+                 display-buffer-no-window
+                 allow-no-window))
 #+end_src
 ** Line Wrap
 #+begin_src emacs-lisp
@@ -136,12 +131,6 @@ Like vim tabs.
   (straight-use-package 'consult)
   (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
-  (autoload 'consult-buffer "consult" "Enhanced ‘switch-to-buffer’ command with support for virtual buffers." t)
-  (define-key (current-global-map) (kbd "C-c b") #'consult-buffer)
-  (autoload 'consult-buffer-other-frame "consult" "Variant of ‘consult-buffer’ which opens in other frame." t)
-  (define-key (current-global-map) (kbd "C-c 5 b") #'consult-buffer-other-frame)
-  (autoload 'consult-buffer-other-window "consult" "Variant of ‘consult-buffer’ which opens in other window." t)
-  (define-key (current-global-map) (kbd "C-c 4 b") #'consult-buffer-other-window)
 #+end_src
 ** Marginalia
 #+begin_src emacs-lisp
