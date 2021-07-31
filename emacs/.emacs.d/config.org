@@ -5,6 +5,27 @@
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
+* Custom Symbols
+#+begin_src emacs-lisp
+  (defvar faerryn/before-minibuffer-hook nil
+    "Normal hook run just before entry to minibuffer")
+  (defun faerryn/run-before-minibuffer-hooks (&rest ignored)
+    (run-hooks 'faerryn/before-minibuffer-hook))
+  (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
+  (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
+  (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
+#+end_src
+* Define Keys
+#+begin_src emacs-lisp
+  (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
+  (define-key (current-global-map) (kbd "C-z") nil)
+#+end_src
+* Set Variables
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(find-file-visit-truename t)
+   '(vc-follow-symlinks t))
+#+end_src
 * Straight.el
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
@@ -22,16 +43,6 @@ Straight.el is a declarative package manager for Emacs.
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
-#+end_src
-* Custom Symbols
-#+begin_src emacs-lisp
-  (defvar faerryn/before-minibuffer-hook nil
-    "Normal hook run just before entry to minibuffer")
-  (defun faerryn/run-before-minibuffer-hooks (&rest ignored)
-    (run-hooks 'faerryn/before-minibuffer-hook))
-  (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
-  (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
-  (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
 #+end_src
 * Appearance
 ** Modeline
@@ -169,10 +180,6 @@ Minimal and compatible completion framework.
   (autoload 'xclip-mode "xclip" "Minor mode to use the `xclip' program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
-* Define Keys
-#+begin_src emacs-lisp
-  (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
-#+end_src
 * EXWM
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
@@ -184,6 +191,7 @@ Minimal and compatible completion framework.
          (define-key map (kbd "C-q") #'exwm-input-send-next-key)
          (define-key map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
          (define-key map (kbd "C-c SPC") #'exwm-floating-toggle-floating)
+         (define-key map (kbd "C-z") #'exwm-input-toggle-keyboard)
          map))
      '(exwm-input-prefix-keys
        (list (kbd "C-g")
@@ -204,6 +212,7 @@ Minimal and compatible completion framework.
          (,(kbd "C-n") . ,(kbd "<down>"))
          (,(kbd "C-a") . ,(kbd "<home>"))
          (,(kbd "C-e") . ,(kbd "<end>")))))
+    (cl-pushnew (kbd "C-z") exwm-input--global-keys)
     (defun faerryn/exwm-buffer-local-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-name)
@@ -220,14 +229,14 @@ Minimal and compatible completion framework.
       (when (eq 'line-mode exwm--selected-input-mode)
         (exwm-input--grab-keyboard exwm--id)))
     (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-mode)
-    (add-hook 'exwm-init-hook
-              (lambda ()
-                (add-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
-                (add-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen)))
-    (add-hook 'exwm-exit-hook
-              (lambda ()
-                (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
-                (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))))
+    (defun faerryn/exwm-init-hook ()
+      (add-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
+      (add-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
+    (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
+    (defun faerryn/exwm-exit-hook ()
+      (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
+      (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
+    (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
 #+end_src
 * GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
@@ -235,12 +244,6 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (straight-use-package 'gcmh)
   (require 'gcmh)
   (add-hook 'emacs-startup-hook #'gcmh-mode)
-#+end_src
-* Follow Symlinks
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(find-file-visit-truename t)
-   '(vc-follow-symlinks t))
 #+end_src
 * Magit
 #+begin_src emacs-lisp
