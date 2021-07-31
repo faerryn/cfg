@@ -36,6 +36,7 @@ Straight.el is a declarative package manager for Emacs.
 * Appearance
 ** Modeline
 #+begin_src emacs-lisp
+  (custom-set-variables '(display-time-format "%R"))
   (display-time-mode +1)
   (display-battery-mode +1)
   (straight-use-package 'doom-modeline)
@@ -44,12 +45,11 @@ Straight.el is a declarative package manager for Emacs.
   (doom-modeline-mode +1)
 #+end_src
 ** Tab Bar
-Like vim tabs.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(tab-bar-mode t)
    '(tab-bar-close-button nil)
    '(tab-bar-new-button nil))
+  (add-hook 'emacs-startup-hook #'tab-bar-mode)
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
@@ -177,40 +177,20 @@ Minimal and compatible completion framework.
          (define-key map (kbd "C-z") #'exwm-input-toggle-keyboard)
          map))
      '(exwm-input-prefix-keys
-       (list (kbd "C-g")
+       (list (kbd "C-c")
+             (kbd "C-g")
              (kbd "C-h")
              (kbd "C-u")
              (kbd "C-x")
              (kbd "M-x")
              (kbd "M-!")
              (kbd "M-&")
-             (kbd "M-:")))
-     '(exwm-input-simulation-keys
-       `((,(kbd "C-y") . ,(kbd "C-v"))
-         (,(kbd "C-w") . ,(kbd "C-x"))
-         (,(kbd "M-w") . ,(kbd "C-c"))
-         (,(kbd "C-/") . ,(kbd "C-z"))
-         (,(kbd "C-f") . ,(kbd "<right>"))
-         (,(kbd "C-p") . ,(kbd "<up>"))
-         (,(kbd "C-b") . ,(kbd "<left>"))
-         (,(kbd "C-n") . ,(kbd "<down>"))
-         (,(kbd "C-a") . ,(kbd "<home>"))
-         (,(kbd "C-e") . ,(kbd "<end>")))))
+             (kbd "M-:"))))
     (cl-pushnew (kbd "C-z") exwm-input--global-keys)
     (exwm-input--update-global-prefix-keys)
     (defun faerryn/exwm-buffer-local-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-name)
-    (defun faerryn/exwm-buffer-local-simulation-keys ()
-      (pcase exwm-class-name
-        ("Emacs" (exwm-input-set-local-simulation-keys nil))
-        ("Firefox" (exwm-input-set-local-simulation-keys
-                    (append `((,(kbd "C-s") . ,(kbd "C-f"))
-                              (,(kbd "C-c 0") . ,(kbd "C-w"))
-                              (,(kbd "C-c 2") . ,(kbd "C-t"))
-                              (,(kbd "C-c o") . ,(kbd "C-<tab>")))
-                            exwm-input-simulation-keys)))))
-    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-simulation-keys)
     (defun faerryn/exwm-restore-mode (&rest ignored)
       (when (eq 'line-mode exwm--selected-input-mode)
         (exwm-input--grab-keyboard exwm--id)))
