@@ -116,7 +116,11 @@ Like vim tabs.
   (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
   (autoload 'consult-buffer "consult" "Enhanced ‘switch-to-buffer’ command with support for virtual buffers." t)
-  (define-key (current-global-map) (kbd "C-x b") #'consult-buffer)
+  (define-key (current-global-map) (kbd "C-c b") #'consult-buffer)
+  (autoload 'consult-buffer-other-frame "consult" "Variant of ‘consult-buffer’ which opens in other frame." t)
+  (define-key (current-global-map) (kbd "C-c 5 b") #'consult-buffer-other-frame)
+  (autoload 'consult-buffer-other-window "consult" "Variant of ‘consult-buffer’ which opens in other window." t)
+  (define-key (current-global-map) (kbd "C-c 4 b") #'consult-buffer-other-window)
 #+end_src
 ** Marginalia
 #+begin_src emacs-lisp
@@ -155,6 +159,10 @@ Minimal and compatible completion framework.
   (autoload 'xclip-mode "xclip" "Minor mode to use the `xclip' program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
+* Define Keys
+#+begin_src emacs-lisp
+  (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
+#+end_src
 * EXWM
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
@@ -163,8 +171,7 @@ Minimal and compatible completion framework.
     (custom-set-variables
      '(exwm-mode-map (make-sparse-keymap))
      '(exwm-input-prefix-keys
-       (list (kbd "C-c")
-             (kbd "C-g")
+       (list (kbd "C-g")
              (kbd "C-h")
              (kbd "C-x")
              (kbd "M-x")
@@ -181,9 +188,18 @@ Minimal and compatible completion framework.
          (,(kbd "C-n") . ,(kbd "<down>"))
          (,(kbd "C-a") . ,(kbd "<home>"))
          (,(kbd "C-e") . ,(kbd "<end>")))))
-    (add-hook 'exwm-update-class-hook
-              (lambda ()
-                (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))))
+    (defun faerryn/exwm-buffer-local-name ()
+      (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
+    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-name)
+    (defun faerryn/exwm-buffer-local-simulation-keys ()
+      (pcase exwm-class-name
+        ("Firefox" (exwm-input-set-local-simulation-keys
+                    (append `((,(kbd "C-s") . ,(kbd "C-f"))
+                              (,(kbd "C-c 0") . ,(kbd "C-w"))
+                              (,(kbd "C-c 2") . ,(kbd "C-t"))
+                              (,(kbd "C-c o") . ,(kbd "C-<tab>")))
+                            exwm-input-simulation-keys)))))
+    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-simulation-keys))
 #+end_src
 * GCMH
 GCMH is an intelligent garbage collector scheduler for Emacs.
