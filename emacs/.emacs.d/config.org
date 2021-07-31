@@ -197,6 +197,7 @@ Minimal and compatible completion framework.
          (,(kbd "C-a") . ,(kbd "<home>"))
          (,(kbd "C-e") . ,(kbd "<end>")))))
     (cl-pushnew (kbd "C-z") exwm-input--global-keys)
+    (exwm-input--update-global-prefix-keys)
     (defun faerryn/exwm-buffer-local-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-name)
