@@ -56,6 +56,7 @@ Straight.el is a declarative package manager for Emacs.
 * Define Keys
 #+begin_src emacs-lisp
   (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
+  (define-key (current-global-map) (kbd "C-c j") #'join-line)
 #+end_src
 * Editor
 ** Electric Pairs
@@ -184,9 +185,9 @@ Minimal and compatible completion framework.
              (kbd "M-&")
              (kbd "M-:"))))
     (exwm-input--update-global-prefix-keys)
-    (defun faerryn/exwm-buffer-local-name ()
+    (defun faerryn/exwm-buffer-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
-    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-local-name)
+    (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name)
     (defun faerryn/exwm-restore-mode (&rest ignored)
       (when (eq 'line-mode exwm--selected-input-mode)
         (exwm-input--grab-keyboard exwm--id)))
