@@ -97,8 +97,15 @@ Straight.el is a declarative package manager for Emacs.
 #+end_src
 ** Dired Mode
 #+begin_src emacs-lisp
-  (custom-set-variables '(dired-listing-switches "-AFhlvX --group-directories-first"))
+  (custom-set-variables '(dired-listing-switches "-AFghvX --group-directories-first"))
   (require 'dired-x)
+#+end_src
+** Eshell Mode
+#+begin_src emacs-lisp
+  (with-eval-after-load "em-alias"
+    (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
+    (eshell/alias "ll" "ls -g $*")
+    (eshell/alias "la" "ll -A $*"))
 #+end_src
 * Minibuffer
 ** Consult
