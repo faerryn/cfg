@@ -2,4 +2,9 @@
 
 set -euf
 
-exec emacs --batch -l "$(dirname "$0")"/early-init.el -f all-the-icons-install-fonts
+USER_EMACS_DIRECTORY="$(dirname "$0")"
+
+exec emacs --batch\
+     -l "$USER_EMACS_DIRECTORY"/early-init.el\
+     -l "$USER_EMACS_DIRECTORY"/init.el\
+     -l "$USER_EMACS_DIRECTORY"/bootstrap.el

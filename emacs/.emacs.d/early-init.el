@@ -7,10 +7,9 @@
 (custom-set-variables '(package-enable-at-startup nil))
 
 ;; Load config.org
-(let* ((config (expand-file-name "config" (file-name-directory load-file-name)))
-       (config.org (concat config ".org"))
-       (config.el  (concat config ".el")))
-  (when (file-newer-than-file-p config.org config.el)
+(let* ((init (expand-file-name "init" (file-name-directory load-file-name)))
+       (init.org (concat init ".org"))
+       (init.el (concat init ".el")))
+  (when (file-newer-than-file-p init.org init.el)
     (require 'ob-tangle)
-    (org-babel-tangle-file config.org config.el "emacs-lisp"))
-  (load config.el nil nil t))
+    (org-babel-tangle-file init.org init.el "emacs-lisp")))

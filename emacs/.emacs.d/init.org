@@ -3,7 +3,7 @@
 
 * Lexical Binding
 #+begin_src emacs-lisp
-  ;;; config.el -*- lexical-binding: t; -*-
+  ;;; init.el -*- lexical-binding: t; -*-
 #+end_src
 * Custom Symbols
 #+begin_src emacs-lisp
@@ -49,7 +49,7 @@ Straight.el is a declarative package manager for Emacs.
   (custom-set-variables
    '(tab-bar-close-button nil)
    '(tab-bar-new-button nil))
-  (add-hook 'emacs-startup-hook #'tab-bar-mode)
+  (tab-bar-mode +1)
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
@@ -167,6 +167,9 @@ Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
   (autoload 'exwm-init "exwm" "Initialize EXWM." t)
+  (defun faerryn/exwm-command-switch (&ignored)
+    (add-hook 'window-setup-hook #'exwm-init))
+  (add-to-list 'command-switch-alist '("--exwm" . faerryn/exwm-command-switch))
   (with-eval-after-load "exwm"
     (custom-set-variables
      '(exwm-mode-map
@@ -195,13 +198,15 @@ Minimal and compatible completion framework.
       (when (eq 'line-mode exwm--selected-input-mode)
         (exwm-input--grab-keyboard exwm--id)))
     (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-mode)
+    (defun faerryn/exwm-unfullscreen (&rest ignored)
+      (exwm-layout-unset-fullscreen))
     (defun faerryn/exwm-init-hook ()
-      (add-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
-      (add-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
+      (add-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
+      (add-hook 'window-size-changed-functions #'faerryn/exwm-unfullscreen))
     (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
     (defun faerryn/exwm-exit-hook ()
-      (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
-      (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
+      (remove-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
+      (remove-hook 'window-size-changed-functions #'faerryn/exwm-unfullscreen))
     (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
 #+end_src
 * Follow Symlinks
@@ -223,4 +228,10 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (custom-set-variables '(magit-define-global-key-bindings nil))
   (autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
+#+end_src
+* Pdf Tools
+#+begin_src emacs-lisp
+  (straight-use-package 'pdf-tools)
+  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
+  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
 #+end_src
