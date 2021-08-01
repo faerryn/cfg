@@ -19,7 +19,7 @@
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(straight-check-for-modifications '(find-when-checking))
+   '(straight-check-for-modifications nil)
    '(straight-disable-autoloads t)
    '(straight-use-symlinks t)
    '(straight-vc-git-default-clone-depth 1))
