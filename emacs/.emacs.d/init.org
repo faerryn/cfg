@@ -9,7 +9,7 @@
 #+begin_src emacs-lisp
   (defvar faerryn/before-minibuffer-hook nil
     "Normal hook run just before entry to minibuffer")
-  (defun faerryn/run-before-minibuffer-hooks (&rest ignored)
+  (defun faerryn/run-before-minibuffer-hooks (&rest _)
     (run-hooks 'faerryn/before-minibuffer-hook))
   (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
   (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
@@ -171,13 +171,21 @@ Minimal and compatible completion framework.
   (straight-use-package 'exwm)
   (autoload 'exwm-init "exwm" "Initialize EXWM." t)
   (with-eval-after-load "exwm"
+    (defun faerryn/exwm-toggle-keyboard ()
+      (interactive)
+      (when (derived-mode-p 'exwm-mode)
+        (let ((id (exwm--buffer->id (window-buffer))))
+          (with-current-buffer (exwm--id->buffer id)
+            (pcase exwm--input-mode
+              ('line-mode (exwm-input-release-keyboard id))
+              ('char-mode (exwm-input-grab-keyboard id)))))))
     (custom-set-variables
      '(exwm-mode-map
        (let ((map (make-sparse-keymap)))
          (define-key map (kbd "C-q") #'exwm-input-send-next-key)
          (define-key map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
          (define-key map (kbd "C-c SPC") #'exwm-floating-toggle-floating)
-         (define-key map (kbd "s-SPC") #'exwm-input-toggle-keyboard)
+         (define-key map (kbd "s-SPC") #'faerryn/exwm-toggle-keyboard)
          map))
      '(exwm-input--global-keys
        (list (kbd "s-SPC")))
@@ -195,19 +203,19 @@ Minimal and compatible completion framework.
     (defun faerryn/exwm-buffer-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name)
-    (defun faerryn/exwm-restore-mode (&rest ignored)
+    (defun faerryn/exwm-restore-mode (&rest _)
       (when (eq 'line-mode exwm--selected-input-mode)
         (exwm-input--grab-keyboard exwm--id)))
     (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-mode)
-    (defun faerryn/exwm-unfullscreen (&rest ignored)
+    (defun faerryn/exwm-unfullscreen (&rest _)
       (exwm-layout-unset-fullscreen))
     (defun faerryn/exwm-init-hook ()
       (add-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
-      (add-hook 'window-size-changed-functions #'faerryn/exwm-unfullscreen))
+      (add-hook 'window-size-change-functions #'faerryn/exwm-unfullscreen))
     (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
     (defun faerryn/exwm-exit-hook ()
       (remove-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
-      (remove-hook 'window-size-changed-functions #'faerryn/exwm-unfullscreen))
+      (remove-hook 'window-size-change-functions #'faerryn/exwm-unfullscreen))
     (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
 #+end_src
 * Follow Symlinks
