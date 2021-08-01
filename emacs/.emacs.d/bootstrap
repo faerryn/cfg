@@ -4,7 +4,4 @@ set -euf
 
 USER_EMACS_DIRECTORY="$(dirname "$0")"
 
-exec emacs --batch\
-     -l "$USER_EMACS_DIRECTORY"/early-init.el\
-     -l "$USER_EMACS_DIRECTORY"/init.el\
-     -l "$USER_EMACS_DIRECTORY"/bootstrap.el
+exec emacs -l "$USER_EMACS_DIRECTORY"/bootstrap.el
