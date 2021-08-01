@@ -39,10 +39,6 @@ Straight.el is a declarative package manager for Emacs.
   (custom-set-variables '(display-time-format "%R"))
   (display-time-mode +1)
   (display-battery-mode +1)
-  (straight-use-package 'doom-modeline)
-  (require 'doom-modeline)
-  (custom-set-variables '(doom-modeline-icon t))
-  (doom-modeline-mode +1)
 #+end_src
 ** Tab Bar
 #+begin_src emacs-lisp
@@ -228,10 +224,4 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
   (custom-set-variables '(magit-define-global-key-bindings nil))
   (autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
-#+end_src
-* Pdf Tools
-#+begin_src emacs-lisp
-  (straight-use-package 'pdf-tools)
-  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
-  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
 #+end_src

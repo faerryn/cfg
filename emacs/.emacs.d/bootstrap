@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -euf
-
-USER_EMACS_DIRECTORY="$(dirname "$0")"
-
-exec emacs -l "$USER_EMACS_DIRECTORY"/bootstrap.el
