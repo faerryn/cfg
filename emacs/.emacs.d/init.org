@@ -162,9 +162,6 @@ Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
   (autoload 'exwm-init "exwm" "Initialize EXWM." t)
-  (defun faerryn/exwm-command-switch (&ignored)
-    (add-hook 'window-setup-hook #'exwm-init))
-  (add-to-list 'command-switch-alist '("--exwm" . faerryn/exwm-command-switch))
   (with-eval-after-load "exwm"
     (custom-set-variables
      '(exwm-mode-map
