@@ -85,20 +85,20 @@ local user = require("user")
 user.setup()
 local use = user.use
 
-use "faerryn/user.nvim"
+use("faerryn/user.nvim")
 
 -- command mode shortcuts
-use "ryvnf/readline.vim"
+use("ryvnf/readline.vim")
 
 -- period (.) repeat for plugins
-use "tpope/vim-repeat"
+use("tpope/vim-repeat")
 
 -- nice colorscheme
-use "joshdick/onedark.vim"
+use("joshdick/onedark.vim")
 vim.api.nvim_command("colorscheme onedark")
 
 -- Fixes neovim#12587
-use "antoinemadec/FixCursorHold.nvim"
+use("antoinemadec/FixCursorHold.nvim")
 
 -- good syntax highlighting
 use {
@@ -112,20 +112,22 @@ require("nvim-treesitter.configs").setup {
 }
 
 -- colorize hexes
-use  "norcalli/nvim-colorizer.lua"
-require("colorizer").setup({}, {
-  RGB = false,
-  RRGGBB = true,
-  names = false,
-  RRGGBBAA = true,
-  rgb_fn = false,
-  hsl_fn = false,
-  css = false,
-  css_fn = false,
-  mode = "background",
-})
-vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
-vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
+if vim.opt.termguicolors:get() then
+  use("norcalli/nvim-colorizer.lua")
+  require("colorizer").setup({}, {
+    RGB = false,
+    RRGGBB = true,
+    names = false,
+    RRGGBBAA = true,
+    rgb_fn = false,
+    hsl_fn = false,
+    css = false,
+    css_fn = false,
+    mode = "background",
+  })
+  vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
+  vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
+end
 
 -- wait for all installation and configs to finish
 user.flush()
