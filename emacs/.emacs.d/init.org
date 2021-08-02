@@ -68,7 +68,7 @@ Straight.el is a declarative package manager for Emacs.
   (custom-set-variables '(tab-always-indent 'complete))
 #+end_src
 * Hated Things
-** Async Shell Command
+** Async Shell Command Buffer
 #+begin_src emacs-lisp
   (custom-set-variables '(async-shell-command-buffer 'new-buffer))
   (add-to-list 'display-buffer-alist
@@ -176,6 +176,10 @@ Minimal and compatible completion framework.
   (custom-set-variables '(eglot-autoshutdown t))
   (autoload 'eglot "eglot"
     "Manage a project with a Language Server Protocol (LSP) server." t)
+  (define-key (current-global-map) (kbd "C-c l") #'eglot)
+  (with-eval-after-load "eglot"
+    (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
+    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename))
 #+end_src
 * EXWM
 #+begin_src emacs-lisp
