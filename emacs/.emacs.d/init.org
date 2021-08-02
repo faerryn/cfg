@@ -39,7 +39,8 @@ Straight.el is a declarative package manager for Emacs.
   (custom-set-variables
    '(battery-mode-line-format "%p%% ")
    '(display-time-default-load-average nil)
-   '(display-time-format "%R "))
+   '(display-time-format "%T ")
+   '(display-time-interval 1))
   (display-time-mode +1)
   (display-battery-mode +1)
 #+end_src
