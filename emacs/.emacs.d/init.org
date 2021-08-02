@@ -97,7 +97,9 @@ Straight.el is a declarative package manager for Emacs.
 #+end_src
 ** Dired Mode
 #+begin_src emacs-lisp
-  (custom-set-variables '(dired-listing-switches "-AFghvX --group-directories-first"))
+  (custom-set-variables
+   '(dired-listing-switches "-AFghvX --group-directories-first")
+   '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
 ** Eshell Mode
@@ -111,7 +113,8 @@ Straight.el is a declarative package manager for Emacs.
 ** Consult
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
-  (autoload 'consult-completion-in-region "consult" "Prompt for completion of region in the minibuffer if non-unique.")
+  (autoload 'consult-completion-in-region "consult"
+    "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
 ** Marginalia
@@ -163,19 +166,22 @@ Minimal and compatible completion framework.
 ** Xclip
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
-  (autoload 'xclip-mode "xclip" "Minor mode to use the `xclip' program to copy&paste." t)
+  (autoload 'xclip-mode "xclip"
+    "Minor mode to use the `xclip' program to copy&paste." t)
   (add-hook 'tty-setup-hook #'xclip-mode)
 #+end_src
 * Eglot
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
   (custom-set-variables '(eglot-autoshutdown t))
-  (autoload 'eglot "eglot" "Manage a project with a Language Server Protocol (LSP) server." t)
+  (autoload 'eglot "eglot"
+    "Manage a project with a Language Server Protocol (LSP) server." t)
 #+end_src
 * EXWM
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
-  (autoload 'exwm-init "exwm" "Initialize EXWM." t)
+  (autoload 'exwm-init "exwm"
+    "Initialize EXWM." t)
   (with-eval-after-load "exwm"
     (defun faerryn/exwm-toggle-keyboard ()
       (interactive)
@@ -241,6 +247,7 @@ GCMH is an intelligent garbage collector scheduler for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
   (custom-set-variables '(magit-define-global-key-bindings nil))
-  (autoload 'magit-status "magit" "Show the status of the current Git repository in a buffer." t)
+  (autoload 'magit-status "magit"
+    "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
 #+end_src
