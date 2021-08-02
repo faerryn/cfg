@@ -94,10 +94,8 @@ use "ryvnf/readline.vim"
 use "tpope/vim-repeat"
 
 -- nice colorscheme
-use {
-  "joshdick/onedark.vim",
-  config = function() vim.api.nvim_command("colorscheme onedark") end,
-}
+use "joshdick/onedark.vim"
+vim.api.nvim_command("colorscheme onedark")
 
 -- Fixes neovim#12587
 use "antoinemadec/FixCursorHold.nvim"
@@ -106,34 +104,28 @@ use "antoinemadec/FixCursorHold.nvim"
 use {
   "nvim-treesitter/nvim-treesitter",
   update = function() vim.api.nvim_command("TSUpdate") end,
-  config = function()
-    require("nvim-treesitter.configs").setup {
-      ensure_installed = { "bash", "c", "cpp", "lua", "latex" },
-      highlight = { enable = true },
-      indent = { enable = true },
-    }
-  end,
+}
+require("nvim-treesitter.configs").setup {
+  ensure_installed = { "bash", "c", "cpp", "lua", "latex" },
+  highlight = { enable = true },
+  indent = { enable = true },
 }
 
 -- colorize hexes
-use {
-  "norcalli/nvim-colorizer.lua",
-  config = function()
-    require("colorizer").setup({}, {
-      RGB = false,
-      RRGGBB = true,
-      names = false,
-      RRGGBBAA = true,
-      rgb_fn = false,
-      hsl_fn = false,
-      css = false,
-      css_fn = false,
-      mode = "background",
-    })
-    vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
-    vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
-  end,
-}
+use  "norcalli/nvim-colorizer.lua"
+require("colorizer").setup({}, {
+  RGB = false,
+  RRGGBB = true,
+  names = false,
+  RRGGBBAA = true,
+  rgb_fn = false,
+  hsl_fn = false,
+  css = false,
+  css_fn = false,
+  mode = "background",
+})
+vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
+vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
 
 -- wait for all installation and configs to finish
 user.flush()
