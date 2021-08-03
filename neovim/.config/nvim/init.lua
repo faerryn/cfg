@@ -29,6 +29,11 @@ vim.opt.wrap = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- indentation
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = vim.opt.tabstop:get()
+vim.opt.expandtab = true
+
 -- show tabs and trailing spaces
 vim.opt.list = true
 
@@ -132,3 +137,5 @@ end
 use("nvim-lua/plenary.nvim")
 use("TimUntersberger/neogit")
 require("neogit").setup()
+
+vim.api.nvim_set_keymap("n", "<Space>g", [[<Cmd>lua require("neogit").open({ kind = "split" })<CR>]], { noremap = true })
