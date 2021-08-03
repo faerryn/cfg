@@ -76,7 +76,7 @@ Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables '(async-shell-command-buffer 'new-buffer))
   (add-to-list 'display-buffer-alist
-               `(,(rx string-start "*Async Shell Command*" (? "<" (+ digit) ">"))
+               `(,(rx string-start "*Async Shell Command*" (? "<" (+ digit) ">") string-end)
                  display-buffer-no-window
                  allow-no-window))
 #+end_src
