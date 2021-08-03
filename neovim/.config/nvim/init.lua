@@ -56,7 +56,7 @@ vim.api.nvim_set_keymap("", "Y", "y$", { noremap = true })
 
 -- highlight on yank
 vim.api.nvim_command("augroup faerryn | autocmd! | augroup END")
-vim.api.nvim_command("autocmd! faerryn TextYankPost * lua vim.highlight.on_yank()")
+vim.api.nvim_command("autocmd faerryn TextYankPost * lua vim.highlight.on_yank()")
 
 -- netrw
 vim.g.netrw_banner    = 0
@@ -125,9 +125,10 @@ if vim.opt.termguicolors:get() then
     css_fn = false,
     mode = "background",
   })
-  vim.api.nvim_command("augroup ColorizerSetup | autocmd! | augroup END")
-  vim.api.nvim_command([[autocmd! ColorizerSetup BufEnter * lua require("colorizer").attach_to_buffer(0)]])
+  vim.api.nvim_command([[autocmd faerryn BufEnter * lua require("colorizer").attach_to_buffer(0)]])
 end
 
--- wait for all installation and configs to finish
-user.flush()
+-- magit for neovim
+use("nvim-lua/plenary.nvim")
+use("TimUntersberger/neogit")
+require("neogit").setup()
