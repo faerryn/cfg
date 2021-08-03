@@ -203,7 +203,7 @@ Minimal and compatible completion framework.
      '(exwm-mode-map
        (let ((map (make-sparse-keymap)))
          (define-key map (kbd "C-q") #'exwm-input-send-next-key)
-         (define-key map (kbd "s-f") #'exwm-layout-toggle-fullscreen)
+         (define-key map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
          (define-key map (kbd "s-SPC") #'faerryn/exwm-toggle-keyboard)
          map))
      '(exwm-input--global-keys
