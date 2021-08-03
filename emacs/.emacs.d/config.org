@@ -113,6 +113,13 @@ Straight.el is a declarative package manager for Emacs.
     (eshell/alias "ll" "ls -g $*")
     (eshell/alias "la" "ll -A $*"))
 #+end_src
+** Rust Mode
+#+begin_src emacs-lisp
+  (straight-use-package 'rust-mode)
+  (autoload 'rust-mode "rust-mode"
+    "Major mode for Rust code." t)
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+#+end_src
 * Minibuffer
 ** Consult
 #+begin_src emacs-lisp
@@ -183,7 +190,8 @@ Minimal and compatible completion framework.
   (define-key (current-global-map) (kbd "C-c l") #'eglot)
   (with-eval-after-load "eglot"
     (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
-    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename))
+    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
 * EXWM
 #+begin_src emacs-lisp
