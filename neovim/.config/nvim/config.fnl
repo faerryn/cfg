@@ -106,8 +106,8 @@
     :indent {:enable true}})
 
   ;; colorize hexes
+  (use "norcalli/nvim-colorizer.lua")
   (when (vim.opt.termguicolors:get)
-    (use "norcalli/nvim-colorizer.lua")
     ((. (require :colorizer) :setup) {}
      {:RGB true
       :RRGGBB true

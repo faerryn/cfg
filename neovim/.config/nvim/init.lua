@@ -14,18 +14,25 @@ local use = user.use
 
 -- fennel for configuration
 local function build_fennel()
-  vim.fn.mkdir("lua/", "p")
-  if vim.fn.filereadable("lua/fennel.lua") then
-    vim.fn.delete("lua/fennel.lua")
-  end
-  os.execute("make LUA=luajit")
-  os.execute("cp fennel.lua lua/fennel.lua")
+  os.execute("make LUA=luajit PREFIX=./ BIN_DIR=./bin LUA_LIB_DIR=./lua install")
 end
-use {
+local fennel_pack = use {
   "fennel",
   repo = "https://git.sr.ht/~technomancy/fennel",
   install = build_fennel,
   update = build_fennel,
 }
 local fennel = require("fennel")
-fennel.dofile(vim.fn.stdpath("config").."/init.fnl")
+
+local config_fnl = vim.fn.stdpath("config").."/config.fnl"
+local config_lua = vim.fn.stdpath("config").."/config.lua"
+if vim.fn.getftime(config_fnl) > vim.fn.getftime(config_lua) then
+  local fout = io.open(config_lua, "w")
+  local job = io.popen(vim.fn.shellescape(fennel_pack.install_path.."/bin/fennel").." --compile "..vim.fn.shellescape(config_fnl), "r")
+
+  fout:write(job:read("*all"))
+
+  fout:close()
+  job:close()
+end
+dofile(config_lua)
