@@ -22,7 +22,6 @@ local fennel_pack = use {
   install = build_fennel,
   update = build_fennel,
 }
-local fennel = require("fennel")
 
 local config_fnl = vim.fn.stdpath("config").."/config.fnl"
 local config_lua = vim.fn.stdpath("config").."/config.lua"
