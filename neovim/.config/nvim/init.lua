@@ -31,7 +31,7 @@ vim.opt.splitright = true
 
 -- indentation
 vim.opt.tabstop = 2
-vim.opt.shiftwidth = vim.opt.tabstop:get()
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 -- show tabs and trailing spaces
