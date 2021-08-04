@@ -29,6 +29,9 @@ vim.opt.wrap = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- emacs-like autochdir
+vim.opt.autochdir = true
+
 -- indentation
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
