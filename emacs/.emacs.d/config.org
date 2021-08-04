@@ -37,7 +37,21 @@ GCMH is an intelligent garbage collection scheduler for Emacs.
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
 * Custom Symbols
-I need to hook to run before the minibuffer opens.
+Switches to and ensures the scratch buffer.
+#+begin_src emacs-lisp
+  (defun fearryn/scratch ()
+    "Display buffer `*scratch*' in the selected window, regenerating it as necessary."
+    (interactive)
+    (if-let ((scratch (get-buffer "*scratch*")))
+        (switch-to-buffer scratch)
+      (let ((scratch (generate-new-buffer "*scratch*")))
+        (with-current-buffer scratch
+          (insert initial-scratch-message)
+          (lisp-interaction-mode))
+        (switch-to-buffer scratch))))
+#+end_src
+
+I need a hook that runs before the minibuffer opens.
 #+begin_src emacs-lisp
   (defvar faerryn/before-minibuffer-hook nil
     "Normal hook run just before entry to minibuffer")
