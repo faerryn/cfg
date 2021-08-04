@@ -67,6 +67,11 @@ Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
+** Indentation
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(indent-tabs-mode nil))
+#+end_src
 ** Tab Complete
 #+begin_src emacs-lisp
   (custom-set-variables '(tab-always-indent 'complete))
