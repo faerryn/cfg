@@ -318,6 +318,12 @@ customize the behavior of EXWM.
             (pcase exwm--input-mode
               ('line-mode (exwm-input-release-keyboard id))
               ('char-mode (exwm-input-grab-keyboard id)))))))
+    (defcustom faerryn/exwm-input-global-keys nil
+      "Key bindings that are allowed in EXWM char-mode"
+      :set (lambda (symbol value)
+             (set symbol value)
+             (setq exwm-input--global-keys value)
+             (exwm-input--update-global-prefix-keys)))
     (custom-set-variables
      '(exwm-mode-map
        (let ((map (make-sparse-keymap)))
@@ -325,7 +331,7 @@ customize the behavior of EXWM.
          (define-key map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
          (define-key map (kbd "s-SPC") #'faerryn/exwm-toggle-keyboard)
          map))
-     '(exwm-input--global-keys
+     '(faerryn/exwm-input-global-keys
        (list (kbd "s-SPC")))
      '(exwm-input-prefix-keys
        (list (kbd "C-c")
@@ -337,7 +343,6 @@ customize the behavior of EXWM.
              (kbd "M-&")
              (kbd "M-:")
              (kbd "M-x"))))
-    (exwm-input--update-global-prefix-keys)
     (defun faerryn/exwm-buffer-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name)
