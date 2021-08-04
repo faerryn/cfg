@@ -99,26 +99,26 @@ Straight.el is a declarative package manager for Emacs.
   (scroll-bar-mode -1)
 #+end_src
 * Major Modes
-** Cc Mode
+** C/C++
 #+begin_src emacs-lisp
   (with-eval-after-load "cc-mode"
     (advice-add 'c-indent-command :override #'indent-for-tab-command))
 #+end_src
-** Dired Mode
+** Dired
 #+begin_src emacs-lisp
   (custom-set-variables
    '(dired-listing-switches "-AFghvX --group-directories-first")
    '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
-** Eshell Mode
+** Eshell
 #+begin_src emacs-lisp
   (with-eval-after-load "em-alias"
     (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
     (eshell/alias "ll" "ls -g $*")
     (eshell/alias "la" "ll -A $*"))
 #+end_src
-** Rust Mode
+** Rust
 #+begin_src emacs-lisp
   (straight-use-package 'rust-mode)
   (autoload 'rust-mode "rust-mode"
