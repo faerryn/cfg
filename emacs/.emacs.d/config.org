@@ -1,21 +1,15 @@
 #+TITLE: Faerryn's Emacs Config
 #+STARTUP: indent overview
 
-* Lexical Binding
+* Prologue
+This section contains essential components of my configuration.
+** Lexical Binding
+[[info:elisp#Lexical Binding][Lexical Binding]] encapsulates the scoping of variables to their
+context. This can make bugs easier to catch and improve performance.
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
-* Custom Symbols
-#+begin_src emacs-lisp
-  (defvar faerryn/before-minibuffer-hook nil
-    "Normal hook run just before entry to minibuffer")
-  (defun faerryn/run-before-minibuffer-hooks (&rest _)
-    (run-hooks 'faerryn/before-minibuffer-hook))
-  (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
-  (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
-  (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
-#+end_src
-* Straight.el
+** Package Manager
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables
@@ -26,15 +20,51 @@ Straight.el is a declarative package manager for Emacs.
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
-      (call-process "git" nil nil nil "clone" "--depth" "1" repo dest))
+      (call-process "git" nil nil nil "clone"
+                    "--depth" (number-to-string straight-vc-git-default-clone-depth)
+                    repo dest))
     (require 'straight (expand-file-name "straight.el" dest))
     (with-temp-buffer
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
+** Garbage Collector
+GCMH is an intelligent garbage collection scheduler for Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'gcmh)
+  (require 'gcmh)
+  (add-hook 'emacs-startup-hook #'gcmh-mode)
+#+end_src
+* Custom Symbols
+I need to hook to run before the minibuffer opens.
+#+begin_src emacs-lisp
+  (defvar faerryn/before-minibuffer-hook nil
+    "Normal hook run just before entry to minibuffer")
+  (defun faerryn/run-before-minibuffer-hooks (&rest _)
+    (run-hooks 'faerryn/before-minibuffer-hook))
+  (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
+  (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
+  (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
+#+end_src
 * Appearance
+Blinging out Emacs since 2021.
+** Declutter Widgets
+Decluttering Emacs of frivolous things like menus and scroll bars.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(inhibit-startup-screen t)
+   '(use-dialog-box nil))
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tooltip-mode -1)
+#+end_src
 ** Modeline
+The modeline is the the bar the displays, among other things, a
+buffer's name and major mode.
+
+Show the time and battery level on the modeline.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(battery-mode-line-format "%p%% ")
@@ -45,6 +75,8 @@ Straight.el is a declarative package manager for Emacs.
   (display-battery-mode +1)
 #+end_src
 ** Tab Bar
+The tab bar manages different buffers and window configuration in
+different tabs. This feature seems stolen from Vim.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(tab-bar-close-button nil)
@@ -52,66 +84,79 @@ Straight.el is a declarative package manager for Emacs.
   (tab-bar-mode +1)
 #+end_src
 ** Theme
+Emacs' default theme is blindingly bright.
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
   (require 'doom-themes)
   (load-theme 'doom-one t)
 #+end_src
-* Define Keys
+* Editor
+Emacs is a text-editor, after all.
+** Custom Keys
+Some commonly used operations, bound to keys for convenience.
 #+begin_src emacs-lisp
   (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
   (define-key (current-global-map) (kbd "C-c j") #'join-line)
 #+end_src
-* Editor
+** LSP Client
+[[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
+intelligent code assistance for an abitrary editor that supports the
+protocol. It brings IDE-grade completion and linting to any
+LSP-capable editor.
+
+Eglot is a LSP client written in Elisp, bringing the power of an IDE
+to Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'eglot)
+  (custom-set-variables '(eglot-autoshutdown t))
+  (autoload 'eglot "eglot"
+    "Manage a project with a Language Server Protocol (LSP) server." t)
+  (with-eval-after-load "eglot"
+    (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
+    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+#+end_src
 ** Electric Pairs
+Automagically close quotes, parentheses, brackets, etc...
 #+begin_src emacs-lisp
   (electric-pair-mode +1)
 #+end_src
 ** Indentation
+Indent with spaces.
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(indent-tabs-mode nil))
+  (custom-set-variables '(indent-tabs-mode nil))
 #+end_src
-** Tab Complete
+** Tab-to-Complete
+Bring the tab-to-complete experience to Emacs!
 #+begin_src emacs-lisp
   (custom-set-variables '(tab-always-indent 'complete))
 #+end_src
-* Hated Things
-** Async Shell Command Buffer
-#+begin_src emacs-lisp
-  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
-  (add-to-list 'display-buffer-alist
-               `(,(rx string-start "*Async Shell Command*" (? "<" (+ digit) ">") string-end)
-                 display-buffer-no-window
-                 allow-no-window))
-#+end_src
-** Line Wrap
-#+begin_src emacs-lisp
-  (custom-set-variables '(truncate-lines t))
-#+end_src
-** Widgets
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(inhibit-startup-screen t)
-   '(use-dialog-box nil))
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-#+end_src
 * Major Modes
+Major modes represent filetypes in Emacs.
 ** C/C++
+Bringing tab-to-complete to C/C++, which is useful when combined with
+LSP servers that provide completion.
 #+begin_src emacs-lisp
   (with-eval-after-load "cc-mode"
     (advice-add 'c-indent-command :override #'indent-for-tab-command))
 #+end_src
 ** Dired
+Dired is the file browser in Emacs.
+
+This prettifies dired's file listing.
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(dired-listing-switches "-AFghvX --group-directories-first")
-   '(dired-x-hands-off-my-keys nil))
+  (custom-set-variables '(dired-listing-switches "-AFghvX --group-directories-first"))
+#+end_src
+
+This loads up extra features for dired.
+#+begin_src emacs-lisp
+  (custom-set-variables '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
 ** Eshell
+Eshell is a portable, lispy shell in Emacs.
+
+This configures aliases for eshell.
 #+begin_src emacs-lisp
   (with-eval-after-load "em-alias"
     (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
@@ -119,14 +164,18 @@ Straight.el is a declarative package manager for Emacs.
     (eshell/alias "la" "ll -A $*"))
 #+end_src
 ** Rust
+Rust is a programming language with focus on performance and memory
+safety. For more details, see [[https://www.rust-lang.org][here]].
 #+begin_src emacs-lisp
   (straight-use-package 'rust-mode)
   (autoload 'rust-mode "rust-mode"
     "Major mode for Rust code." t)
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 #+end_src
-* Minibuffer
+* Minibuffer Completion
+The minibuffer is the empty space under the modeline.
 ** Consult
+Consult provides a collection of useful functions that make use of minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
   (autoload 'consult-completion-in-region "consult"
@@ -134,13 +183,15 @@ Straight.el is a declarative package manager for Emacs.
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
 ** Marginalia
+Marginalia provides extra information in the "margins" during minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'marginalia)
   (require 'marginalia)
   (marginalia-mode +1)
 #+end_src
 ** Orderless
-Smarter sorting in completion buffers.
+Orderless provides a smarter, more usable sorting and searching for
+minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
   (require 'orderless)
@@ -150,22 +201,31 @@ Smarter sorting in completion buffers.
    '(completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 ** Vertico
-Minimal and compatible completion framework.
+Vertico provices a performant and extensible minibuffer-based completion framework.
+
 #+begin_src emacs-lisp
   (straight-use-package
    `(vertico :files ,(cons "extensions/*.el" straight-default-files-directive)))
   (require 'vertico)
-  (require 'vertico-mouse)
   (vertico-mode +1)
+#+end_src
+
+This enables mouse support.
+#+begin_src emacs-lisp
+  (require 'vertico-mouse)
   (vertico-mouse-mode +1)
 #+end_src
 * Visual Aids
+Editing is as much reading as writing. This section focuses on
+improving the reading experience.
 ** Line Numbers
+Line numbers are crucial to understand where you are in a document.
 #+begin_src emacs-lisp
   (custom-set-variables '(display-line-numbers-type t))
   (global-display-line-numbers-mode +1)
 #+end_src
 ** Show Paren
+This highlights matching quotes, parentheses, brackets, etc...
 #+begin_src emacs-lisp
   (show-paren-mode +1)
 #+end_src
@@ -184,35 +244,67 @@ Minimal and compatible completion framework.
   (add-hook 'prog-mode-hook #'rainbow-mode)
 #+end_src
 ** Whitespace
+Display normally transparent characters. Catch the trailing spaces.
 #+begin_src emacs-lisp
   (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
   (global-whitespace-mode +1)
 #+end_src
 * Text Terminal
+Emacs can run in a text terminal.
 ** Xterm Mouse
+Text terminals sometimes support the mouse, and emacs can support text
+terminals supporting the mouse.
 #+begin_src emacs-lisp
   (add-hook 'tty-setup-hook #'xterm-mouse-mode)
 #+end_src
 ** Xclip
+Xclip allows non-X11 programs to access the X11 clipboard. Terminal
+emacs can try to access the X11 clipboard this way.
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
   (autoload 'xclip-mode "xclip"
     "Minor mode to use the `xclip' program to copy&paste." t)
-  (add-hook 'tty-setup-hook #'xclip-mode)
+  (defun faerryn/safe-xclip-mode ()
+    (ignore-errors
+      (xclip-mode +1)))
+  (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
 #+end_src
-* Eglot
+* Async Shell Command Buffer
+async-shell-command spawns a buffer with the command's output. This
+hides that buffer so that it is not displayed immediately.
 #+begin_src emacs-lisp
-  (straight-use-package 'eglot)
-  (custom-set-variables '(eglot-autoshutdown t))
-  (autoload 'eglot "eglot"
-    "Manage a project with a Language Server Protocol (LSP) server." t)
-  (define-key (current-global-map) (kbd "C-c l") #'eglot)
-  (with-eval-after-load "eglot"
-    (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
-    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
-    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
+  (add-to-list 'display-buffer-alist
+               `(,(rx string-start "*Async Shell Command*" (? "<" (+ digit) ">") string-end)
+                 display-buffer-no-window
+                 allow-no-window))
 #+end_src
-* EXWM
+* Follow Symlinks
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(find-file-visit-truename t)
+   '(vc-follow-symlinks t))
+#+end_src
+* Git Intergration
+Magit is THE git porcelain - it is good enough to justify learning
+Emacs by itself!
+#+begin_src emacs-lisp
+  (straight-use-package 'magit)
+  (custom-set-variables '(magit-define-global-key-bindings nil))
+  (autoload 'magit-status "magit"
+    "Show the status of the current Git repository in a buffer." t)
+  (define-key (current-global-map) (kbd "C-c g") #'magit-status)
+#+end_src
+* Truncate Lines
+Line wrap is weird and confusing. Truncated lines are elephants.
+#+begin_src emacs-lisp
+  (custom-set-variables '(truncate-lines t))
+#+end_src
+* X11 Window Manager
+An X11 window manager is what powers most Linux desktops.
+
+EXWM is a window manager written in Elisp. Lots of hacks are used to
+customize the behavior of EXWM.
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
   (autoload 'exwm-init "exwm"
@@ -261,25 +353,4 @@ Minimal and compatible completion framework.
       (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
       (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
     (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
-#+end_src
-* Follow Symlinks
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(find-file-visit-truename t)
-   '(vc-follow-symlinks t))
-#+end_src
-* GCMH
-GCMH is an intelligent garbage collector scheduler for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'gcmh)
-  (require 'gcmh)
-  (add-hook 'emacs-startup-hook #'gcmh-mode)
-#+end_src
-* Magit
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (custom-set-variables '(magit-define-global-key-bindings nil))
-  (autoload 'magit-status "magit"
-    "Show the status of the current Git repository in a buffer." t)
-  (define-key (current-global-map) (kbd "C-c g") #'magit-status)
 #+end_src
