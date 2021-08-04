@@ -173,6 +173,9 @@ Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (straight-use-package 'rainbow-mode)
   (custom-set-variables
+   '(rainbow-ansi-colors nil)
+   '(rainbow-html-colors nil)
+   '(rainbow-latex-colors nil)
    '(rainbow-r-colors nil)
    '(rainbow-x-colors nil))
   (require 'rainbow-mode)

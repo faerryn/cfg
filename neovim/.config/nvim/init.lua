@@ -123,10 +123,10 @@ require("nvim-treesitter.configs").setup {
 if vim.opt.termguicolors:get() then
   use("norcalli/nvim-colorizer.lua")
   require("colorizer").setup({}, {
-    RGB = false,
+    RGB = true,
     RRGGBB = true,
     names = false,
-    RRGGBBAA = true,
+    RRGGBBAA = false,
     rgb_fn = false,
     hsl_fn = false,
     css = false,
