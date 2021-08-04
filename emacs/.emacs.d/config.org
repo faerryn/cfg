@@ -95,8 +95,7 @@ Emacs is a text-editor, after all.
 ** Custom Keys
 Some commonly used operations, bound to keys for convenience.
 #+begin_src emacs-lisp
-  (define-key (current-global-map) (kbd "C-c f") #'fixup-whitespace)
-  (define-key (current-global-map) (kbd "C-c j") #'join-line)
+  (define-key (current-global-map) (kbd "C-c x") #'fixup-whitespace)
 #+end_src
 ** LSP Client
 [[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
@@ -113,6 +112,7 @@ to Emacs.
     "Manage a project with a Language Server Protocol (LSP) server." t)
   (with-eval-after-load "eglot"
     (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
+    (define-key eglot-mode-map (kbd "C-c f") #'eglot-format)
     (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
