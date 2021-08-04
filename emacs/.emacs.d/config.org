@@ -169,6 +169,17 @@ Minimal and compatible completion framework.
 #+begin_src emacs-lisp
   (show-paren-mode +1)
 #+end_src
+** Rainbow
+#+begin_src emacs-lisp
+  (straight-use-package 'rainbow-mode)
+  (custom-set-variables
+   '(rainbow-r-colors nil)
+   '(rainbow-x-colors nil))
+  (require 'rainbow-mode)
+  (add-hook 'conf-mode-hook #'rainbow-mode)
+  (add-hook 'text-mode-hook #'rainbow-mode)
+  (add-hook 'prog-mode-hook #'rainbow-mode)
+#+end_src
 ** Whitespace
 #+begin_src emacs-lisp
   (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
