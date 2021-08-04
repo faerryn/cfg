@@ -58,26 +58,30 @@
 (set vim.opt.termguicolors (= (os.getenv "COLORTERM") "truecolor"))
 
 ;; Y to eol
-(vim.api.nvim_set_keymap "" "Y" "y$" { "noremap" true })
+(vim.api.nvim_set_keymap "" "Y" "y$" {:noremap true})
+
+;; <Tab> to omnifunc
+(vim.api.nvim_set_keymap "i" "<Tab>" "!pumvisible() && col(\".\") > 1 + max([match(getline(\".\"), '\\S'), 0]) ? \"<C-x><C-o>\" : \"<Tab>\"" {:expr true :noremap true})
 
 ;; highlight on yank
 (vim.api.nvim_command "augroup faerryn | autocmd! | augroup END")
 (vim.api.nvim_command "autocmd faerryn TextYankPost * lua vim.highlight.on_yank()")
 
 ;; netrw
-(set vim.g.netrw_banner    0)
-(set vim.g.netrw_hide      1)
-(set vim.g.netrw_keepdir   0)
+(set vim.g.netrw_banner 0)
+(set vim.g.netrw_hide 1)
+(set vim.g.netrw_keepdir 0)
 (set vim.g.netrw_list_hide "^\\.\\.\\?/$")
-(set vim.g.netrw_winsize   25)
+(set vim.g.netrw_winsize 25)
 
 ;; shell split commands
-(vim.api.nvim_command (.. "command! Shell  edit           term://" (vim.opt.shell:get)))
-(vim.api.nvim_command (.. "command! Hshell split          term://" (vim.opt.shell:get)))
-(vim.api.nvim_command (.. "command! Lshell topleft vsplit term://" (vim.opt.shell:get)))
-(vim.api.nvim_command (.. "command! Sshell split          term://" (vim.opt.shell:get)))
-(vim.api.nvim_command (.. "command! Vshell vsplit         term://" (vim.opt.shell:get)))
-(vim.api.nvim_command (.. "command! Tshell tabnew         term://" (vim.opt.shell:get)))
+(each [cmd exedit (pairs {:Shell "edit"
+                          :Hshell "split"
+                          :Lshell "topleft"
+                          :Sshell "split"
+                          :Vshell "vsplit"
+                          :Tshell "tabnew"})]
+  (vim.api.nvim_command (.. "command! " cmd " execute \"" exedit " term://\".&shell")))
 
 (let [use (. (require :user) :use)]
 
@@ -94,8 +98,12 @@
   (use "joshdick/onedark.vim")
   (vim.api.nvim_command "colorscheme onedark")
 
+  ;; fennel.vim to highlight fennel files
+  (use "bakpakin/fennel.vim")
+
   ;; Fixes neovim#12587
   (use "antoinemadec/FixCursorHold.nvim")
+  (set vim.g.cursorhold_updatetime 1000)
 
   ;; good syntax highlighting
   (use {1 "nvim-treesitter/nvim-treesitter"
@@ -124,10 +132,38 @@
   (use "nvim-lua/plenary.nvim")
   (use "TimUntersberger/neogit")
   ((. (require :neogit) :setup))
-
   (vim.api.nvim_set_keymap "n" "<Space>g"
-                           "<Cmd>lua require(\"neogit\").open({ kind = \"split\" })<CR>"
-                           { :noremap true })
+                           "<Cmd>lua require(\"neogit\").open({kind = \"split\"})<CR>"
+                           {:noremap true})
 
-  ;; fennel.vim to highlight fennel files
-  (use "bakpakin/fennel.vim"))
+  ;; lsp for neovim
+  (use "neovim/nvim-lspconfig")
+  (let [lsp-info-buf (vim.api.nvim_create_buf false false)
+        lsp-info-pop-up (fn []
+                          (when (= (vim.fn.bufwinid lsp-info-buf) -1)
+                            (let [curwin (vim.api.nvim_get_current_win)]
+                              (vim.api.nvim_command "15split")
+                              (vim.api.nvim_win_set_buf 0 lsp-info-buf)
+                              (vim.api.nvim_set_current_win curwin))))]
+    (set vim.lsp.handlers.textDocument/hover
+         (fn [_ _ result]
+           (when result
+             (let [lines []]
+               (each [line (string.gmatch (. (. result :contents) :value) "[^\n]*\n")]
+                 (table.insert lines (string.sub line 0 -2)))
+               (vim.lsp.util.stylize_markdown lsp-info-buf lines {})
+               (lsp-info-pop-up))))))
+  (let [lspconfig (require :lspconfig)
+        on-attach (fn [client bufnr]
+                    (vim.api.nvim_buf_set_option bufnr :omnifunc "v:lua.vim.lsp.omnifunc")
+                    (vim.api.nvim_buf_set_keymap bufnr "n" "<Space>a" "<Cmd>lua vim.lsp.buf.code_action()<CR>" {:noremap true})
+                    (vim.api.nvim_buf_set_keymap bufnr "x" "<Space>a" "<Cmd>lua vim.lsp.buf.range_code_action()<CR>" {:noremap true})
+                    (vim.api.nvim_buf_set_keymap bufnr "n" "<Space>f" "<Cmd>lua vim.lsp.buf.formatting_sync()<CR>" {:noremap true})
+                    (vim.api.nvim_buf_set_keymap bufnr "n" "<Space>r" "<Cmd>lua vim.lsp.buf.rename()<CR>" {:noremap true})
+                    (vim.api.nvim_command (.. "autocmd faerryn CursorHold <buffer=" bufnr "> lua vim.lsp.buf.hover()"))
+                    (vim.api.nvim_command (.. "autocmd faerryn CursorHoldI <buffer=" bufnr "> lua vim.lsp.buf.signature_help()")))
+        opts {:autostart false
+              :on_attach on-attach}
+        servers ["clangd" "rust_analyzer"]]
+    (each [_ server (ipairs servers)]
+      ((. (. lspconfig server) :setup) opts))))
