@@ -13,3 +13,5 @@ setopt HIST_LEX_WORDS HIST_REDUCE_BLANKS
 
 autoload -U compinit
 compinit
+
+bindkey -e
