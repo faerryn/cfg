@@ -132,13 +132,10 @@ vim.api.nvim_command("command! -nargs=1 -complete=file FennelFile lua require('f
 -- fennel syntax
 use("bakpakin/fennel.vim")
 
-local treesitter_branch = nil
-if not vim.fn.has("nvim-0.6") then
-  treesitter_branch = "0.5-compat"
-end
+-- Neovim can get smarter by sitting in (abstract syntax) trees!
 use {
   "nvim-treesitter/nvim-treesitter",
-  branch = treesitter_branch,
+  branch =  "0.5-compat",
   update = function () vim.api.nvim_command("TSUpdate") end,
 }
 require("nvim-treesitter.configs").setup {
