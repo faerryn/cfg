@@ -24,6 +24,7 @@ local fennel_pack = use {
 }
 local fennel = require("fennel")
 
+-- compile config.fnl
 local config_fnl = vim.fn.stdpath("config").."/config.fnl"
 local config_lua = vim.fn.stdpath("config").."/config.lua"
 if vim.fn.getftime(config_fnl) > vim.fn.getftime(config_lua) then
@@ -38,4 +39,5 @@ if vim.fn.getftime(config_fnl) > vim.fn.getftime(config_lua) then
   fout:close()
 end
 
+-- load resulting config.lua
 dofile(config_lua)
