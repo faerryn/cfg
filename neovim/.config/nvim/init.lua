@@ -22,16 +22,20 @@ local fennel_pack = use {
   install = build_fennel,
   update = build_fennel,
 }
+local fennel = require("fennel")
 
 local config_fnl = vim.fn.stdpath("config").."/config.fnl"
 local config_lua = vim.fn.stdpath("config").."/config.lua"
 if vim.fn.getftime(config_fnl) > vim.fn.getftime(config_lua) then
+  local fin = io.open(config_fnl, "r")
+  local fennel_code = fin:read("*all")
+  fin:close()
+  
+  local lua_code = fennel.compileString(fennel_code)
+
   local fout = io.open(config_lua, "w")
-  local job = io.popen(vim.fn.shellescape(fennel_pack.install_path.."/bin/fennel").." --compile "..vim.fn.shellescape(config_fnl), "r")
-
-  fout:write(job:read("*all"))
-
+  fout:write(lua_code)
   fout:close()
-  job:close()
 end
+
 dofile(config_lua)
