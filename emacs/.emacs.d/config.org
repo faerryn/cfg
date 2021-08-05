@@ -147,7 +147,9 @@ Automagically close quotes, parentheses, brackets, etc...
 ** Indentation
 Indent with spaces.
 #+begin_src emacs-lisp
-  (custom-set-variables '(indent-tabs-mode nil))
+  (custom-set-variables
+   '(indent-tabs-mode nil)
+   '(tab-width 2))
 #+end_src
 ** Tab-to-Complete
 Bring the tab-to-complete experience to Emacs!
