@@ -85,6 +85,9 @@
                           :Vshell "vsplit"
                           :Tshell "tabnew"})]
   (vim.api.nvim_command (.. "command! " cmd " execute \"" exedit " term://\".&shell")))
+;; fennel commands
+(vim.api.nvim_command "command! -nargs=* Fennel lua require('fennel').eval(<q-args>)")
+(vim.api.nvim_command "command! -nargs=1 -complete=file FennelFile lua require('fennel').dofile(vim.fn.expand(<q-args>))")
 
 ;; grab the use()
 (local use (. (require :user) :use))
