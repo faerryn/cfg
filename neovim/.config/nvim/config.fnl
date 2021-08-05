@@ -61,12 +61,7 @@
 (vim.api.nvim_set_keymap "" "Y" "y$" {:noremap true})
 
 ;; <Tab> to omnifunc
-(vim.api.nvim_set_keymap "i" "<Tab>"
-                         (.. "pumvisible() ? \"<C-n>\" :"
-                             "col(\".\") - 1 <= match(getline(\".\").\"$\", '\\S') ? \"<Tab>\" :"
-                             "len(&omnifunc) ? \"<C-x><C-o>\" :"
-                             "\"<C-x><C-n>\"")
-                         {:expr true :noremap true})
+(vim.api.nvim_set_keymap "i" "<Tab>" "pumvisible() ? \"<C-n>\" : col(\".\") - 1 <= match(getline(\".\").\"$\", '\\S') ? \"<Tab>\" : len(&omnifunc) ? \"<C-x><C-o>\" : \"<C-x><C-n>\"" {:expr true :noremap true})
 (vim.api.nvim_set_keymap "i" "<S-Tab>" "pumvisible() ? \"<C-p>\" : \"<Tab>\"" {:expr true :noremap true})
 (vim.api.nvim_set_keymap "i" "<CR>" "pumvisible() ? \"<C-y>\" : \"<CR>\"" {:expr true :noremap true})
 (vim.api.nvim_set_keymap "i" "<Esc>" "pumvisible() ? \"<C-e>\" : \"<Esc>\"" {:expr true :noremap true})
@@ -141,9 +136,7 @@
 (use "nvim-lua/plenary.nvim")
 (use "TimUntersberger/neogit")
 ((. (require :neogit) :setup))
-(vim.api.nvim_set_keymap "n" "<Space>g"
-                         "<Cmd>lua require(\"neogit\").open({kind = \"split\"})<CR>"
-                         {:noremap true})
+(vim.api.nvim_set_keymap "n" "<Space>g" "<Cmd>lua require(\"neogit\").open({kind = \"split\"})<CR>" {:noremap true})
 
 ;; lsp for neovim
 (use "neovim/nvim-lspconfig")
