@@ -1,20 +1,5 @@
 --- init.lua
 
--- user.nvim is my very own package manager!
-local user_packadd_path = "faerryn/user.nvim/default"
-local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
-if vim.fn.isdirectory(user_install_path) == 0 then
-  os.execute("git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "..vim.fn.shellescape(user_install_path))
-end
-vim.api.nvim_command("packadd "..vim.fn.fnameescape(user_packadd_path))
-local user = require("user")
-user.setup()
-local use = user.use
-use("faerryn/user.nvim")
-
--- define and clear augroup for `:source $MYVIMRC`
-vim.api.nvim_command("augroup faerryn | autocmd! | augroup END")
-
 -- teach vim object permanence
 vim.opt.hidden = true
 
@@ -78,6 +63,9 @@ vim.api.nvim_set_keymap("i", "<S-Tab>", "pumvisible() ? '<C-p>' : '<Tab>'", {exp
 vim.api.nvim_set_keymap("i", "<CR>", "pumvisible() ? '<C-y>' : '<CR>'", {expr = true, noremap = true})
 vim.api.nvim_set_keymap("i", "<Esc>", "pumvisible() ? '<C-e>' : '<Esc>'", {expr = true, noremap = true})
 
+-- define and clear augroup for `:source $MYVIMRC`
+vim.api.nvim_command("augroup faerryn | autocmd! | augroup END")
+
 -- highlight yanked text
 vim.api.nvim_command("autocmd faerryn TextYankPost * lua vim.highlight.on_yank()")
 
@@ -99,6 +87,18 @@ vim.g.netrw_hide = 1
 vim.g.netrw_keepdir = 0
 vim.g.netrw_list_hide = "^\\.\\.\\?/$"
 vim.g.netrw_winsize = 25
+
+-- user.nvim is my very own package manager!
+local user_packadd_path = "faerryn/user.nvim/default"
+local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
+if vim.fn.isdirectory(user_install_path) == 0 then
+  os.execute("git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "..vim.fn.shellescape(user_install_path))
+end
+vim.api.nvim_command("packadd "..vim.fn.fnameescape(user_packadd_path))
+local user = require("user")
+user.setup()
+local use = user.use
+use("faerryn/user.nvim")
 
 -- fixes neovim#12587
 use("antoinemadec/FixCursorHold.nvim")
@@ -146,6 +146,7 @@ require("nvim-treesitter.configs").setup {
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
+-- color my neovim with colors!
 use("norcalli/nvim-colorizer.lua")
 if vim.opt.termguicolors:get() then
   require("colorizer").setup({}, {
