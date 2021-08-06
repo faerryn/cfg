@@ -316,9 +316,13 @@ hides that buffer so that it is not displayed immediately.
                  display-buffer-no-window
                  allow-no-window))
 #+end_src
-* Disable lockfiles
+* Declutter File System
+Disable autosaves, backups, and lockfiles for file system sanity.
 #+begin_src emacs-lisp
-  (custom-set-variables '(create-lockfiles nil))
+  (custom-set-variables
+   '(auto-save-default nil)
+   '(make-backup-files nil)
+   '(create-lockfiles nil))
 #+end_src
 * Follow Symlinks
 #+begin_src emacs-lisp
