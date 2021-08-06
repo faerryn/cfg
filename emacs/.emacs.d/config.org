@@ -78,12 +78,24 @@ Decluttering Emacs of frivolous things like menus and scroll bars.
 The modeline is the the bar the displays, among other things, a
 buffer's name and major mode.
 
+Emacs' default modeline is ugly. Doom Emacs provides us with an
+aesthetic alternative.
+
+The reason we are autoloading `doom-modeline' is to ensure that a
+frame exists when the code is loaded. Otherwise, some features will be
+disabled by default.
+#+begin_src emacs-lisp
+  (straight-use-package 'doom-modeline)
+  (autoload 'doom-modeline-mode "doom-modeline" "Toggle doom-modeline on or off." t)
+  (add-hook 'emacs-startup-hook #'doom-modeline-mode)
+  #+end_src
+
 Show the time and battery level on the modeline.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(battery-mode-line-format "%p%% ")
+   '(battery-mode-line-format "%p%%")
    '(display-time-default-load-average nil)
-   '(display-time-format "%T ")
+   '(display-time-format "%T")
    '(display-time-interval 1))
   (display-time-mode +1)
   (display-battery-mode +1)
@@ -98,7 +110,7 @@ different tabs. This feature seems stolen from Vim.
   (tab-bar-mode +1)
 #+end_src
 ** Theme
-Emacs' default theme is blindingly bright.
+Emacs' default theme is blindingly bright. Doom Emacs (once again) provides an aesthetic alternative.
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
   (require 'doom-themes)
