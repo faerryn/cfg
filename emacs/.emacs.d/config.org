@@ -190,16 +190,6 @@ This loads up extra features for dired.
   (custom-set-variables '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
-** Eshell
-Eshell is a portable, lispy shell in Emacs.
-
-This configures aliases for eshell.
-#+begin_src emacs-lisp
-  (with-eval-after-load "em-alias"
-    (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
-    (eshell/alias "ll" "ls -g $*")
-    (eshell/alias "la" "ll -A $*"))
-#+end_src
 ** Rust
 [[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
 safety. It boasts a builtin project and dependency manager, and
@@ -348,6 +338,21 @@ Emacs by itself!
   (autoload 'magit-status "magit"
     "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
+#+end_src
+* Terminal Emulation
+Eshell is a portable, lispy shell in Emacs. This configures aliases
+for eshell.
+#+begin_src emacs-lisp
+  (with-eval-after-load "em-alias"
+    (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
+    (eshell/alias "ll" "ls -g $*")
+    (eshell/alias "la" "ll -A $*"))
+#+end_src
+
+Vterm is an efficient replacement for emacs' built-in `term'.
+#+begin_src emacs-lisp
+  (straight-use-package 'vterm)
+  (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
 #+end_src
 * Treesitter
 #+begin_src emacs-lisp
