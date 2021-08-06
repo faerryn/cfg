@@ -55,7 +55,7 @@ I need a hook that runs before the minibuffer opens.
 #+begin_src emacs-lisp
   (defvar faerryn/before-minibuffer-hook nil
     "Normal hook run just before entry to minibuffer")
-  (defun faerryn/run-before-minibuffer-hooks (&rest _)
+  (defun faerryn/run-before-minibuffer-hooks (&rest ignored)
     (run-hooks 'faerryn/before-minibuffer-hook))
   (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
   (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
@@ -387,10 +387,10 @@ customize the behavior of EXWM.
     (defun faerryn/exwm-buffer-name ()
       (exwm-workspace-rename-buffer (concat "*EXWM* " exwm-class-name)))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-buffer-name)
-    (defun faerryn/exwm-restore-mode (&rest _)
+    (defun faerryn/exwm-restore-input (&rest ignored)
       (when (eq 'line-mode exwm--selected-input-mode)
         (exwm-input--grab-keyboard exwm--id)))
-    (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-mode)
+    (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-input)
     (defun faerryn/exwm-init-hook ()
       (add-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
       (add-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
