@@ -307,14 +307,11 @@ emacs can try to access the X11 clipboard this way.
   (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
 #+end_src
 * Async Shell Command Buffer
-async-shell-command spawns a buffer with the command's output. This
-hides that buffer so that it is not displayed immediately.
+Hide the buffer that `async-shell-command' produces.
 #+begin_src emacs-lisp
-  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
-  (add-to-list 'display-buffer-alist
-               `(,(rx string-start "*Async Shell Command*" (? "<" (+ digit) ">") string-end)
-                 display-buffer-no-window
-                 allow-no-window))
+  (custom-set-variables
+   '(async-shell-command-buffer 'new-buffer)
+   '(async-shell-command-display-buffer nil))
 #+end_src
 * Declutter File System
 Disable autosaves, backups, and lockfiles for file system sanity.
