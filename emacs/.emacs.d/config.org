@@ -340,6 +340,15 @@ Emacs by itself!
     "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
 #+end_src
+* Treesitter
+#+begin_src emacs-lisp
+  (straight-use-package 'tree-sitter)
+  (straight-use-package 'tree-sitter-langs)
+  (require 'tree-sitter)
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode +1)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+#+end_src
 * Truncate Lines
 Line wrap is weird and confusing. Truncated lines are elephants.
 #+begin_src emacs-lisp
