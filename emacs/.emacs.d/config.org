@@ -190,6 +190,12 @@ This loads up extra features for dired.
   (custom-set-variables '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
+** Pdf-View
+#+begin_src emacs-lisp
+  (straight-use-package 'pdf-tools)
+  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
+  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+#+end_src
 ** Rust
 [[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
 safety. It boasts a builtin project and dependency manager, and
