@@ -6,9 +6,6 @@ vim.opt.hidden = true
 -- disable double-edit detection
 vim.opt.swapfile = false
 
--- preserve undo history
-vim.opt.undofile = true
-
 -- nice widget bars
 vim.opt.title = true
 vim.opt.laststatus = 2
