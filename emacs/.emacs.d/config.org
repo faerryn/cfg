@@ -411,7 +411,7 @@ customize the behavior of EXWM.
              (kbd "M-:")
              (kbd "M-x"))))
     (defun faerryn/exwm-rename-buffer ()
-      (rename-buffer (concat "*EXWM* " exwm-class-name) t))
+      (rename-buffer (concat "*EXWM " exwm-class-name "*") t))
     (add-hook 'exwm-update-class-hook #'faerryn/exwm-rename-buffer)
     (defun faerryn/exwm-restore-input (&rest ignored)
       (when (eq 'line-mode exwm--selected-input-mode)
