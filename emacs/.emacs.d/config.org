@@ -2,13 +2,16 @@
 #+STARTUP: indent overview
 
 Welcome to my humble parish of the Church of Emacs.
-* Lexical Binding
+* Prologue
+This section contains essential components necessary for the rest of
+my config to work.
+** Lexical Binding
 [[info:elisp#Lexical Binding][Lexical Binding]] encapsulates the scoping of variables to their
 context. This can make bugs easier to catch and improve performance.
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
-* Package Manager
+** Package Manager
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables
@@ -30,14 +33,14 @@ Straight.el is a declarative package manager for Emacs.
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
-* Garbage Collector
+** Garbage Collector
 GCMH is an intelligent garbage collection scheduler for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
   (require 'gcmh)
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
-* Custom Symbols
+** Custom Symbols
 Switches to and ensures the scratch buffer.
 #+begin_src emacs-lisp
   (defun fearryn/scratch ()
@@ -63,175 +66,6 @@ I need a hook that runs before the minibuffer opens.
   (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
 #+end_src
 
-
-* Async Shell Command Buffer
-Hide the buffer that `async-shell-command' produces.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(async-shell-command-buffer 'new-buffer)
-   '(async-shell-command-display-buffer nil))
-#+end_src
-* Declutter File System
-Disable autosaves, backups, and lockfiles for file system sanity.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(auto-save-default nil)
-   '(make-backup-files nil)
-   '(create-lockfiles nil))
-#+end_src
-* Editing
-Emacs is a text-editor, after all.
-** Custom Keys
-Key bindings are the bread and butter of Emacs. It goes to reason that
-you can define your own!
-#+begin_src emacs-lisp
-  (define-key (current-global-map) (kbd "C-c x") #'fixup-whitespace)
-#+end_src
-** LSP Client
-[[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
-intelligent code assistance for an abitrary editor that supports the
-protocol. It brings IDE-grade completion and linting to any
-LSP-capable editor.
-
-Eglot is a LSP client written in Elisp, bringing the power of an IDE
-to Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'eglot)
-  (custom-set-variables '(eglot-autoshutdown t))
-  (autoload 'eglot "eglot"
-    "Manage a project with a Language Server Protocol (LSP) server." t)
-  (with-eval-after-load "eglot"
-    (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
-    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
-    (defun faerryn/eglot-setup-fosa ()
-      (if (eglot-managed-p)
-          (add-hook 'before-save-hook #'eglot-format)
-        (remove-hook 'before-save-hook #'eglot-format)))
-    (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa))
-#+end_src
-
-Set `rust-analyzer' as the default rust-mode LSP server.
-#+begin_src emacs-lisp
-  (with-eval-after-load "eglot"
-    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
-#+end_src
-** Electric Pairs
-Automagically close quotes, parentheses, brackets, etc...
-#+begin_src emacs-lisp
-  (electric-pair-mode +1)
-#+end_src
-** Indentation
-Indent with 2 spaces.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(indent-tabs-mode nil)
-   '(tab-width 2))
-#+end_src
-** Tab-to-Complete
-Bring the tab-to-complete experience to Emacs!
-#+begin_src emacs-lisp
-  (custom-set-variables '(tab-always-indent 'complete))
-#+end_src
-* Eshell
-Eshell is a portable, lispy shell in Emacs. This configures aliases
-for eshell.
-#+begin_src emacs-lisp
-  (with-eval-after-load "em-alias"
-    (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
-    (eshell/alias "ll" "ls -g $*")
-    (eshell/alias "la" "ll -A $*"))
-#+end_src
-* Follow Symlinks
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(find-file-visit-truename t)
-   '(vc-follow-symlinks t))
-#+end_src
-* Git Intergration
-Magit is a very nice git client for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (custom-set-variables '(magit-define-global-key-bindings nil))
-  (autoload 'magit-status "magit"
-    "Show the status of the current Git repository in a buffer." t)
-  (define-key (current-global-map) (kbd "C-c g") #'magit-status)
-#+end_src
-* Major Modes
-Major modes represent filetypes in Emacs.
-** C/C++
-Bringing tab-to-complete to C/C++, which is useful when combined with
-LSP servers that provide completion.
-#+begin_src emacs-lisp
-  (with-eval-after-load "cc-mode"
-    (advice-add 'c-indent-command :override #'indent-for-tab-command))
-#+end_src
-** Dired
-Dired is the file browser in Emacs.
-
-This prettifies dired's file listing.
-#+begin_src emacs-lisp
-  (custom-set-variables '(dired-listing-switches "-AFghvX --group-directories-first"))
-#+end_src
-
-This loads up extra features for dired.
-#+begin_src emacs-lisp
-  (custom-set-variables '(dired-x-hands-off-my-keys nil))
-  (require 'dired-x)
-#+end_src
-** Org
-Emacs' Org mode has superpowers.
-#+begin_src emacs-lisp
-  (custom-set-variables '(org-catch-invisible-edits 'smart))
-#+end_src
-** Pdf-View
-The Portable Document Format is the most widespread method of
-publishing paginated, formatted text.
-#+begin_src emacs-lisp
-  (straight-use-package 'pdf-tools)
-  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
-  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
-#+end_src
-** Rust
-[[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
-safety. It boasts a builtin project and dependency manager, and
-delightfully concise syntax.
-#+begin_src emacs-lisp
-  (straight-use-package 'rust-mode)
-  (autoload 'rust-mode "rust-mode"
-    "Major mode for Rust code." t)
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-#+end_src
-** Zig
-[[https://ziglang.org][Zig]] is an ambitious programming language with zero cost duck-typing
-and concise code. It boasts an incredibly powerful type system and
-featureful compile-time code execution.
-#+begin_src emacs-lisp
-  (straight-use-package 'zig-mode)
-  (custom-set-variables '(zig-format-on-save nil))
-  (autoload 'zig-mode "zig-mode"
-    "A major mode for the Zig programming language." t)
-  (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
-#+end_src
-* Text Terminal
-Emacs can run in a text terminal.
-** Xterm Mouse
-Text terminals sometimes support the mouse, and emacs can support text
-terminals supporting the mouse.
-#+begin_src emacs-lisp
-  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-#+end_src
-** Xclip
-Xclip allows non-X11 programs to access the X11 clipboard. Terminal
-emacs can try to access the X11 clipboard this way.
-#+begin_src emacs-lisp
-  (straight-use-package 'xclip)
-  (autoload 'xclip-mode "xclip"
-    "Minor mode to use the `xclip' program to copy&paste." t)
-  (defun faerryn/safe-xclip-mode ()
-    (ignore-errors
-      (xclip-mode +1)))
-  (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
-#+end_src
 * User Interface
 Blinging out Emacs since 2021.
 ** Declutter Widgets
@@ -379,12 +213,114 @@ Display normally transparent characters. Catch the trailing spaces.
   (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
   (global-whitespace-mode +1)
 #+end_src
-* Vterm
-Vterm is an efficient replacement for emacs' built-in `term'.
+* Text Editing
+Emacs is a text-editor, after all.
+** Custom Keys
+Key bindings are the bread and butter of Emacs. It goes to reason that
+you can define your own!
 #+begin_src emacs-lisp
-  (straight-use-package 'vterm)
-  (custom-set-variables '(vterm-environment '("COLORTERM=truecolor")))
-  (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
+  (define-key (current-global-map) (kbd "C-c x") #'fixup-whitespace)
+#+end_src
+** LSP Client
+[[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
+intelligent code assistance for an abitrary editor that supports the
+protocol. It brings IDE-grade completion and linting to any
+LSP-capable editor.
+
+Eglot is a LSP client written in Elisp, bringing the power of an IDE
+to Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'eglot)
+  (custom-set-variables '(eglot-autoshutdown t))
+  (autoload 'eglot "eglot"
+    "Manage a project with a Language Server Protocol (LSP) server." t)
+  (with-eval-after-load "eglot"
+    (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
+    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
+    (defun faerryn/eglot-setup-fosa ()
+      (if (eglot-managed-p)
+          (add-hook 'before-save-hook #'eglot-format)
+        (remove-hook 'before-save-hook #'eglot-format)))
+    (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa))
+#+end_src
+
+Set `rust-analyzer' as the default rust-mode LSP server.
+#+begin_src emacs-lisp
+  (with-eval-after-load "eglot"
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+#+end_src
+** Electric Pairs
+Automagically close quotes, parentheses, brackets, etc...
+#+begin_src emacs-lisp
+  (electric-pair-mode +1)
+#+end_src
+** Indentation
+Indent with 2 spaces.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(indent-tabs-mode nil)
+   '(tab-width 2))
+#+end_src
+** Tab-to-Complete
+Bring the tab-to-complete experience to Emacs!
+#+begin_src emacs-lisp
+  (custom-set-variables '(tab-always-indent 'complete))
+#+end_src
+* Major Modes
+Major modes represent filetypes in Emacs.
+** C/C++
+Bringing tab-to-complete to C/C++, which is useful when combined with
+LSP servers that provide completion.
+#+begin_src emacs-lisp
+  (with-eval-after-load "cc-mode"
+    (advice-add 'c-indent-command :override #'indent-for-tab-command))
+#+end_src
+** Dired
+Dired is the file browser in Emacs.
+
+This prettifies dired's file listing.
+#+begin_src emacs-lisp
+  (custom-set-variables '(dired-listing-switches "-AFghvX --group-directories-first"))
+#+end_src
+
+This loads up extra features for dired.
+#+begin_src emacs-lisp
+  (custom-set-variables '(dired-x-hands-off-my-keys nil))
+  (require 'dired-x)
+#+end_src
+** Org
+Emacs' Org mode has superpowers.
+#+begin_src emacs-lisp
+  (custom-set-variables '(org-catch-invisible-edits 'smart))
+#+end_src
+** Pdf-View
+The Portable Document Format is the most widespread method of
+publishing paginated, formatted text.
+#+begin_src emacs-lisp
+  (straight-use-package 'pdf-tools)
+  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
+  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+#+end_src
+** Rust
+[[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
+safety. It boasts a builtin project and dependency manager, and
+delightfully concise syntax.
+#+begin_src emacs-lisp
+  (straight-use-package 'rust-mode)
+  (autoload 'rust-mode "rust-mode"
+    "Major mode for Rust code." t)
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+#+end_src
+** Zig
+[[https://ziglang.org][Zig]] is an ambitious programming language with zero cost duck-typing
+and concise code. It boasts an incredibly powerful type system and
+featureful compile-time code execution.
+#+begin_src emacs-lisp
+  (straight-use-package 'zig-mode)
+  (custom-set-variables '(zig-format-on-save nil))
+  (autoload 'zig-mode "zig-mode"
+    "A major mode for the Zig programming language." t)
+  (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 #+end_src
 * X11 Window Manager
 An X11 window manager is what powers most Linux desktops.
@@ -437,4 +373,71 @@ customize the behavior of EXWM.
       (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
       (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
     (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
+#+end_src
+* Sundry
+** Async Shell Command Buffer
+Hide the buffer that `async-shell-command' produces.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(async-shell-command-buffer 'new-buffer)
+   '(async-shell-command-display-buffer nil))
+#+end_src
+** Declutter File System
+Disable autosaves, backups, and lockfiles for file system sanity.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(auto-save-default nil)
+   '(make-backup-files nil)
+   '(create-lockfiles nil))
+#+end_src
+** Eshell
+Eshell is a portable, lispy shell in Emacs. This configures aliases
+for eshell.
+#+begin_src emacs-lisp
+  (with-eval-after-load "em-alias"
+    (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
+    (eshell/alias "ll" "ls -g $*")
+    (eshell/alias "la" "ll -A $*"))
+#+end_src
+** Follow Symlinks
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(find-file-visit-truename t)
+   '(vc-follow-symlinks t))
+#+end_src
+** Git Intergration
+Magit is a very nice git client for Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'magit)
+  (custom-set-variables '(magit-define-global-key-bindings nil))
+  (autoload 'magit-status "magit"
+    "Show the status of the current Git repository in a buffer." t)
+  (define-key (current-global-map) (kbd "C-c g") #'magit-status)
+#+end_src
+** Text Terminal
+Emacs can run in a text terminal.
+
+Text terminals sometimes support the mouse, and emacs can support text
+terminals supporting the mouse.
+#+begin_src emacs-lisp
+  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
+#+end_src
+
+Xclip allows non-X11 programs to access the X11 clipboard. Terminal
+emacs can try to access the X11 clipboard this way.
+#+begin_src emacs-lisp
+  (straight-use-package 'xclip)
+  (autoload 'xclip-mode "xclip"
+    "Minor mode to use the `xclip' program to copy&paste." t)
+  (defun faerryn/safe-xclip-mode ()
+    (ignore-errors
+      (xclip-mode +1)))
+  (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
+#+end_src
+** Vterm
+Vterm is an efficient replacement for emacs' built-in `term'.
+#+begin_src emacs-lisp
+  (straight-use-package 'vterm)
+  (custom-set-variables '(vterm-environment '("COLORTERM=truecolor")))
+  (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
 #+end_src
