@@ -291,7 +291,9 @@ This loads up extra features for dired.
 ** Org
 Emacs' Org mode has superpowers.
 #+begin_src emacs-lisp
-  (custom-set-variables '(org-catch-invisible-edits 'smart))
+  (custom-set-variables
+   '(org-catch-invisible-edits 'smart)
+   '(org-clock-sound t))
 #+end_src
 ** Pdf-View
 The Portable Document Format is the most widespread method of
