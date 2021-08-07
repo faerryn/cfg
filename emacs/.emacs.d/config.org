@@ -2,15 +2,13 @@
 #+STARTUP: indent overview
 
 Welcome to my humble parish of the Church of Emacs.
-* Prologue
-This section contains essential components of my configuration.
-** Lexical Binding
+* Lexical Binding
 [[info:elisp#Lexical Binding][Lexical Binding]] encapsulates the scoping of variables to their
 context. This can make bugs easier to catch and improve performance.
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
-** Package Manager
+* Package Manager
 Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables
@@ -32,14 +30,14 @@ Straight.el is a declarative package manager for Emacs.
       (eval-region (search-forward "(require 'straight)")
                    (point-max))))
 #+end_src
-** Garbage Collector
+* Garbage Collector
 GCMH is an intelligent garbage collection scheduler for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
   (require 'gcmh)
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
-** Custom Symbols
+* Custom Symbols
 Switches to and ensures the scratch buffer.
 #+begin_src emacs-lisp
   (defun fearryn/scratch ()
