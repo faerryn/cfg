@@ -358,6 +358,7 @@ for eshell.
 Vterm is an efficient replacement for emacs' built-in `term'.
 #+begin_src emacs-lisp
   (straight-use-package 'vterm)
+  (custom-set-variables '(vterm-environment '("COLORTERM=truecolor")))
   (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
 #+end_src
 * Treesitter
