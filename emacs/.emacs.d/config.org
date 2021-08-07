@@ -20,9 +20,11 @@ Straight.el is a declarative package manager for Emacs.
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
-      (call-process "git" nil nil nil "clone"
+      (call-process "git" nil nil nil
+                    "clone"
                     "--depth" (number-to-string straight-vc-git-default-clone-depth)
-                    repo dest))
+                    repo
+                    dest))
     (require 'straight (expand-file-name "straight.el" dest))
     (with-temp-buffer
       (insert-file-contents (expand-file-name "bootstrap.el" dest))
@@ -88,7 +90,7 @@ disabled by default.
   (straight-use-package 'doom-modeline)
   (autoload 'doom-modeline-mode "doom-modeline" "Toggle doom-modeline on or off." t)
   (add-hook 'emacs-startup-hook #'doom-modeline-mode)
-  #+end_src
+#+end_src
 
 Show the time and battery level on the modeline.
 #+begin_src emacs-lisp
