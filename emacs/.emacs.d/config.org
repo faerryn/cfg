@@ -192,7 +192,14 @@ This loads up extra features for dired.
   (custom-set-variables '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
+** Org
+Emacs' Org mode has superpowers.
+#+begin_src emacs-lisp
+  (custom-set-variables '(org-catch-invisible-edits 'smart))
+#+end_src
 ** Pdf-View
+The Portable Document Format is the most widespread method of
+publishing paginated, formatted text.
 #+begin_src emacs-lisp
   (straight-use-package 'pdf-tools)
   (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
