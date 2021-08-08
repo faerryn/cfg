@@ -410,9 +410,11 @@ customize the behavior of EXWM.
 ** Async Shell Command Buffer
 Hide the buffer that `async-shell-command' produces.
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(async-shell-command-buffer 'new-buffer)
-   '(async-shell-command-display-buffer nil))
+  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
+  (add-to-list 'display-buffer-alist
+               `(,(rx string-start "*Async Shell Command*")
+                 display-buffer-no-window
+                 allow-no-window))
 #+end_src
 ** Declutter File System
 Disable autosaves, backups, and lockfiles for file system sanity.
