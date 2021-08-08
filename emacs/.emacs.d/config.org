@@ -234,13 +234,15 @@ Eglot is a LSP client written in Elisp, bringing the power of an IDE
 to Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
-  (custom-set-variables
-   '(eglot-autoshutdown t))
   (autoload 'eglot "eglot"
     "Manage a project with a Language Server Protocol (LSP) server." t)
   (with-eval-after-load "eglot"
-    (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
-    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
+    (custom-set-variables
+     '(eglot-autoshutdown t)
+     '(eglot-mode-map (let ((map (make-sparse-keymap)))
+                        (define-key map (kbd "C-c a") #'eglot-code-actions)
+                        (define-key map (kbd "C-c r") #'eglot-rename)
+                        map)))
     (defun faerryn/eglot-setup-fosa ()
       (if (eglot-managed-p)
           (add-hook 'before-save-hook #'eglot-format)
