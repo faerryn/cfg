@@ -82,7 +82,8 @@ Decluttering Emacs of frivolous things like menus and scroll bars.
 ** Line Numbers
 Line numbers are crucial to understand where you are in a document.
 #+begin_src emacs-lisp
-  (custom-set-variables '(display-line-numbers-type t))
+  (custom-set-variables
+   '(display-line-numbers-type t))
   (global-display-line-numbers-mode +1)
 #+end_src
 ** Minibuffer Completion
@@ -202,7 +203,8 @@ is possible for compatible languages.
 ** Truncate Lines
 Line wrap is weird and confusing. Truncated lines are elephants.
 #+begin_src emacs-lisp
-  (custom-set-variables '(truncate-lines t))
+  (custom-set-variables
+   '(truncate-lines t))
 #+end_src
 ** Visual Aids
 Editing is as much reading as writing. This section focuses on
@@ -210,7 +212,8 @@ improving the reading experience.
 ** Whitespace
 Display normally transparent characters. Catch the trailing spaces.
 #+begin_src emacs-lisp
-  (custom-set-variables '(whitespace-style '(face tabs trailing tab-mark)))
+  (custom-set-variables
+   '(whitespace-style '(face tabs trailing tab-mark)))
   (global-whitespace-mode +1)
 #+end_src
 * Text Editing
@@ -231,7 +234,8 @@ Eglot is a LSP client written in Elisp, bringing the power of an IDE
 to Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
-  (custom-set-variables '(eglot-autoshutdown t))
+  (custom-set-variables
+   '(eglot-autoshutdown t))
   (autoload 'eglot "eglot"
     "Manage a project with a Language Server Protocol (LSP) server." t)
   (with-eval-after-load "eglot"
@@ -264,7 +268,8 @@ Indent with 2 spaces.
 ** Tab-to-Complete
 Bring the tab-to-complete experience to Emacs!
 #+begin_src emacs-lisp
-  (custom-set-variables '(tab-always-indent 'complete))
+  (custom-set-variables
+   '(tab-always-indent 'complete))
 #+end_src
 * Major Modes
 Major modes represent filetypes in Emacs.
@@ -280,12 +285,14 @@ Dired is the file browser in Emacs.
 
 This prettifies dired's file listing.
 #+begin_src emacs-lisp
-  (custom-set-variables '(dired-listing-switches "-AFghvX --group-directories-first"))
+  (custom-set-variables
+   '(dired-listing-switches "-AFghvX --group-directories-first"))
 #+end_src
 
 This loads up extra features for dired.
 #+begin_src emacs-lisp
-  (custom-set-variables '(dired-x-hands-off-my-keys nil))
+  (custom-set-variables
+   '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
 ** Org
@@ -319,7 +326,8 @@ and concise code. It boasts an incredibly powerful type system and
 featureful compile-time code execution.
 #+begin_src emacs-lisp
   (straight-use-package 'zig-mode)
-  (custom-set-variables '(zig-format-on-save nil))
+  (custom-set-variables
+   '(zig-format-on-save nil))
   (autoload 'zig-mode "zig-mode"
     "A major mode for the Zig programming language." t)
   (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
@@ -410,7 +418,8 @@ customize the behavior of EXWM.
 ** Async Shell Command Buffer
 Hide the buffer that `async-shell-command' produces.
 #+begin_src emacs-lisp
-  (custom-set-variables '(async-shell-command-buffer 'new-buffer))
+  (custom-set-variables
+   '(async-shell-command-buffer 'new-buffer))
   (add-to-list 'display-buffer-alist
                `(,(rx string-start "*Async Shell Command*")
                  display-buffer-no-window
@@ -457,7 +466,8 @@ is staging small chunks at a time to split up big changes into
 multiple commits.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
-  (custom-set-variables '(magit-define-global-key-bindings nil))
+  (custom-set-variables
+   '(magit-define-global-key-bindings nil))
   (autoload 'magit-status "magit"
     "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
@@ -466,6 +476,7 @@ multiple commits.
 Vterm is an efficient replacement for emacs' built-in `term'.
 #+begin_src emacs-lisp
   (straight-use-package 'vterm)
-  (custom-set-variables '(vterm-environment '("COLORTERM=truecolor")))
+  (custom-set-variables
+   '(vterm-environment '("COLORTERM=truecolor")))
   (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
 #+end_src

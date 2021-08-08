@@ -1,10 +1,9 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
-;; Disable garbage collection
-(custom-set-variables '(gc-cons-threshold most-positive-fixnum))
-
-;; Disable package.el
-(custom-set-variables '(package-enable-at-startup nil))
+;; Disable garbage collection and package.el
+(custom-set-variables
+ '(gc-cons-threshold most-positive-fixnum)
+ '(package-enable-at-startup nil))
 
 ;; Load config.org
 (let* ((config.org (expand-file-name "config.org" user-emacs-directory))
