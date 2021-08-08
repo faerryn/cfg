@@ -416,6 +416,18 @@ Hide the buffer that `async-shell-command' produces.
                  display-buffer-no-window
                  allow-no-window))
 #+end_src
+** Compiler Explorer
+RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]]. It allows a
+programmer to see how individual lines of code are compiled.
+#+begin_src emacs-lisp
+  (straight-use-package 'rmsbolt)
+  (autoload 'rmsbolt-mode "rmsbolt" "Toggle rmsbolt-mode." t)
+  (with-eval-after-load "rmsbolt"
+    (custom-set-variables
+     '(rmsbolt-mode-map (let ((map (make-sparse-keymap)))
+                          (define-key map (kbd "C-c b") #'rmsbolt-compile)
+                          map))))
+#+end_src
 ** Declutter File System
 Disable autosaves, backups, and lockfiles for file system sanity.
 #+begin_src emacs-lisp
