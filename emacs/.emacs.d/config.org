@@ -236,24 +236,17 @@ to Emacs.
   (straight-use-package 'eglot)
   (autoload 'eglot "eglot"
     "Manage a project with a Language Server Protocol (LSP) server." t)
+  (custom-set-variables
+   '(eglot-autoshutdown t))
   (with-eval-after-load "eglot"
-    (custom-set-variables
-     '(eglot-autoshutdown t)
-     '(eglot-mode-map (let ((map (make-sparse-keymap)))
-                        (define-key map (kbd "C-c a") #'eglot-code-actions)
-                        (define-key map (kbd "C-c r") #'eglot-rename)
-                        map)))
-    (defun faerryn/eglot-setup-fosa ()
-      (if (eglot-managed-p)
-          (add-hook 'before-save-hook #'eglot-format)
-        (remove-hook 'before-save-hook #'eglot-format)))
-    (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa))
-#+end_src
-
-Set `rust-analyzer' as the default rust-mode LSP server.
-#+begin_src emacs-lisp
-  (with-eval-after-load "eglot"
+    (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
+    (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+  (defun faerryn/eglot-setup-fosa ()
+    (if (eglot-managed-p)
+        (add-hook 'before-save-hook #'eglot-format)
+      (remove-hook 'before-save-hook #'eglot-format)))
+  (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa)
 #+end_src
 ** Electric Pairs
 Automagically close quotes, parentheses, brackets, etc...
@@ -366,14 +359,18 @@ customize the behavior of EXWM.
   (straight-use-package 'exwm)
   (autoload 'exwm-init "exwm"
     "Initialize EXWM." t)
+#+end_src
+
+This defines keybindings and key behaviors for EXWM.
+#+begin_src emacs-lisp
+  (defun faerryn/exwm-toggle-input ()
+    "Toggle EXWM buffers between `line' and `char' mode."
+    (interactive)
+    (when-let ((id (exwm--buffer->id (current-buffer))))
+      (pcase exwm--input-mode
+        ('line-mode (exwm-input-release-keyboard id))
+        ('char-mode (exwm-input-grab-keyboard id)))))
   (with-eval-after-load "exwm"
-    (defun faerryn/exwm-toggle-input ()
-      "Toggle EXWM buffers between `line' and `char' mode."
-      (interactive)
-      (when-let ((id (exwm--buffer->id (current-buffer))))
-        (pcase exwm--input-mode
-          ('line-mode (exwm-input-release-keyboard id))
-          ('char-mode (exwm-input-grab-keyboard id)))))
     (defcustom faerryn/exwm-input-global-keys nil
       "Key bindings that are allowed in EXWM char-mode"
       :type '(repeat key-sequence)
@@ -381,40 +378,45 @@ customize the behavior of EXWM.
              (set symbol value)
              (setq exwm-input--global-keys value)
              (exwm-input--update-global-prefix-keys)))
-    (custom-set-variables
-     '(exwm-mode-map
-       (let ((map (make-sparse-keymap)))
-         (define-key map (kbd "C-q") #'exwm-input-send-next-key)
-         (define-key map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
-         (define-key map (kbd "C-M-<delete>") #'faerryn/exwm-toggle-input)
-         map))
-     '(faerryn/exwm-input-global-keys
-       (list (kbd "C-M-<delete>")))
-     '(exwm-input-prefix-keys
-       (list (kbd "C-c")
-             (kbd "C-g")
-             (kbd "C-h")
-             (kbd "C-u")
-             (kbd "C-x")
-             (kbd "M-!")
-             (kbd "M-&")
-             (kbd "M-:")
-             (kbd "M-x"))))
-    (defun faerryn/exwm-rename-buffer ()
-      (rename-buffer (concat "*EXWM " exwm-class-name "*") t))
-    (add-hook 'exwm-update-class-hook #'faerryn/exwm-rename-buffer)
-    (defun faerryn/exwm-restore-input (&rest ignored)
-      (when (eq 'line-mode exwm--selected-input-mode)
-        (exwm-input--grab-keyboard exwm--id)))
-    (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-input)
-    (defun faerryn/exwm-init-hook ()
-      (add-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
-      (add-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
-    (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
-    (defun faerryn/exwm-exit-hook ()
-      (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
-      (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
-    (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
+    (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
+    (define-key exwm-mode-map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
+    (define-key exwm-mode-map (kbd "C-M-<delete>") #'faerryn/exwm-toggle-input))
+  (custom-set-variables
+   '(faerryn/exwm-input-global-keys
+     (list (kbd "C-M-<delete>")))
+   '(exwm-input-prefix-keys
+     (list (kbd "C-c")
+           (kbd "C-g")
+           (kbd "C-h")
+           (kbd "C-u")
+           (kbd "C-x")
+           (kbd "M-!")
+           (kbd "M-&")
+           (kbd "M-:")
+           (kbd "M-x"))))
+#+end_src
+
+This names exwm buffers according to the X11 window class.
+#+begin_src emacs-lisp
+  (defun faerryn/exwm-rename-buffer ()
+    (rename-buffer (concat "*EXWM " exwm-class-name "*") t))
+  (add-hook 'exwm-update-class-hook #'faerryn/exwm-rename-buffer)
+#+end_src
+
+This edits the EXWM fullscreen behavior to be nicer.
+#+begin_src emacs-lisp
+  (defun faerryn/exwm-restore-input (&rest ignored)
+    (when (eq 'line-mode exwm--selected-input-mode)
+      (exwm-input--grab-keyboard exwm--id)))
+  (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-input)
+  (defun faerryn/exwm-init-hook ()
+    (add-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
+    (add-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
+  (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
+  (defun faerryn/exwm-exit-hook ()
+    (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
+    (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
+  (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook)
 #+end_src
 * Sundry
 Miscellaneous items that don't fall into a broader category.
@@ -435,10 +437,7 @@ programmer to see how individual lines of code are compiled.
   (straight-use-package 'rmsbolt)
   (autoload 'rmsbolt-mode "rmsbolt" "Toggle rmsbolt-mode." t)
   (with-eval-after-load "rmsbolt"
-    (custom-set-variables
-     '(rmsbolt-mode-map (let ((map (make-sparse-keymap)))
-                          (define-key map (kbd "C-c b") #'rmsbolt-compile)
-                          map))))
+    (define-key rmsbolt-mode-map (kbd "C-c b") #'rmsbolt-compile))
 #+end_src
 ** Declutter File System
 Disable autosaves, backups, and lockfiles for file system sanity.
@@ -469,8 +468,6 @@ is staging small chunks at a time to split up big changes into
 multiple commits.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
-  (custom-set-variables
-   '(magit-define-global-key-bindings nil))
   (autoload 'magit-status "magit"
     "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
@@ -479,7 +476,7 @@ multiple commits.
 Vterm is an efficient replacement for emacs' built-in `term'.
 #+begin_src emacs-lisp
   (straight-use-package 'vterm)
+  (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
   (custom-set-variables
    '(vterm-environment '("COLORTERM=truecolor")))
-  (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
 #+end_src
