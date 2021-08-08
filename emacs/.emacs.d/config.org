@@ -357,6 +357,13 @@ customize the behavior of EXWM.
   (autoload 'exwm-init "exwm"
     "Initialize EXWM." t)
   (with-eval-after-load "exwm"
+    (defun faerryn/exwm-toggle-input ()
+      "Toggle EXWM buffers between `line' and `char' mode."
+      (interactive)
+      (when-let ((id (exwm--buffer->id (current-buffer))))
+        (pcase exwm--input-mode
+          ('line-mode (exwm-input-release-keyboard id))
+          ('char-mode (exwm-input-grab-keyboard id)))))
     (defcustom faerryn/exwm-input-global-keys nil
       "Key bindings that are allowed in EXWM char-mode"
       :type '(repeat key-sequence)
@@ -369,8 +376,7 @@ customize the behavior of EXWM.
        (let ((map (make-sparse-keymap)))
          (define-key map (kbd "C-q") #'exwm-input-send-next-key)
          (define-key map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
-         (define-key map (kbd "C-c k") #'exwm-input-release-keyboard)
-         (define-key map (kbd "C-M-<delete>") #'exwm-input-grab-keyboard)
+         (define-key map (kbd "C-M-<delete>") #'faerryn/exwm-toggle-input)
          map))
      '(faerryn/exwm-input-global-keys
        (list (kbd "C-M-<delete>")))
