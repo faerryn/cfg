@@ -324,8 +324,30 @@ featureful compile-time code execution.
     "A major mode for the Zig programming language." t)
   (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 #+end_src
-* X11
-** X11 Window Manager
+* Xorg Integration
+Xorg is the classic Linux display server.
+** Terminal Emulator
+Emacs can run in a text terminal through `emacs -nw'.
+
+Text terminals sometimes support the mouse, and emacs can support text
+terminals supporting the mouse.
+#+begin_src emacs-lisp
+  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
+#+end_src
+
+Emacs in an X11 terminal emulator cannot access the clipboard by
+default. This package detects a suitable CLI clipboard tool (such as
+the eponymous `xclip') to integrate into Emacs.
+#+begin_src emacs-lisp
+  (straight-use-package 'xclip)
+  (autoload 'xclip-mode "xclip"
+    "Minor mode to use the `xclip' program to copy&paste." t)
+  (defun faerryn/safe-xclip-mode ()
+    (ignore-errors
+      (xclip-mode +1)))
+  (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
+#+end_src
+** Window Manager
 An X11 window manager is what powers most Linux desktops.
 
 EXWM is a window manager written in Elisp. Lots of hacks are used to
@@ -337,6 +359,7 @@ customize the behavior of EXWM.
   (with-eval-after-load "exwm"
     (defcustom faerryn/exwm-input-global-keys nil
       "Key bindings that are allowed in EXWM char-mode"
+      :type '(repeat key-sequence)
       :set (lambda (symbol value)
              (set symbol value)
              (setq exwm-input--global-keys value)
@@ -376,27 +399,6 @@ customize the behavior of EXWM.
       (remove-hook 'faerryn/before-minibuffer-hook #'exwm-layout-unset-fullscreen)
       (remove-hook 'window-state-change-hook #'exwm-layout-unset-fullscreen))
     (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook))
-#+end_src
-** Running in a Terminal Emulator
-Emacs can run in a text terminal through `emacs -nw'.
-
-Text terminals sometimes support the mouse, and emacs can support text
-terminals supporting the mouse.
-#+begin_src emacs-lisp
-  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-#+end_src
-
-Emacs in an X11 terminal emulator cannot access the clipboard by
-default. This package detects a suitable CLI clipboard tool (such as
-the eponymous `xclip') to integrate into Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'xclip)
-  (autoload 'xclip-mode "xclip"
-    "Minor mode to use the `xclip' program to copy&paste." t)
-  (defun faerryn/safe-xclip-mode ()
-    (ignore-errors
-      (xclip-mode +1)))
-  (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
 #+end_src
 * Sundry
 ** Async Shell Command Buffer
