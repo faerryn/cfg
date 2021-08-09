@@ -65,7 +65,6 @@ I need a hook that runs before the minibuffer opens.
   (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
   (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
 #+end_src
-
 * User Interface
 Blinging out Emacs since 2021.
 ** Declutter Widgets
