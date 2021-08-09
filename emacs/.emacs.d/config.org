@@ -204,9 +204,6 @@ Line wrap is weird and confusing. Truncated lines are elephants.
   (custom-set-variables
    '(truncate-lines t))
 #+end_src
-** Visual Aids
-Editing is as much reading as writing. This section focuses on
-improving the reading experience.
 ** Whitespace
 Display normally transparent characters. Catch the trailing spaces.
 #+begin_src emacs-lisp
