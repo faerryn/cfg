@@ -438,7 +438,10 @@ programmer to see how individual lines of code are compiled.
    '(rmsbolt-automatic-recompile nil))
   (defun faerryn/rmsbolt-setup-cosa ()
     (if rmsbolt-mode
-        (add-hook 'after-save-hook #'rmsbolt-compile nil t)
+        (progn
+          (unless (buffer-modified-p)
+            (rmsbolt-compile))
+          (add-hook 'after-save-hook #'rmsbolt-compile nil t))
       (remove-hook 'after-save-hook #'rmsbolt-compile t)))
   (add-hook 'rmsbolt-mode-hook #'faerryn/rmsbolt-setup-cosa)
 #+end_src
