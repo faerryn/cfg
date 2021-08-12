@@ -161,6 +161,10 @@ Paint the background of color codes with the color they represent.
    '(rainbow-r-colors nil)
    '(rainbow-x-colors nil))
   (require 'rainbow-mode)
+#+end_src
+
+Enable a custom global minor-mode for rainbow-mode and enable it.
+#+begin_src emacs-lisp
   (define-globalized-minor-mode faerryn/global-rainbow-mode rainbow-mode rainbow-turn-on)
   (faerryn/global-rainbow-mode +1)
 #+end_src
@@ -233,10 +237,24 @@ to Emacs.
     "Manage a project with a Language Server Protocol (LSP) server." t)
   (custom-set-variables
    '(eglot-autoshutdown t))
+#+end_src
+
+This sets up keybindings.
+#+begin_src emacs-lisp
   (with-eval-after-load "eglot"
     (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
     (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
+    (define-key eglot-mode-map (kbd "C-c f") #'eglot-format))
+#+end_src
+
+This sets up custom default lsp servers.
+#+begin_src emacs-lisp
+  (with-eval-after-load "eglot"
     (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+#+end_src
+
+This sets up format-on-save.
+#+begin_src emacs-lisp
   (defun faerryn/eglot-setup-fosa ()
     (if (eglot-managed-p)
         (add-hook 'before-save-hook #'eglot-format nil t)
@@ -436,6 +454,10 @@ programmer to see how individual lines of code are compiled.
   (autoload 'rmsbolt-mode "rmsbolt" "Toggle rmsbolt-mode." t)
   (custom-set-variables
    '(rmsbolt-automatic-recompile nil))
+#+end_src
+
+This sets up rmsbolt on activation of the minor mode and on save.
+#+begin_src emacs-lisp
   (defun faerryn/rmsbolt-setup-cosa ()
     (if rmsbolt-mode
         (progn
