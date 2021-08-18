@@ -7,7 +7,7 @@ This section contains essential components necessary for the rest of
 my config to work.
 ** Lexical Binding
 [[info:elisp#Lexical Binding][Lexical Binding]] encapsulates the scoping of variables to their
-context. This can make bugs easier to catch and improve performance.
+context.  This can make bugs easier to catch and improve performance.
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
@@ -87,7 +87,7 @@ Line numbers are crucial to understand where you are in a document.
   (global-display-line-numbers-mode +1)
 #+end_src
 ** Minibuffer Completion
-The minibuffer is the empty space under the modeline. It often
+The minibuffer is the empty space under the modeline.  It often
 features tab-to-complete functionality.
 *** Consult
 Consult provides a collection of useful functions that make use of minibuffer completion.
@@ -133,7 +133,7 @@ This enables mouse support.
 The modeline is the the bar the displays, among other things, a
 buffer's name and major mode.
 
-Emacs' default modeline is weird. Doom Emacs provides us with an
+Emacs' default modeline is weird.  Doom Emacs provides us with an
 aesthetic alternative.
 #+begin_src emacs-lisp
   (straight-use-package 'doom-modeline)
@@ -176,7 +176,7 @@ This highlights matching quotes, parentheses, brackets, etc...
 #+end_src
 ** Tab Bar
 The tab bar manages different buffers and window configuration in
-different tabs. This feature seems stolen from Vim.
+different tabs.  This feature seems stolen from Vim.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(tab-bar-close-button nil)
@@ -184,7 +184,7 @@ different tabs. This feature seems stolen from Vim.
   (tab-bar-mode +1)
 #+end_src
 ** Theme
-Emacs' default theme is blindingly bright. Doom Emacs (once again)
+Emacs' default theme is blindingly bright.  Doom Emacs (once again)
 provides an aesthetic alternative.
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
@@ -192,7 +192,7 @@ provides an aesthetic alternative.
   (load-theme 'doom-one t)
 #+end_src
 ** Treesitter
-Treesitter is a asbtract syntax generator stolen from Neovim. Using
+Treesitter is a asbtract syntax generator stolen from Neovim.  Using
 performant and accurate AST generation, fast and correct highlighting
 is possible for compatible languages.
 #+begin_src emacs-lisp
@@ -204,13 +204,13 @@ is possible for compatible languages.
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 #+end_src
 ** Truncate Lines
-Line wrap is weird and confusing. Truncated lines are elephants.
+Line wrap is weird and confusing.  Truncated lines are elephants.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(truncate-lines t))
 #+end_src
 ** Whitespace
-Display normally transparent characters. Catch the trailing spaces.
+Display normally transparent characters.  Catch the trailing spaces.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(whitespace-style '(face tabs trailing tab-mark)))
@@ -219,15 +219,15 @@ Display normally transparent characters. Catch the trailing spaces.
 * Text Editing
 Emacs is a text-editor, after all.
 ** Custom Keys
-Key bindings are the bread and butter of Emacs. It goes to reason that
-you can define your own!
+Key bindings are the bread and butter of Emacs.  It goes to reason
+that you can define your own!
 #+begin_src emacs-lisp
   (define-key (current-global-map) (kbd "C-c x") #'fixup-whitespace)
 #+end_src
 ** LSP Client
 [[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
 intelligent code assistance for an abitrary editor that supports the
-protocol. It brings IDE-grade completion and linting to any
+protocol.  It brings IDE-grade completion and linting to any
 LSP-capable editor.
 
 Eglot is a LSP client written in Elisp, bringing the power of an IDE
@@ -251,7 +251,7 @@ This sets up keybindings.
 This sets up custom default lsp servers.
 #+begin_src emacs-lisp
   (with-eval-after-load "eglot"
-    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+    (add-to-list 'eglot-server-programs '(rust-mode .  ("rust-analyzer"))))
 #+end_src
 
 This sets up format-on-save.
@@ -317,21 +317,21 @@ publishing paginated, formatted text.
 #+begin_src emacs-lisp
   (straight-use-package 'pdf-tools)
   (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
-  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" .  pdf-view-mode))
 #+end_src
 ** Rust
 [[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
-safety. It boasts a builtin project and dependency manager, and
+safety.  It boasts a builtin project and dependency manager, and
 delightfully concise syntax.
 #+begin_src emacs-lisp
   (straight-use-package 'rust-mode)
   (autoload 'rust-mode "rust-mode"
     "Major mode for Rust code." t)
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" .  rust-mode))
 #+end_src
 ** Zig
 [[https://ziglang.org][Zig]] is an ambitious programming language with zero cost duck-typing
-and concise code. It boasts an incredibly powerful type system and
+and concise code.  It boasts an incredibly powerful type system and
 featureful compile-time code execution.
 #+begin_src emacs-lisp
   (straight-use-package 'zig-mode)
@@ -339,7 +339,7 @@ featureful compile-time code execution.
    '(zig-format-on-save nil))
   (autoload 'zig-mode "zig-mode"
     "A major mode for the Zig programming language." t)
-  (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
+  (add-to-list 'auto-mode-alist '("\\.zig\\'" .  zig-mode))
 #+end_src
 * Xorg Integration
 Xorg is the classic Linux display server.
@@ -353,7 +353,7 @@ terminals supporting the mouse.
 #+end_src
 
 Emacs in an X11 terminal emulator cannot access the clipboard by
-default. This package detects a suitable CLI clipboard tool (such as
+default.  This package detects a suitable CLI clipboard tool (such as
 the eponymous `xclip') to integrate into Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
@@ -367,7 +367,7 @@ the eponymous `xclip') to integrate into Emacs.
 ** Window Manager
 An X11 window manager is what powers most Linux desktops.
 
-EXWM is a window manager written in Elisp. Lots of hacks are used to
+EXWM is a window manager written in Elisp.  Lots of hacks are used to
 customize the behavior of EXWM.
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
@@ -449,7 +449,7 @@ Hide the buffer that `async-shell-command' produces.
                  allow-no-window))
 #+end_src
 ** Compiler Explorer
-RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]]. It allows a
+RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]].  It allows a
 programmer to see how individual lines of code are compiled.
 #+begin_src emacs-lisp
   (straight-use-package 'rmsbolt)
@@ -470,6 +470,7 @@ This sets up rmsbolt on activation of the minor mode and on save.
   (add-hook 'rmsbolt-mode-hook #'faerryn/rmsbolt-setup-cosa)
 #+end_src
 ** Silent Bell
+Loud bells annoy me.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(visible-bell t))
@@ -483,7 +484,7 @@ Disable autosaves, backups, and lockfiles for file system sanity.
    '(create-lockfiles nil))
 #+end_src
 ** Eshell
-Eshell is a portable, lispy shell in Emacs. This configures aliases
+Eshell is a portable, lispy shell in Emacs.  This configures aliases
 for eshell.
 #+begin_src emacs-lisp
   (with-eval-after-load "em-alias"
@@ -492,14 +493,15 @@ for eshell.
     (eshell/alias "la" "ll -A $*"))
 #+end_src
 ** Follow Symlinks
+For symlinks are good.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(find-file-visit-truename t)
    '(vc-follow-symlinks t))
 #+end_src
 ** Git Client
-Magit is a very nice git client for Emacs. The killer feature (for me)
-is staging small chunks at a time to split up big changes into
+Magit is a very nice git client for Emacs.  The killer feature (for
+me) is staging small chunks at a time to split up big changes into
 multiple commits.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
