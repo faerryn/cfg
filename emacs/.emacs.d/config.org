@@ -24,7 +24,7 @@ Straight.el is a declarative package manager for Emacs.
     (unless (file-directory-p dest)
       (call-process "git" nil nil nil
                     "clone"
-                    "--depth" (number-to-string straight-vc-git-default-clone-depth)
+                    "--depth=1"
                     repo
                     dest))
     (require 'straight (expand-file-name "straight.el" dest))
@@ -75,7 +75,8 @@ Decluttering Emacs of frivolous things like menus and scroll bars.
    '(use-dialog-box nil))
   (menu-bar-mode -1)
   (tool-bar-mode -1)
-  (scroll-bar-mode -1)
+  (when (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
   (tooltip-mode -1)
 #+end_src
 ** Line Numbers
@@ -467,6 +468,11 @@ This sets up rmsbolt on activation of the minor mode and on save.
           (add-hook 'after-save-hook #'rmsbolt-compile nil t))
       (remove-hook 'after-save-hook #'rmsbolt-compile t)))
   (add-hook 'rmsbolt-mode-hook #'faerryn/rmsbolt-setup-cosa)
+#+end_src
+** Silent Bell
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(visible-bell t))
 #+end_src
 ** Declutter File System
 Disable autosaves, backups, and lockfiles for file system sanity.
