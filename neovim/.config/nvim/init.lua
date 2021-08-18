@@ -112,23 +112,6 @@ vim.api.nvim_command("colorscheme onedark")
 use("ziglang/zig.vim")
 vim.g.zig_fmt_autosave = 0
 
--- a lisp that is a lua, straight in Neovim!
-local function build_fennel()
-  os.execute("make LUA=luajit BIN_DIR=./bin LUA_LIB_DIR=./lua install")
-end
-use {
-  "fennel",
-  repo = "https://git.sr.ht/~technomancy/fennel",
-  install = build_fennel,
-  update = build_fennel,
-}
-local fennel = require("fennel")
-vim.api.nvim_command("command! -nargs=* Fennel lua require('fennel').eval(<q-args>)")
-vim.api.nvim_command("command! -nargs=1 -complete=file FennelFile lua require('fennel').dofile(vim.fn.expand(<q-args>))")
-
--- fennel syntax
-use("bakpakin/fennel.vim")
-
 -- Neovim can get smarter by sitting in (abstract syntax) trees!
 use {
   "nvim-treesitter/nvim-treesitter",
@@ -136,7 +119,7 @@ use {
   update = function () vim.api.nvim_command("TSUpdate") end,
 }
 require("nvim-treesitter.configs").setup {
-  ensure_installed = {"bash", "c", "cpp", "fennel", "lua", "latex", "rust", "zig"},
+  ensure_installed = {"bash", "c", "cpp", "lua", "latex", "rust", "zig"},
   highlight = {enable = true},
 }
 vim.opt.foldmethod = "expr"
