@@ -72,12 +72,11 @@ Decluttering Emacs of frivolous things like menus and scroll bars.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(inhibit-startup-screen t)
-   '(use-dialog-box nil))
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (when (fboundp 'scroll-bar-mode)
-    (scroll-bar-mode -1))
-  (tooltip-mode -1)
+   '(use-dialog-box nil)
+   '(menu-bar-mode nil)
+   '(tool-bar-mode nil)
+   '(scroll-bar-mode nil)
+   '(tooltip-mode nil))
 #+end_src
 ** Line Numbers
 Line numbers are crucial to understand where you are in a document.
@@ -307,6 +306,7 @@ This loads up extra features for dired.
 ** Org
 Emacs' Org mode has superpowers.
 #+begin_src emacs-lisp
+  (straight-use-package 'org)
   (custom-set-variables
    '(org-catch-invisible-edits 'smart)
    '(org-clock-sound t))
