@@ -219,6 +219,18 @@ that you can define your own!
 #+begin_src emacs-lisp
   (define-key (current-global-map) (kbd "C-c x") #'fixup-whitespace)
 #+end_src
+** Electric Pairs
+Automagically close quotes, parentheses, brackets, etc...
+#+begin_src emacs-lisp
+  (electric-pair-mode +1)
+#+end_src
+** Indentation
+Indent with 2 spaces.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(indent-tabs-mode nil)
+   '(tab-width 2))
+#+end_src
 ** LSP Client
 [[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
 intelligent code assistance for an abitrary editor that supports the
@@ -255,23 +267,11 @@ This sets up format-on-save.
       (remove-hook 'before-save-hook #'eglot-format t)))
   (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa)
 #+end_src
-
-This sets up eglot snippets support using yasnippet.
+** Snippets
+This sets up snippet support through yasnippet.
 #+begin_src emacs-lisp
   (straight-use-package 'yasnippet)
-  (add-hook 'eglot-managed-mode-hook #'yas-minor-mode)
-#+end_src
-** Electric Pairs
-Automagically close quotes, parentheses, brackets, etc...
-#+begin_src emacs-lisp
-  (electric-pair-mode +1)
-#+end_src
-** Indentation
-Indent with 2 spaces.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(indent-tabs-mode nil)
-   '(tab-width 2))
+  (yas-global-mode +1)
 #+end_src
 ** Tab-to-Complete
 Bring the tab-to-complete experience to Emacs!
