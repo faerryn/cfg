@@ -23,7 +23,7 @@ Straight.el is a declarative package manager for Emacs.
     (unless (file-directory-p dest)
       (call-process "git" nil nil nil
                     "clone"
-                    "--depth=1"
+                    "--depth" "1"
                     repo
                     dest))
     (require 'straight (expand-file-name "straight.el" dest))
