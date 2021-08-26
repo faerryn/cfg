@@ -248,7 +248,7 @@ This sets up keybindings.
 This sets up custom default lsp servers.
 #+begin_src emacs-lisp
   (with-eval-after-load "eglot"
-    (add-to-list 'eglot-server-programs '(rust-mode .  ("rust-analyzer"))))
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
 
 This sets up format-on-save.
@@ -304,14 +304,15 @@ Emacs' Org mode has superpowers.
 #+begin_src emacs-lisp
   (straight-use-package 'org)
   (custom-set-variables
-   '(org-catch-invisible-edits 'smart)
-   '(org-clock-sound t))
+   '(org-catch-invisible-edits 'smart))
 #+end_src
-** Pdf-View
-The Portable Document Format is the most widespread method of
-publishing paginated, formatted text.
+** PDF
+Emacs' DocView is not very good. Pdf-tools provides PDFView, a
+superior alternative.
 #+begin_src emacs-lisp
   (straight-use-package 'pdf-tools)
+  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
+  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
 #+end_src
 ** Rust
 [[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
@@ -444,12 +445,13 @@ programmer to see how individual lines of code are compiled.
 This sets up rmsbolt on activation of the minor mode and on save.
 #+begin_src emacs-lisp
   (defun faerryn/rmsbolt-setup-cosa ()
-    (if rmsbolt-mode
-        (progn
-          (unless (buffer-modified-p)
-            (rmsbolt-compile))
-          (add-hook 'after-save-hook #'rmsbolt-compile nil t))
-      (remove-hook 'after-save-hook #'rmsbolt-compile t)))
+    (unless (derived-mode-p 'asm-mode)
+      (if rmsbolt-mode
+          (progn
+            (unless (buffer-modified-p)
+              (rmsbolt-compile))
+            (add-hook 'after-save-hook #'rmsbolt-compile nil t))
+        (remove-hook 'after-save-hook #'rmsbolt-compile t))))
   (add-hook 'rmsbolt-mode-hook #'faerryn/rmsbolt-setup-cosa)
 #+end_src
 ** Silent Bell
