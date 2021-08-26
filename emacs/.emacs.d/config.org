@@ -299,6 +299,13 @@ This loads up extra features for dired.
 #+begin_src emacs-lisp
   (straight-use-package 'markdown-mode)
 #+end_src
+** OCaml
+OCaml is a funny programming language.
+#+begin_src emacs-lisp
+  (straight-use-package 'caml-mode)
+  (autoload 'caml-mode "caml-mode" "Major mode for editing OCaml code." t)
+  (add-to-list 'auto-mode-alist '("\\.ml[iylp]?$" . caml-mode))
+#+end_src
 ** Org
 Emacs' Org mode has superpowers.
 #+begin_src emacs-lisp
