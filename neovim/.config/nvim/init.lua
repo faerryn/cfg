@@ -105,8 +105,11 @@ vim.g.cursorhold_updatetime = 1000
 use("ryvnf/readline.vim")
 
 -- a nice colorscheme
-use("joshdick/onedark.vim")
-vim.api.nvim_command("colorscheme onedark")
+use {
+  "sonph/onehalf",
+  subdir = "vim",
+}
+vim.api.nvim_command("colorscheme onehalfdark")
 
 -- c of the future
 use("ziglang/zig.vim")
