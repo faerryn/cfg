@@ -16,7 +16,6 @@ Straight.el is a declarative package manager for Emacs.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(straight-check-for-modifications nil)
-   '(straight-disable-autoloads t)
    '(straight-use-symlinks t)
    '(straight-vc-git-default-clone-depth 1))
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
@@ -92,8 +91,6 @@ features tab-to-complete functionality.
 Consult provides a collection of useful functions that make use of minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
-  (autoload 'consult-completion-in-region "consult"
-    "Prompt for completion of region in the minibuffer if non-unique.")
   (advice-add 'completion-in-region :override #'consult-completion-in-region)
 #+end_src
 *** Marginalia
@@ -136,7 +133,6 @@ Emacs' default modeline is weird.  Doom Emacs provides us with an
 aesthetic alternative.
 #+begin_src emacs-lisp
   (straight-use-package 'doom-modeline)
-  (autoload 'doom-modeline-mode "doom-modeline" "Toggle doom-modeline on or off." t)
   (add-hook 'emacs-startup-hook #'doom-modeline-mode)
 #+end_src
 
@@ -233,8 +229,6 @@ Eglot is a LSP client written in Elisp, bringing the power of an IDE
 to Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
-  (autoload 'eglot "eglot"
-    "Manage a project with a Language Server Protocol (LSP) server." t)
   (custom-set-variables
    '(eglot-autoshutdown t))
 #+end_src
@@ -316,8 +310,6 @@ The Portable Document Format is the most widespread method of
 publishing paginated, formatted text.
 #+begin_src emacs-lisp
   (straight-use-package 'pdf-tools)
-  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
-  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" .  pdf-view-mode))
 #+end_src
 ** Rust
 [[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
@@ -325,9 +317,6 @@ safety.  It boasts a builtin project and dependency manager, and
 delightfully concise syntax.
 #+begin_src emacs-lisp
   (straight-use-package 'rust-mode)
-  (autoload 'rust-mode "rust-mode"
-    "Major mode for Rust code." t)
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" .  rust-mode))
 #+end_src
 ** Zig
 [[https://ziglang.org][Zig]] is an ambitious programming language with zero cost duck-typing
@@ -337,9 +326,6 @@ featureful compile-time code execution.
   (straight-use-package 'zig-mode)
   (custom-set-variables
    '(zig-format-on-save nil))
-  (autoload 'zig-mode "zig-mode"
-    "A major mode for the Zig programming language." t)
-  (add-to-list 'auto-mode-alist '("\\.zig\\'" .  zig-mode))
 #+end_src
 * Xorg Integration
 Xorg is the classic Linux display server.
@@ -357,8 +343,6 @@ default.  This package detects a suitable CLI clipboard tool (such as
 the eponymous `xclip') to integrate into Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
-  (autoload 'xclip-mode "xclip"
-    "Minor mode to use the `xclip' program to copy&paste." t)
   (defun faerryn/safe-xclip-mode ()
     (ignore-errors
       (xclip-mode +1)))
@@ -371,8 +355,6 @@ EXWM is a window manager written in Elisp.  Lots of hacks are used to
 customize the behavior of EXWM.
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
-  (autoload 'exwm-init "exwm"
-    "Initialize EXWM." t)
 #+end_src
 
 This defines keybindings and key behaviors for EXWM.
@@ -453,7 +435,6 @@ RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]].  It
 programmer to see how individual lines of code are compiled.
 #+begin_src emacs-lisp
   (straight-use-package 'rmsbolt)
-  (autoload 'rmsbolt-mode "rmsbolt" "Toggle rmsbolt-mode." t)
   (custom-set-variables
    '(rmsbolt-automatic-recompile nil))
 #+end_src
@@ -505,15 +486,12 @@ me) is staging small chunks at a time to split up big changes into
 multiple commits.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
-  (autoload 'magit-status "magit"
-    "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
 #+end_src
 ** Vterm
 Vterm is an efficient replacement for emacs' built-in `term'.
 #+begin_src emacs-lisp
   (straight-use-package 'vterm)
-  (autoload 'vterm "vterm" "Create an interactive Vterm buffer." t)
   (custom-set-variables
    '(vterm-environment '("COLORTERM=truecolor")))
 #+end_src
