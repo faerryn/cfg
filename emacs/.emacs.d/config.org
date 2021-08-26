@@ -36,7 +36,6 @@ Straight.el is a declarative package manager for Emacs.
 GCMH is an intelligent garbage collection scheduler for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
-  (require 'gcmh)
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
 ** Custom Symbols
@@ -97,7 +96,6 @@ Consult provides a collection of useful functions that make use of minibuffer co
 Marginalia provides extra information in the "margins" during minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'marginalia)
-  (require 'marginalia)
   (marginalia-mode +1)
 #+end_src
 *** Orderless
@@ -105,7 +103,6 @@ Orderless provides a smarter, more usable sorting and searching for
 minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'orderless)
-  (require 'orderless)
   (custom-set-variables
    '(completion-styles '(orderless))
    '(completion-category-defaults nil)
@@ -116,13 +113,11 @@ Vertico provices a performant and extensible minibuffer-based completion framewo
 #+begin_src emacs-lisp
   (straight-use-package
    `(vertico :files ,(cons "extensions/*.el" straight-default-files-directive)))
-  (require 'vertico)
   (vertico-mode +1)
 #+end_src
 
 This enables mouse support.
 #+begin_src emacs-lisp
-  (require 'vertico-mouse)
   (vertico-mouse-mode +1)
 #+end_src
 ** Modeline
@@ -156,11 +151,11 @@ Paint the background of color codes with the color they represent.
    '(rainbow-latex-colors nil)
    '(rainbow-r-colors nil)
    '(rainbow-x-colors nil))
-  (require 'rainbow-mode)
 #+end_src
 
 Enable a custom global minor-mode for rainbow-mode and enable it.
 #+begin_src emacs-lisp
+  (require 'rainbow-mode)
   (define-globalized-minor-mode faerryn/global-rainbow-mode rainbow-mode rainbow-turn-on)
   (faerryn/global-rainbow-mode +1)
 #+end_src
@@ -183,7 +178,6 @@ Emacs' default theme is blindingly bright.  Doom Emacs (once again)
 provides an aesthetic alternative.
 #+begin_src emacs-lisp
   (straight-use-package 'doom-themes)
-  (require 'doom-themes)
   (load-theme 'doom-one t)
 #+end_src
 ** Treesitter
@@ -193,8 +187,6 @@ is possible for compatible languages.
 #+begin_src emacs-lisp
   (straight-use-package 'tree-sitter)
   (straight-use-package 'tree-sitter-langs)
-  (require 'tree-sitter)
-  (require 'tree-sitter-langs)
   (global-tree-sitter-mode +1)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 #+end_src
