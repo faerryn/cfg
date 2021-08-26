@@ -255,6 +255,12 @@ This sets up format-on-save.
       (remove-hook 'before-save-hook #'eglot-format t)))
   (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa)
 #+end_src
+
+This sets up eglot snippets support using yasnippet.
+#+begin_src emacs-lisp
+  (straight-use-package 'yasnippet)
+  (add-hook 'eglot-managed-mode-hook #'yas-minor-mode)
+#+end_src
 ** Electric Pairs
 Automagically close quotes, parentheses, brackets, etc...
 #+begin_src emacs-lisp
@@ -296,6 +302,10 @@ This loads up extra features for dired.
   (custom-set-variables
    '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
+#+end_src
+** Markdown
+#+begin_src emacs-lisp
+  (straight-use-package 'markdown-mode)
 #+end_src
 ** Org
 Emacs' Org mode has superpowers.
