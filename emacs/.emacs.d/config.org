@@ -220,8 +220,7 @@ Automagically close quotes, parentheses, brackets, etc...
 Indent with 2 spaces.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(indent-tabs-mode nil)
-   '(tab-width 2))
+   '(indent-tabs-mode nil))
 #+end_src
 ** LSP Client
 [[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating

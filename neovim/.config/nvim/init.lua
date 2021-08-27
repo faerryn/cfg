@@ -21,8 +21,6 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- indentation
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 -- X11 integration
@@ -68,12 +66,12 @@ vim.api.nvim_command("autocmd faerryn TextYankPost * lua vim.highlight.on_yank()
 
 -- shell split commands
 for cmd, exedit in pairs({
-  Hshell = "split",
-  Lshell = "topleft",
-  Shell = "edit",
-  Sshell = "split",
-  Tshell = "tabnew",
-  Vshell = "vsplit",
+        Hshell = "split",
+        Lshell = "topleft",
+        Shell = "edit",
+        Sshell = "split",
+        Tshell = "tabnew",
+        Vshell = "vsplit",
 }) do
 vim.api.nvim_command(("command! " .. cmd .. " execute '" .. exedit .. " term://' . &shell"))
 end
@@ -89,7 +87,7 @@ vim.g.netrw_winsize = 25
 local user_packadd_path = "faerryn/user.nvim/default"
 local user_install_path = vim.fn.stdpath("data").."/site/pack/user/opt/"..user_packadd_path
 if vim.fn.isdirectory(user_install_path) == 0 then
-  os.execute("git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "..vim.fn.shellescape(user_install_path))
+        os.execute("git clone --quiet --depth 1 https://github.com/faerryn/user.nvim.git "..vim.fn.shellescape(user_install_path))
 end
 vim.api.nvim_command("packadd "..vim.fn.fnameescape(user_packadd_path))
 local user = require("user")
@@ -106,8 +104,8 @@ use("ryvnf/readline.vim")
 
 -- a nice colorscheme
 use {
-  "sonph/onehalf",
-  subdir = "vim",
+        "sonph/onehalf",
+        subdir = "vim",
 }
 vim.api.nvim_command("colorscheme onehalfdark")
 
@@ -117,13 +115,13 @@ vim.g.zig_fmt_autosave = 0
 
 -- Neovim can get smarter by sitting in (abstract syntax) trees!
 use {
-  "nvim-treesitter/nvim-treesitter",
-  branch =  "0.5-compat",
-  update = function () vim.api.nvim_command("TSUpdate") end,
+        "nvim-treesitter/nvim-treesitter",
+        branch =  "0.5-compat",
+        update = function () vim.api.nvim_command("TSUpdate") end,
 }
 require("nvim-treesitter.configs").setup {
-  ensure_installed = {"bash", "c", "cpp", "lua", "latex", "rust", "zig"},
-  highlight = {enable = true},
+        ensure_installed = {"bash", "c", "cpp", "lua", "latex", "rust", "zig"},
+        highlight = {enable = true},
 }
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -131,18 +129,18 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- color my neovim with colors!
 use("norcalli/nvim-colorizer.lua")
 if vim.opt.termguicolors:get() then
-  require("colorizer").setup({}, {
-    RGB = true,
-    RRGGBB = true,
-    RRGGBBAA = false,
-    css = false,
-    css_fn = false,
-    hsl_fn = false,
-    names = false,
-    rgb_fn = false,
-    mode = "background",
-  })
-  vim.api.nvim_command("autocmd faerryn BufEnter * lua require('colorizer').attach_to_buffer(0)")
+        require("colorizer").setup({}, {
+                RGB = true,
+                RRGGBB = true,
+                RRGGBBAA = false,
+                css = false,
+                css_fn = false,
+                hsl_fn = false,
+                names = false,
+                rgb_fn = false,
+                mode = "background",
+        })
+        vim.api.nvim_command("autocmd faerryn BufEnter * lua require('colorizer').attach_to_buffer(0)")
 end
 
 use("nvim-lua/plenary.nvim")
@@ -153,18 +151,18 @@ vim.api.nvim_set_keymap("n", "<Space>g", "<Cmd>lua require('neogit').open({kind 
 use("neovim/nvim-lspconfig")
 local lspconfig = require("lspconfig")
 local function on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>a", "<Cmd>lua vim.lsp.buf.code_action()<CR>", {noremap = true})
-  vim.api.nvim_buf_set_keymap(bufnr, "x", "<Space>a", "<Cmd>lua vim.lsp.buf.range_code_action()<CR>", {noremap = true})
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>r", "<Cmd>lua vim.lsp.buf.rename()<CR>", {noremap = true})
-  vim.api.nvim_command("autocmd faerryn BufWritePre <buffer=" .. bufnr .. "> lua vim.lsp.buf.formatting_sync()")
-  vim.api.nvim_command("autocmd faerryn CursorHold <buffer=" .. bufnr .. "> lua vim.lsp.buf.hover()")
-  vim.api.nvim_command("autocmd faerryn CursorHoldI <buffer=" .. bufnr .. "> lua vim.lsp.buf.signature_help()")
+        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>a", "<Cmd>lua vim.lsp.buf.code_action()<CR>", {noremap = true})
+        vim.api.nvim_buf_set_keymap(bufnr, "x", "<Space>a", "<Cmd>lua vim.lsp.buf.range_code_action()<CR>", {noremap = true})
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>r", "<Cmd>lua vim.lsp.buf.rename()<CR>", {noremap = true})
+        vim.api.nvim_command("autocmd faerryn BufWritePre <buffer=" .. bufnr .. "> lua vim.lsp.buf.formatting_sync()")
+        vim.api.nvim_command("autocmd faerryn CursorHold <buffer=" .. bufnr .. "> lua vim.lsp.buf.hover()")
+        vim.api.nvim_command("autocmd faerryn CursorHoldI <buffer=" .. bufnr .. "> lua vim.lsp.buf.signature_help()")
 end
 local opts = {
-  autostart = false,
-  on_attach = on_attach,
+        autostart = false,
+        on_attach = on_attach,
 }
 for _, server in ipairs({"clangd", "rust_analyzer", "zls"}) do
-  lspconfig[server].setup(opts)
+        lspconfig[server].setup(opts)
 end
