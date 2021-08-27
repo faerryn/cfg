@@ -297,13 +297,12 @@ This loads up extra features for dired.
 OCaml is a funny programming language.
 #+begin_src emacs-lisp
   (straight-use-package 'caml-mode)
-  (autoload 'caml-mode "caml-mode" "Major mode for editing OCaml code." t)
+  (autoload 'caml-mode "caml" "Major mode for editing OCaml code." t)
   (add-to-list 'auto-mode-alist '("\\.ml[iylp]?$" . caml-mode))
 #+end_src
 ** Org
 Emacs' Org mode has superpowers.
 #+begin_src emacs-lisp
-  (straight-use-package 'org)
   (custom-set-variables
    '(org-catch-invisible-edits 'smart))
 #+end_src
@@ -455,12 +454,6 @@ This sets up rmsbolt on activation of the minor mode and on save.
         (remove-hook 'after-save-hook #'rmsbolt-compile t))))
   (add-hook 'rmsbolt-mode-hook #'faerryn/rmsbolt-setup-cosa)
 #+end_src
-** Silent Bell
-Loud bells annoy me.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(visible-bell t))
-#+end_src
 ** Declutter File System
 Disable autosaves, backups, and lockfiles for file system sanity.
 #+begin_src emacs-lisp
@@ -492,6 +485,12 @@ multiple commits.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
+#+end_src
+** Silent Bell
+Loud bells annoy me.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(visible-bell t))
 #+end_src
 ** Vterm
 Vterm is an efficient replacement for emacs' built-in `term'.

@@ -165,6 +165,6 @@ local opts = {
   autostart = false,
   on_attach = on_attach,
 }
-for _, server in ipairs({"clangd", "rust_analyzer"}) do
+for _, server in ipairs({"clangd", "rust_analyzer", "zls"}) do
   lspconfig[server].setup(opts)
 end
