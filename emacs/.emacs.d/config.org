@@ -80,8 +80,8 @@ Decluttering Emacs of frivolous things like menus and scroll bars.
 Line numbers are crucial to understand where you are in a document.
 #+begin_src emacs-lisp
   (custom-set-variables
+   '(global-display-line-numbers-mode t)
    '(display-line-numbers-type t))
-  (global-display-line-numbers-mode +1)
 #+end_src
 ** Minibuffer Completion
 The minibuffer is the empty space under the modeline.  It often
@@ -134,12 +134,12 @@ aesthetic alternative.
 Show the time and battery level on the modeline.
 #+begin_src emacs-lisp
   (custom-set-variables
+   '(display-time-mode t)
+   '(display-battery-mode t)
    '(battery-mode-line-format "%p%%")
    '(display-time-default-load-average nil)
    '(display-time-format "%r")
    '(display-time-interval 1))
-  (display-time-mode +1)
-  (display-battery-mode +1)
 #+end_src
 ** Rainbow
 Paint the background of color codes with the color they represent.
@@ -162,16 +162,17 @@ Enable a custom global minor-mode for rainbow-mode and enable it.
 ** Show Paren
 This highlights matching quotes, parentheses, brackets, etc...
 #+begin_src emacs-lisp
-  (show-paren-mode +1)
+  (custom-set-variables
+   '(show-paren-mode t))
 #+end_src
 ** Tab Bar
 The tab bar manages different buffers and window configuration in
 different tabs.  This feature seems stolen from Vim.
 #+begin_src emacs-lisp
   (custom-set-variables
+   '(tab-bar-mode t)
    '(tab-bar-close-button nil)
    '(tab-bar-new-button nil))
-  (tab-bar-mode +1)
 #+end_src
 ** Theme
 Emacs' default theme is blindingly bright.  Doom Emacs (once again)
@@ -200,8 +201,8 @@ Line wrap is weird and confusing.  Truncated lines are elephants.
 Display normally transparent characters.  Catch the trailing spaces.
 #+begin_src emacs-lisp
   (custom-set-variables
+   '(global-whitespace-mode t)
    '(whitespace-style '(face tabs trailing tab-mark)))
-  (global-whitespace-mode +1)
 #+end_src
 * Text Editing
 Emacs is a text-editor, after all.
@@ -214,7 +215,8 @@ that you can define your own!
 ** Electric Pairs
 Automagically close quotes, parentheses, brackets, etc...
 #+begin_src emacs-lisp
-  (electric-pair-mode +1)
+  (custom-set-variables
+   '(electric-pair-mode t))
 #+end_src
 ** Indentation
 Indent with 2 spaces.
