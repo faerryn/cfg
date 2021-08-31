@@ -135,11 +135,12 @@ Show the time and battery level on the modeline.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(display-time-mode t)
-   '(display-battery-mode t)
-   '(battery-mode-line-format "%p%%")
    '(display-time-default-load-average nil)
    '(display-time-format "%r")
-   '(display-time-interval 1))
+   '(display-time-interval 1)
+   '(display-battery-mode t)
+   '(battery-mode-line-format "%p%%")
+   '(battery-update-interval 1))
 #+end_src
 ** Rainbow
 Paint the background of color codes with the color they represent.
