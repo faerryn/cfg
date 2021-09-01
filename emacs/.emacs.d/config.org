@@ -128,6 +128,8 @@ Emacs' default modeline is weird.  Doom Emacs provides us with an
 aesthetic alternative.
 #+begin_src emacs-lisp
   (straight-use-package 'doom-modeline)
+  (custom-set-variables
+   '(doom-modeline-icon nil))
   (add-hook 'emacs-startup-hook #'doom-modeline-mode)
 #+end_src
 
@@ -308,14 +310,6 @@ Emacs' Org mode has superpowers.
   (custom-set-variables
    '(org-catch-invisible-edits 'smart))
 #+end_src
-** PDF
-Emacs' DocView is not very good. Pdf-tools provides PDFView, a
-superior alternative.
-#+begin_src emacs-lisp
-  (straight-use-package 'pdf-tools)
-  (autoload 'pdf-view-mode "pdf-tools" "Major mode in PDF buffers." t)
-  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
-#+end_src
 ** Rust
 [[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
 safety.  It boasts a builtin project and dependency manager, and
@@ -493,11 +487,4 @@ Loud bells annoy me.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(visible-bell t))
-#+end_src
-** Vterm
-Vterm is an efficient replacement for emacs' built-in `term'.
-#+begin_src emacs-lisp
-  (straight-use-package 'vterm)
-  (custom-set-variables
-   '(vterm-environment '("COLORTERM=truecolor")))
 #+end_src
