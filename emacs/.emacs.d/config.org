@@ -284,7 +284,10 @@ Dired is the file browser in Emacs.
 This prettifies dired's file listing.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(dired-listing-switches "-AFghvX --group-directories-first"))
+   '(dired-listing-switches "-AFghvX --group-directories-first")
+   '(dired-guess-shell-alist-user
+     '(("\\.swf\\'" "ruffle")
+       ("\\.pdf\\'" "zathura"))))
 #+end_src
 
 This loads up extra features for dired.
