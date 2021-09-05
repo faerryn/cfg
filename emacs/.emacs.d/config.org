@@ -227,22 +227,10 @@ Eglot is a LSP client written in Elisp, bringing the power of an IDE
 to Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
-  (custom-set-variables
-   '(eglot-autoshutdown t))
-#+end_src
-
-This sets up keybindings.
-#+begin_src emacs-lisp
   (with-eval-after-load "eglot"
     (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
     (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
     (define-key eglot-mode-map (kbd "C-c f") #'eglot-format))
-#+end_src
-
-This sets up custom default lsp servers.
-#+begin_src emacs-lisp
-  (with-eval-after-load "eglot"
-    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
 
 This sets up format-on-save.
@@ -309,6 +297,12 @@ safety.  It boasts a builtin project and dependency manager, and
 delightfully concise syntax.
 #+begin_src emacs-lisp
   (straight-use-package 'rust-mode)
+#+end_src
+
+This sets up rust-analyzer as the default lsp server for rust-mode.
+#+begin_src emacs-lisp
+  (with-eval-after-load "eglot"
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 #+end_src
 ** Zig
 [[https://ziglang.org][Zig]] is an ambitious programming language with zero cost duck-typing
