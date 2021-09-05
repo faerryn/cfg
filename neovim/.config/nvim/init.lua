@@ -120,7 +120,7 @@ use {
         update = function () vim.api.nvim_command("TSUpdate") end,
 }
 require("nvim-treesitter.configs").setup {
-        ensure_installed = {"bash", "c", "cpp", "lua", "latex", "rust", "zig"},
+        ensure_installed = "maintained",
         highlight = {enable = true},
 }
 vim.opt.foldmethod = "expr"
