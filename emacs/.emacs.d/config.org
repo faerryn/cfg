@@ -184,16 +184,6 @@ provides an aesthetic alternative.
   (straight-use-package 'doom-themes)
   (load-theme 'doom-one t)
 #+end_src
-** Treesitter
-Treesitter is a asbtract syntax generator stolen from Neovim.  Using
-performant and accurate AST generation, fast and correct highlighting
-is possible for compatible languages.
-#+begin_src emacs-lisp
-  (straight-use-package 'tree-sitter)
-  (straight-use-package 'tree-sitter-langs)
-  (global-tree-sitter-mode +1)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-#+end_src
 ** Truncate Lines
 Line wrap is weird and confusing.  Truncated lines are elephants.
 #+begin_src emacs-lisp
