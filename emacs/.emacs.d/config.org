@@ -248,7 +248,8 @@ This prettifies dired's file listing.
    '(dired-listing-switches "-AFghvX --group-directories-first")
    '(dired-guess-shell-alist-user
      '(("\\.swf\\'" "ruffle")
-       ("\\.pdf\\'" "zathura"))))
+       ("\\.pdf\\'" "zathura")
+       ("\\.ogg\\'" "mpv"))))
 #+end_src
 
 This loads up extra features for dired.
@@ -326,7 +327,7 @@ customize the behavior of EXWM.
   (straight-use-package 'exwm)
 #+end_src
 
-This defines keybindings and key behaviors for EXWM.
+This defines key behaviors for EXWM.
 #+begin_src emacs-lisp
   (defun faerryn/exwm-toggle-input ()
     "Toggle EXWM buffers between `line-mode' and `char-mode'."
@@ -359,6 +360,24 @@ This defines keybindings and key behaviors for EXWM.
            (kbd "M-&")
            (kbd "M-:")
            (kbd "M-x"))))
+#+end_src
+
+This gets rid of EXWM's buffer-predicate settings.
+#+begin_src emacs-lisp
+  (with-eval-after-load "exwm"
+    (defun faerryn/nil (&rest ignored))
+    (defun faerryn/exwm-workspace-init-fix (oldfun)
+      (advice-add #'modify-all-frames-parameters :override #'faerryn/nil)
+      (funcall oldfun)
+      (advice-remove #'modify-all-frames-parameters #'faerryn/nil))
+    (advice-add #'exwm-workspace--init :around #'faerryn/exwm-workspace-init-fix)
+    (defun faerryn/mfp-ignore-bp (oldfun frame alist)
+      (funcall oldfun frame (assoc-delete-all 'buffer-predicate alist)))
+    (defun faerryn/exwm-workspace-exit-fix (oldfun)
+      (advice-add #'modify-frame-parameters :around #'faerryn/mfp-ignore-bp)
+      (funcall oldfun)
+      (advice-remove #'modify-frame-parameters #'faerryn/mfp-ignore-bp))
+    (advice-add #'exwm-workspace--exit :around #'faerryn/exwm-workspace-exit-fix))
 #+end_src
 
 This names exwm buffers according to the X11 window class.
