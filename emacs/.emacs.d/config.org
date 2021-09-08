@@ -261,7 +261,9 @@ This loads up extra features for dired.
 ** Lisp Interaction
 It's watch *scratch* buffers are made of!
 #+begin_src emacs-lisp
-  (add-hook 'lisp-interaction-mode-hook 'orgtbl-mode)
+  (autoload 'orgtbl-mode "org-table"
+    "The Org mode table editor as a minor mode for use in other modes." t)
+  (add-hook 'lisp-interaction-mode-hook #'orgtbl-mode)
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
@@ -271,7 +273,8 @@ It's watch *scratch* buffers are made of!
 OCaml is a funny programming language.
 #+begin_src emacs-lisp
   (straight-use-package 'caml-mode)
-  (autoload 'caml-mode "caml" "Major mode for editing OCaml code." t)
+  (autoload 'caml-mode "caml"
+    "Major mode for editing OCaml code." t)
   (add-to-list 'auto-mode-alist '("\\.ml[iylp]?$" . caml-mode))
 #+end_src
 ** Org
