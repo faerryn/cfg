@@ -41,7 +41,7 @@ GCMH is an intelligent garbage collection scheduler for Emacs.
 ** Custom Symbols
 Switches to and ensures the scratch buffer.
 #+begin_src emacs-lisp
-  (defun fearryn/scratch ()
+  (defun faerryn/scratch ()
     "Display buffer `*scratch*' in the selected window, regenerating it as necessary."
     (interactive)
     (if-let ((scratch (get-buffer "*scratch*")))
