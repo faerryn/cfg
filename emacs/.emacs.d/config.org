@@ -258,6 +258,11 @@ This loads up extra features for dired.
    '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
 #+end_src
+** Lisp Interaction
+It's watch *scratch* buffers are made of!
+#+begin_src emacs-lisp
+  (add-hook 'lisp-interaction-mode-hook 'orgtbl-mode)
+#+end_src
 ** Markdown
 #+begin_src emacs-lisp
   (straight-use-package 'markdown-mode)
