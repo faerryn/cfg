@@ -98,16 +98,6 @@ Marginalia provides extra information in the "margins" during minibuffer complet
   (straight-use-package 'marginalia)
   (marginalia-mode +1)
 #+end_src
-*** Orderless
-Orderless provides a smarter, more usable sorting and searching for
-minibuffer completion.
-#+begin_src emacs-lisp
-  (straight-use-package 'orderless)
-  (custom-set-variables
-   '(completion-styles '(orderless))
-   '(completion-category-defaults nil)
-   '(completion-category-overrides '((file (styles partial-completion)))))
-#+end_src
 *** Vertico
 Vertico provices a performant and extensible minibuffer-based completion framework.
 #+begin_src emacs-lisp
@@ -154,13 +144,6 @@ Paint the background of color codes with the color they represent.
    '(rainbow-latex-colors nil)
    '(rainbow-r-colors nil)
    '(rainbow-x-colors nil))
-#+end_src
-
-Enable a custom global minor-mode for rainbow-mode and enable it.
-#+begin_src emacs-lisp
-  (require 'rainbow-mode)
-  (define-globalized-minor-mode faerryn/global-rainbow-mode rainbow-mode rainbow-turn-on)
-  (faerryn/global-rainbow-mode +1)
 #+end_src
 ** Show Paren
 This highlights matching quotes, parentheses, brackets, etc...
