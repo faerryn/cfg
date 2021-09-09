@@ -426,6 +426,15 @@ Hide the buffer that `async-shell-command' produces.
                  display-buffer-no-window
                  allow-no-window))
 #+end_src
+** Buffer Predicate
+This filters what buffers [[help:other-buffer]] will show.
+#+begin_src emacs-lisp
+  (defun faerryn/buffer-predicate (buf)
+    (or (buffer-file-name buf)
+        (with-current-buffer buf
+          (derived-mode-p 'exwm-mode 'lisp-interaction-mode))))
+  (modify-all-frames-parameters '((buffer-predicate . faerryn/buffer-predicate)))
+#+end_src
 ** Compiler Explorer
 RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]].  It allows a
 programmer to see how individual lines of code are compiled.
