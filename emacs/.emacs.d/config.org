@@ -411,23 +411,13 @@ This edits the EXWM fullscreen behavior to be nicer.
 #+end_src
 * Sundry
 Miscellaneous items that don't fall into a broader category.
-** Async Shell Command Buffer
-Hide the buffer that `async-shell-command' produces.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(async-shell-command-buffer 'new-buffer))
-  (add-to-list 'display-buffer-alist
-               `(,(rx string-start "*Async Shell Command*")
-                 display-buffer-no-window
-                 allow-no-window))
-#+end_src
 ** Buffer Predicate
 This filters what buffers [[help:other-buffer]] will show.
 #+begin_src emacs-lisp
   (defun faerryn/buffer-predicate (buf)
     (or (buffer-file-name buf)
         (with-current-buffer buf
-          (derived-mode-p 'lisp-interaction-mode 'eshell-mode 'exwm-mode))))
+          (derived-mode-p 'dired-mode 'eshell-mode 'exwm-mode 'lisp-interaction-mode))))
   (modify-all-frames-parameters '((buffer-predicate . faerryn/buffer-predicate)))
 #+end_src
 ** Compiler Explorer
@@ -458,6 +448,15 @@ Disable autosaves, backups, and lockfiles for file system sanity.
    '(auto-save-default nil)
    '(make-backup-files nil)
    '(create-lockfiles nil))
+#+end_src
+** Display Buffer Alist
+Hide the buffer that [[help:async-shell-command]] produces.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(async-shell-command-buffer 'new-buffer))
+  (add-to-list 'display-buffer-alist
+               `(,(rx string-start "*Async Shell Command*")
+                 (display-buffer-no-window)))
 #+end_src
 ** Eshell
 Eshell is a portable, lispy shell in Emacs.  This configures aliases
