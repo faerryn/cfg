@@ -51,6 +51,7 @@ Switches to and ensures the scratch buffer.
           (insert initial-scratch-message)
           (lisp-interaction-mode))
         (switch-to-buffer scratch))))
+  (define-key (current-global-map) (kbd "C-c s") #'faerryn/scratch)
 #+end_src
 
 A hook that runs before the minibuffer opens.
@@ -455,7 +456,7 @@ For symlinks are good.
 Magit is a very nice git client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
-  (define-key (current-global-map) (kbd "C-c g") #'magit-status)
+  (define-key (current-global-map) (kbd "C-x g") #'magit-status)
 #+end_src
 ** Silent Bell
 Loud bells annoy me.
