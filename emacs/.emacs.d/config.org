@@ -53,7 +53,7 @@ Switches to and ensures the scratch buffer.
         (switch-to-buffer scratch))))
 #+end_src
 
-I need a hook that runs before the minibuffer opens.
+A hook that runs before the minibuffer opens.
 #+begin_src emacs-lisp
   (defvar faerryn/before-minibuffer-hook nil
     "Normal hook run just before entry to minibuffer")
@@ -84,8 +84,8 @@ Line numbers are crucial to understand where you are in a document.
    '(display-line-numbers-type t))
 #+end_src
 ** Minibuffer Completion
-The minibuffer is the empty space under the modeline.  It often
-features tab-to-complete functionality.
+Emacs prompts for input through the minibuffer, which often includes
+tab completion and other useful features.
 *** Consult
 Consult provides a collection of useful functions that make use of minibuffer completion.
 #+begin_src emacs-lisp
@@ -219,8 +219,8 @@ This sets up format-on-save.
       (remove-hook 'before-save-hook #'eglot-format t)))
   (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa)
 #+end_src
-** Tab-to-Complete
-Bring the tab-to-complete experience to Emacs!
+** Tab Completion
+Bring the tab completion to Emacs!
 #+begin_src emacs-lisp
   (custom-set-variables
    '(tab-always-indent 'complete))
@@ -317,8 +317,7 @@ the eponymous `xclip') to integrate into Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
   (defun faerryn/safe-xclip-mode ()
-    (ignore-errors
-      (xclip-mode +1)))
+    (ignore-errors (xclip-mode +1)))
   (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
 #+end_src
 ** Window Manager
@@ -453,9 +452,7 @@ For symlinks are good.
    '(vc-follow-symlinks t))
 #+end_src
 ** Git Client
-Magit is a very nice git client for Emacs.  The killer feature (for
-me) is staging small chunks at a time to split up big changes into
-multiple commits.
+Magit is a very nice git client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
   (define-key (current-global-map) (kbd "C-c g") #'magit-status)
