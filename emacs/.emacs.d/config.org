@@ -135,15 +135,10 @@ Show the time and battery level on the modeline.
    '(battery-update-interval 1))
 #+end_src
 ** Rainbow
-Paint the background of color codes with the color they represent.
+Paint the background of color codes with the color they represent upon
+calling `rainbow-mode'.
 #+begin_src emacs-lisp
   (straight-use-package 'rainbow-mode)
-  (custom-set-variables
-   '(rainbow-ansi-colors nil)
-   '(rainbow-html-colors nil)
-   '(rainbow-latex-colors nil)
-   '(rainbow-r-colors nil)
-   '(rainbow-x-colors nil))
 #+end_src
 ** Show Paren
 This highlights matching quotes, parentheses, brackets, etc...
