@@ -332,47 +332,20 @@ customize the behavior of EXWM.
 
 This defines key behaviors for EXWM.
 #+begin_src emacs-lisp
-  (defun faerryn/exwm-toggle-input ()
-    "Toggle EXWM buffers between `line-mode' and `char-mode'."
-    (interactive)
-    (when-let ((id (exwm--buffer->id (current-buffer))))
-      (pcase exwm--input-mode
-        ('line-mode (exwm-input-release-keyboard id))
-        ('char-mode (exwm-input-grab-keyboard id)))))
   (with-eval-after-load "exwm"
-    (defcustom faerryn/exwm-input-global-keys nil
-      "Key chords that are passed to Emacs while in  `char-mode'."
-      :type '(repeat key-sequence)
-      :set (lambda (symbol value)
-             (set symbol value)
-             (setq exwm-input--global-keys value)
-             (exwm-input--update-global-prefix-keys)))
-    (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
     (define-key exwm-mode-map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
-    (define-key exwm-mode-map (kbd "C-M-<delete>") #'faerryn/exwm-toggle-input))
+    (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key))
   (custom-set-variables
-   '(faerryn/exwm-input-global-keys
-     (list (kbd "C-M-<delete>")))
-   '(exwm-input-prefix-keys
-     (list (kbd "C-c")
-           (kbd "C-g")
-           (kbd "C-h")
-           (kbd "C-u")
-           (kbd "C-x")
-           (kbd "M-!")
-           (kbd "M-&")
-           (kbd "M-:")
-           (kbd "M-x"))))
+   '(exwm-input-prefix-keys (mapcar #'kbd '("C-c" "C-g" "C-h" "C-u" "C-x" "M-!" "M-&" "M-:" "M-x"))))
 #+end_src
 
 This gets rid of EXWM's buffer-predicate settings.
 #+begin_src emacs-lisp
   (with-eval-after-load "exwm"
-    (defun faerryn/nil (&rest ignored))
     (defun faerryn/exwm-workspace-init-fix (oldfun)
-      (advice-add #'modify-all-frames-parameters :override #'faerryn/nil)
+      (advice-add #'modify-all-frames-parameters :override #'ignore)
       (funcall oldfun)
-      (advice-remove #'modify-all-frames-parameters #'faerryn/nil))
+      (advice-remove #'modify-all-frames-parameters #'ignore))
     (advice-add #'exwm-workspace--init :around #'faerryn/exwm-workspace-init-fix)
     (defun faerryn/mfp-ignore-bp (oldfun frame alist)
       (funcall oldfun frame (assoc-delete-all 'buffer-predicate alist)))
@@ -390,16 +363,21 @@ This names exwm buffers according to the X11 window class.
   (add-hook 'exwm-update-class-hook #'faerryn/exwm-rename-buffer)
 #+end_src
 
-This edits the EXWM fullscreen behavior to be nicer.
+This makes EXWM fullscreen respect the same bindings as normal.
 #+begin_src emacs-lisp
-  (defun faerryn/exwm-restore-input (&rest ignored)
-    (when (eq 'line-mode exwm--selected-input-mode)
-      (exwm-input--grab-keyboard exwm--id)))
-  (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-restore-input)
-  (defun faerryn/exwm-unfullscreen (&rest ignored)
+  (defun faerryn/exwm-keep-input-mode (&optional id)
+    (when-let ((id (or id (exwm--buffer->id (current-buffer)))))
+      (exwm-input--grab-keyboard id)))
+  (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-keep-input-mode)
+#+end_src
+
+This makes EXWM exit fullscreen whenever another buffer gains focus.
+#+begin_src emacs-lisp
+  (defun faerryn/exwm-unfullscreen ()
     (dolist (buf (buffer-list))
       (when-let ((id (exwm--buffer->id buf)))
-        (exwm-layout-unset-fullscreen id))))
+        (with-current-buffer buf
+          (exwm-layout-unset-fullscreen id)))))
   (defun faerryn/exwm-init-hook ()
     (add-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
     (add-hook 'window-state-change-hook #'faerryn/exwm-unfullscreen))
