@@ -440,7 +440,7 @@ Hide the buffer that [[help:async-shell-command]] produces.
 Eshell is a portable, lispy shell in Emacs.  This configures aliases
 for eshell.
 #+begin_src emacs-lisp
-  (with-eval-after-load "eshell"
+  (with-eval-after-load "em-alias"
     (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
     (eshell/alias "ll" "ls -g $*")
     (eshell/alias "la" "ll -A $*"))
