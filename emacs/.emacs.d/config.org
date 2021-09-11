@@ -418,6 +418,16 @@ Disable autosaves, backups, and lockfiles for file system sanity.
    '(make-backup-files nil)
    '(create-lockfiles nil))
 #+end_src
+** EMMS
+#+begin_src emacs-lisp
+  (straight-use-package 'emms)
+  (custom-set-variables
+   '(emms-source-file-default-directory "~/Music/"))
+  (with-eval-after-load "emms"
+    (emms-all)
+    (emms-default-players))
+  (autoload 'emms "emms-playlist-mode" "Switch to the current emms-playlist buffer." t)
+#+end_src
 ** Tramp
 Tramp is how Emacs can access remote files as if they were local.
 
