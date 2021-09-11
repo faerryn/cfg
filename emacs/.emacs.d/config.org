@@ -395,7 +395,7 @@ This filters what buffers [[help:other-buffer]] will show.
   (defun faerryn/buffer-predicate (buf)
     (or (buffer-file-name buf)
         (with-current-buffer buf
-          (derived-mode-p 'dired-mode 'eshell-mode 'exwm-mode 'lisp-interaction-mode))))
+          (derived-mode-p 'dired-mode 'eshell-mode 'erc-mode 'exwm-mode 'lisp-interaction-mode))))
   (modify-all-frames-parameters '((buffer-predicate . faerryn/buffer-predicate)))
 #+end_src
 ** Compiler Explorer
