@@ -264,6 +264,12 @@ Emacs' Org mode has superpowers.
   (custom-set-variables
    '(org-catch-invisible-edits 'smart))
 #+end_src
+** Pdf
+#+begin_src emacs-lisp
+  (straight-use-package 'pdf-tools)
+  (autoload 'pdf-view-mode "pdf-view")
+  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+#+end_src
 ** Rust
 [[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
 safety.  It boasts a builtin project and dependency manager, and
