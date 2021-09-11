@@ -417,7 +417,8 @@ Tramp is how Emacs can access remote files as if they were local.
 
 Let Tramp inherit the remote's PATH environmental variable.
 #+begin_src emacs-lisp
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (with-eval-after-load "tramp"
+    (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 #+end_src
 ** Display Buffer Alist
 Hide the buffer that [[help:async-shell-command]] produces.
