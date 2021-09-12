@@ -383,6 +383,15 @@ This makes EXWM exit fullscreen whenever another buffer gains focus.
 #+end_src
 * Sundry
 Miscellaneous items that don't fall into a broader category.
+** Async Shell Command
+Configure the behavior of [[help:async-shell-command]]
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(async-shell-command-buffer #'rename-buffer))
+  (add-to-list 'display-buffer-alist
+               `(,(rx string-start "*Async Shell Command*")
+                 (display-buffer-no-window)))
+#+end_src
 ** Compiler Explorer
 RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]].  It allows a
 programmer to see how individual lines of code are compiled.
@@ -429,15 +438,6 @@ Let Tramp inherit the remote's PATH environmental variable.
 #+begin_src emacs-lisp
   (with-eval-after-load "tramp"
     (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
-#+end_src
-** Display Buffer Alist
-Hide the buffer that [[help:async-shell-command]] produces.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(async-shell-command-buffer 'rename-buffer))
-  (add-to-list 'display-buffer-alist
-               `(,(rx string-start "*Async Shell Command*")
-                 (display-buffer-no-window)))
 #+end_src
 ** Eshell
 Eshell is a portable, lispy shell in Emacs.  This configures aliases
