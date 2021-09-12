@@ -369,13 +369,21 @@ This makes EXWM exit fullscreen whenever another buffer gains focus.
       (when-let ((id (exwm--buffer->id buf)))
         (with-current-buffer buf
           (exwm-layout-unset-fullscreen id)))))
+  (defun faerryn/exwm-switch-to-buffer (oldfun &rest r)
+    (interactive (lambda (oldfunspec)
+                   (faerryn/exwm-unfullscreen)
+                   (advice-eval-interactive-spec oldfunspec)))
+    (faerryn/exwm-unfullscreen)
+    (apply oldfun r))
   (defun faerryn/exwm-init-hook ()
     (add-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
-    (add-hook 'window-state-change-hook #'faerryn/exwm-unfullscreen))
+    (add-hook 'window-state-change-hook #'faerryn/exwm-unfullscreen)
+    (advice-add #'switch-to-buffer :around #'faerryn/exwm-switch-to-buffer))
   (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
   (defun faerryn/exwm-exit-hook ()
     (remove-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
-    (remove-hook 'window-state-change-hook #'faerryn/exwm-unfullscreen))
+    (remove-hook 'window-state-change-hook #'faerryn/exwm-unfullscreen)
+    (advice-remove #'switch-to-buffer #'faerryn/exwm-switch-to-buffer))
   (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook)
 #+end_src
 * Sundry
