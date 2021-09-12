@@ -76,7 +76,7 @@ tab completion and other useful features.
 Consult provides a collection of useful functions that make use of minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
-  (advice-add 'completion-in-region :override #'consult-completion-in-region)
+  (setq completion-in-region-function #'consult-completion-in-region)
 #+end_src
 *** Marginalia
 Marginalia provides extra information in the "margins" during minibuffer completion.
