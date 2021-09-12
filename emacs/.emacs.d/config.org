@@ -332,19 +332,18 @@ This defines key behaviors for EXWM.
 
 This gets rid of EXWM's buffer-predicate settings.
 #+begin_src emacs-lisp
-  (with-eval-after-load "exwm"
-    (defun faerryn/exwm-workspace-init-fix (oldfun)
-      (advice-add #'modify-all-frames-parameters :override #'ignore)
-      (funcall oldfun)
-      (advice-remove #'modify-all-frames-parameters #'ignore))
-    (advice-add #'exwm-workspace--init :around #'faerryn/exwm-workspace-init-fix)
-    (defun faerryn/mfp-ignore-bp (oldfun frame alist)
-      (funcall oldfun frame (assoc-delete-all 'buffer-predicate alist)))
-    (defun faerryn/exwm-workspace-exit-fix (oldfun)
-      (advice-add #'modify-frame-parameters :around #'faerryn/mfp-ignore-bp)
-      (funcall oldfun)
-      (advice-remove #'modify-frame-parameters #'faerryn/mfp-ignore-bp))
-    (advice-add #'exwm-workspace--exit :around #'faerryn/exwm-workspace-exit-fix))
+  (defun faerryn/exwm-workspace-init-fix (oldfun)
+    (advice-add #'modify-all-frames-parameters :override #'ignore)
+    (funcall oldfun)
+    (advice-remove #'modify-all-frames-parameters #'ignore))
+  (advice-add #'exwm-workspace--init :around #'faerryn/exwm-workspace-init-fix)
+  (defun faerryn/mfp-ignore-bp (oldfun frame alist)
+    (funcall oldfun frame (assoc-delete-all 'buffer-predicate alist)))
+  (defun faerryn/exwm-workspace-exit-fix (oldfun)
+    (advice-add #'modify-frame-parameters :around #'faerryn/mfp-ignore-bp)
+    (funcall oldfun)
+    (advice-remove #'modify-frame-parameters #'faerryn/mfp-ignore-bp))
+  (advice-add #'exwm-workspace--exit :around #'faerryn/exwm-workspace-exit-fix)
 #+end_src
 
 This names exwm buffers according to the X11 window class.
@@ -354,12 +353,9 @@ This names exwm buffers according to the X11 window class.
   (add-hook 'exwm-update-class-hook #'faerryn/exwm-rename-buffer)
 #+end_src
 
-This makes EXWM fullscreen respect the same bindings as normal.
+This makes EXWM fullscreen to stay in line mode.
 #+begin_src emacs-lisp
-  (defun faerryn/exwm-keep-input-mode (&optional id)
-    (when-let ((id (or id (exwm--buffer->id (current-buffer)))))
-      (exwm-input--grab-keyboard id)))
-  (advice-add #'exwm-layout-set-fullscreen :after #'faerryn/exwm-keep-input-mode)
+  (advice-add #'exwm-layout-set-fullscreen :after #'exwm-input-grab-keyboard)
 #+end_src
 
 This makes EXWM exit fullscreen whenever another buffer gains focus.
