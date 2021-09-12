@@ -15,9 +15,3 @@ autoload -U compinit
 compinit
 
 bindkey -e
-
-if [[ "$INSIDE_EMACS" = 'vterm' ]] \
-       && [[ -n "$EMACS_VTERM_PATH" ]] \
-       && [[ -f "$EMACS_VTERM_PATH"/etc/emacs-vterm-zsh.sh ]]; then
-    . "$EMACS_VTERM_PATH"/etc/emacs-vterm-zsh.sh
-fi
