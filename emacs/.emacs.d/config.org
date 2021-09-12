@@ -434,7 +434,7 @@ Let Tramp inherit the remote's PATH environmental variable.
 Hide the buffer that [[help:async-shell-command]] produces.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(async-shell-command-buffer 'new-buffer))
+   '(async-shell-command-buffer 'rename-buffer))
   (add-to-list 'display-buffer-alist
                `(,(rx string-start "*Async Shell Command*")
                  (display-buffer-no-window)))
