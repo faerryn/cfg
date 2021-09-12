@@ -431,14 +431,6 @@ Disable autosaves, backups, and lockfiles for file system sanity.
     (emms-default-players))
   (autoload 'emms "emms-playlist-mode" "Switch to the current emms-playlist buffer." t)
 #+end_src
-** Tramp
-Tramp is how Emacs can access remote files as if they were local.
-
-Let Tramp inherit the remote's PATH environmental variable.
-#+begin_src emacs-lisp
-  (with-eval-after-load "tramp"
-    (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
-#+end_src
 ** Eshell
 Eshell is a portable, lispy shell in Emacs.  This configures aliases
 for eshell.
@@ -466,4 +458,16 @@ Loud bells annoy me.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(visible-bell t))
+#+end_src
+** Tramp
+Tramp is how Emacs can access remote files as if they were local.
+
+Let Tramp inherit the remote's PATH environmental variable.
+#+begin_src emacs-lisp
+  (with-eval-after-load "tramp"
+    (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+#+end_src
+** Vterm
+#+begin_src emacs-lisp
+  (straight-use-package 'vterm)
 #+end_src
