@@ -236,6 +236,7 @@ This prettifies dired's file listing.
    '(dired-guess-shell-alist-user
      '(("\\.swf\\'" "ruffle")
        ("\\.pdf\\'" "zathura")
+       ("\\.mp4\\'" "mpv")
        ("\\.ogg\\'" "mpv"))))
 #+end_src
 
@@ -395,7 +396,7 @@ Configure the behavior of [[help:async-shell-command]]
   (custom-set-variables
    '(async-shell-command-buffer #'rename-buffer))
   (add-to-list 'display-buffer-alist
-               `(,(rx string-start "*Async Shell Command*")
+               '("\\`\\*Async Shell Command\\*"
                  (display-buffer-no-window)))
 #+end_src
 ** Compiler Explorer
