@@ -132,6 +132,12 @@ This highlights matching quotes, parentheses, brackets, etc...
   (custom-set-variables
    '(show-paren-mode t))
 #+end_src
+** Silent Bell
+Loud bells annoy me.
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(visible-bell t))
+#+end_src
 ** Tab Bar
 The tab bar manages different buffers and window configuration in
 different tabs.  This feature seems stolen from Vim.
@@ -452,12 +458,6 @@ Magit is a very nice git client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
   (define-key (current-global-map) (kbd "C-x g") #'magit-status)
-#+end_src
-** Silent Bell
-Loud bells annoy me.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(visible-bell t))
 #+end_src
 ** Tramp
 Tramp is how Emacs can access remote files as if they were local.
