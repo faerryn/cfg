@@ -17,7 +17,8 @@ Straight.el is a declarative package manager for Emacs.
   (custom-set-variables
    '(straight-check-for-modifications nil)
    '(straight-use-symlinks t)
-   '(straight-vc-git-default-clone-depth 1))
+   '(straight-vc-git-default-clone-depth 1)
+   '(straight-autoloads nil))
   (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
         (repo "https://github.com/raxod502/straight.el.git"))
     (unless (file-directory-p dest)
@@ -36,6 +37,8 @@ Straight.el is a declarative package manager for Emacs.
 GCMH is an intelligent garbage collection scheduler for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'gcmh)
+  (autoload 'gcmh-mode "gcmh"
+    "Minor mode to tweak Garbage Collection strategy." t)
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
 ** Custom Symbols
@@ -76,12 +79,15 @@ tab completion and other useful features.
 Consult provides a collection of useful functions that make use of minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'consult)
+  (autoload 'consult-completion-in-region "consult"
+    "Use minibuffer completion as the UI for ‘completion-at-point’.")
   (setq completion-in-region-function #'consult-completion-in-region)
 #+end_src
 *** Marginalia
 Marginalia provides extra information in the "margins" during minibuffer completion.
 #+begin_src emacs-lisp
   (straight-use-package 'marginalia)
+  (require 'marginalia)
   (marginalia-mode +1)
 #+end_src
 *** Vertico
@@ -89,11 +95,13 @@ Vertico provices a performant and extensible minibuffer-based completion framewo
 #+begin_src emacs-lisp
   (straight-use-package
    `(vertico :files ,(cons "extensions/*.el" straight-default-files-directive)))
+  (require 'vertico)
   (vertico-mode +1)
 #+end_src
 
 This enables mouse support.
 #+begin_src emacs-lisp
+  (require 'vertico-mouse)
   (vertico-mouse-mode +1)
 #+end_src
 ** Modeline
@@ -197,6 +205,8 @@ Eglot is a LSP client written in Elisp, bringing the power of an IDE
 to Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'eglot)
+  (autoload 'eglot "eglot"
+    "Manage a project with a Language Server Protocol (LSP) server." t)
   (with-eval-after-load "eglot"
     (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
     (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
@@ -256,6 +266,9 @@ It's watch *scratch* buffers are made of!
 ** Markdown
 #+begin_src emacs-lisp
   (straight-use-package 'markdown-mode)
+  (autoload 'markdown-mode "markdown-mode"
+    "Major mode for editing Markdown files." t)
+  (add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
 #+end_src
 ** OCaml
 OCaml is a funny programming language.
@@ -284,6 +297,8 @@ safety.  It boasts a builtin project and dependency manager, and
 delightfully concise syntax.
 #+begin_src emacs-lisp
   (straight-use-package 'rust-mode)
+  (autoload 'rust-mode "rust-mode"
+    "Major mode for Rust code." t)
 #+end_src
 
 This sets up rust-analyzer as the default lsp server for rust-mode.
@@ -297,6 +312,8 @@ and concise code.  It boasts an incredibly powerful type system and
 featureful compile-time code execution.
 #+begin_src emacs-lisp
   (straight-use-package 'zig-mode)
+  (autoload 'zig-mode "zig-mode"
+    "A major mode for the Zig programming language." t)
   (custom-set-variables
    '(zig-format-on-save nil))
 #+end_src
@@ -317,7 +334,9 @@ the eponymous `xclip') to integrate into Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'xclip)
   (defun faerryn/safe-xclip-mode ()
-    (ignore-errors (xclip-mode +1)))
+    (ignore-errors
+      (require 'xclip)
+      (xclip-mode +1)))
   (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
 #+end_src
 ** Window Manager
@@ -327,6 +346,8 @@ EXWM is a window manager written in Elisp.  Lots of hacks are used to
 customize the behavior of EXWM.
 #+begin_src emacs-lisp
   (straight-use-package 'exwm)
+  (autoload 'exwm-init "exwm"
+    "Initialize EXWM." t)
 #+end_src
 
 This defines key behaviors for EXWM.
@@ -406,6 +427,8 @@ RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]].  It
 programmer to see how individual lines of code are compiled.
 #+begin_src emacs-lisp
   (straight-use-package 'rmsbolt)
+  (autoload 'rmsbolt-mode "rmsbolt"
+    "Toggle rmsbolt-mode." t)
   (custom-set-variables
    '(rmsbolt-automatic-recompile nil))
 #+end_src
@@ -433,12 +456,15 @@ Disable autosaves, backups, and lockfiles for file system sanity.
 ** EMMS
 #+begin_src emacs-lisp
   (straight-use-package 'emms)
+  (autoload 'emms "emms"
+    "Switch to the current emms-playlist buffer, use
+  emms-playlist-mode and query for a directory tree to add to the
+  playlist." t)
   (custom-set-variables
    '(emms-source-file-default-directory "~/Music/"))
   (with-eval-after-load "emms"
     (emms-all)
     (emms-default-players))
-  (autoload 'emms "emms-playlist-mode" "Switch to the current emms-playlist buffer." t)
 #+end_src
 ** Eshell
 Eshell is a portable, lispy shell in Emacs.  This configures aliases
@@ -460,6 +486,8 @@ For symlinks are good.
 Magit is a very nice git client for Emacs.
 #+begin_src emacs-lisp
   (straight-use-package 'magit)
+  (autoload 'magit-status "magit"
+    "Show the status of the current Git repository in a buffer." t)
   (define-key (current-global-map) (kbd "C-x g") #'magit-status)
 #+end_src
 ** Tramp
@@ -469,8 +497,4 @@ Let Tramp inherit the remote's PATH environmental variable.
 #+begin_src emacs-lisp
   (with-eval-after-load "tramp"
     (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
-#+end_src
-** Vterm
-#+begin_src emacs-lisp
-  (straight-use-package 'vterm)
 #+end_src
