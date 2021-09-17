@@ -357,8 +357,9 @@ This gets rid of EXWM's buffer-predicate settings.
 This names exwm buffers according to the X11 window class.
 #+begin_src emacs-lisp
   (defun faerryn/exwm-rename-buffer ()
-    (rename-buffer (concat "*EXWM " exwm-class-name "*") t))
+    (rename-buffer (concat "*EXWM " exwm-title "*") t))
   (add-hook 'exwm-update-class-hook #'faerryn/exwm-rename-buffer)
+  (add-hook 'exwm-update-title-hook #'faerryn/exwm-rename-buffer)
 #+end_src
 
 This makes EXWM fullscreen to stay in line mode.
