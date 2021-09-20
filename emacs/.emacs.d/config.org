@@ -423,7 +423,7 @@ Miscellaneous items that don't fall into a broader category.
 Configure the behavior of [[help:async-shell-command]]
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(async-shell-command-buffer #'rename-buffer))
+   '(async-shell-command-buffer 'rename-buffer))
   (add-to-list 'display-buffer-alist
                '("\\`\\*Async Shell Command\\*"
                  (display-buffer-no-window)))
