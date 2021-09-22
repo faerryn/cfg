@@ -250,6 +250,12 @@ This defines key behaviors for EXWM.
    '(exwm-input-prefix-keys (mapcar #'kbd '("C-c" "C-g" "C-h" "C-u" "C-x" "M-!" "M-&" "M-:" "M-x"))))
 #+end_src
 
+This sets the modeline up for a full environment.
+#+begin_src emacs-lisp
+  (add-hook 'exwm-init-hook #'display-time-mode)
+  (add-hook 'exwm-init-hook #'display-battery-mode)
+#+end_src
+
 This gets rid of EXWM's buffer-predicate settings.
 #+begin_src emacs-lisp
   (defun faerryn/exwm-workspace-init-fix (oldfun)
@@ -299,14 +305,6 @@ This makes EXWM exit fullscreen whenever another buffer gains focus.
     (advice-add #'previous-buffer :before #'faerryn/exwm-unfullscreen-wrapper)
     (advice-add #'tab-next :before #'faerryn/exwm-unfullscreen-wrapper))
   (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
-  (defun faerryn/exwm-exit-hook ()
-    (remove-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
-    (remove-hook 'window-state-change-hook #'faerryn/exwm-unfullscreen)
-    (advice-remove #'switch-to-buffer #'faerryn/exwm-unfullscreen-wrapper)
-    (advice-remove #'next-buffer #'faerryn/exwm-unfullscreen-wrapper)
-    (advice-remove #'previous-buffer #'faerryn/exwm-unfullscreen-wrapper)
-    (advice-remove #'tab-next #'faerryn/exwm-unfullscreen-wrapper))
-  (add-hook 'exwm-exit-hook #'faerryn/exwm-exit-hook)
 #+end_src
 * Sundry
 Miscellaneous items that don't fall into a broader category.
