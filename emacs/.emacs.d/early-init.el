@@ -1,6 +1,6 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
-;; Disable garbage collection and package.el
+;; Disable garbage collection
 (setq gc-cons-threshold most-positive-fixnum)
 
 ;; Load init.org

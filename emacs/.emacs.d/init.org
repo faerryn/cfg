@@ -361,6 +361,7 @@ Let Tramp inherit the remote's PATH environmental variable.
     (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 #+end_src
 * Epilogue
+This ensures all installed packages.
 #+begin_src emacs-lisp
   (package-refresh-contents)
   (package-install-selected-packages)
