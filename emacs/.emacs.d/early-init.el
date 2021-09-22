@@ -1,13 +1,11 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
 ;; Disable garbage collection and package.el
-(setq gc-cons-threshold most-positive-fixnum
-      package-enable-at-startup nil)
+(setq gc-cons-threshold most-positive-fixnum)
 
-;; Load config.org
-(let* ((config.org (expand-file-name "config.org" user-emacs-directory))
-       (config.el (expand-file-name "config.el" user-emacs-directory)))
-  (when (file-newer-than-file-p config.org config.el)
+;; Load init.org
+(let* ((init.org (expand-file-name "init.org" user-emacs-directory))
+       (init.el (expand-file-name "init.el" user-emacs-directory)))
+  (when (file-newer-than-file-p init.org init.el)
     (require 'ob-tangle)
-    (org-babel-tangle-file config.org config.el "emacs-lisp"))
-  (load config.el nil nil t))
+    (org-babel-tangle-file init.org init.el "emacs-lisp")))

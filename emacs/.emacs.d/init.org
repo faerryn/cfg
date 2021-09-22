@@ -11,34 +11,14 @@ context.  This can make bugs easier to catch and improve performance.
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
-** Package Manager
-Straight.el is a declarative package manager for Emacs.
+** Package.el
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(straight-check-for-modifications nil)
-   '(straight-use-symlinks t)
-   '(straight-vc-git-default-clone-depth 1)
-   '(straight-autoloads nil))
-  (let ((dest (expand-file-name "straight/repos/straight.el/" user-emacs-directory))
-        (repo "https://github.com/raxod502/straight.el.git"))
-    (unless (file-directory-p dest)
-      (call-process "git" nil nil nil
-                    "clone"
-                    "--depth" "1"
-                    repo
-                    dest))
-    (require 'straight (expand-file-name "straight.el" dest))
-    (with-temp-buffer
-      (insert-file-contents (expand-file-name "bootstrap.el" dest))
-      (eval-region (search-forward "(require 'straight)")
-                   (point-max))))
+  (require 'package)
 #+end_src
 ** Garbage Collector
 GCMH is an intelligent garbage collection scheduler for Emacs.
 #+begin_src emacs-lisp
-  (straight-use-package 'gcmh)
-  (autoload 'gcmh-mode "gcmh"
-    "Minor mode to tweak Garbage Collection strategy." t)
+  (add-to-list 'package-selected-packages 'gcmh)
   (add-hook 'emacs-startup-hook #'gcmh-mode)
 #+end_src
 ** Custom Symbols
@@ -78,61 +58,32 @@ tab completion and other useful features.
 *** Consult
 Consult provides a collection of useful functions that make use of minibuffer completion.
 #+begin_src emacs-lisp
-  (straight-use-package 'consult)
-  (autoload 'consult-completion-in-region "consult"
-    "Use minibuffer completion as the UI for ‘completion-at-point’.")
-  (setq completion-in-region-function #'consult-completion-in-region)
+  (add-to-list 'package-selected-packages 'consult)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq completion-in-region-function #'consult-completion-in-region)))
 #+end_src
 *** Marginalia
 Marginalia provides extra information in the "margins" during minibuffer completion.
 #+begin_src emacs-lisp
-  (straight-use-package 'marginalia)
-  (require 'marginalia)
-  (marginalia-mode +1)
+  (add-to-list 'package-selected-packages 'marginalia)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (marginalia-mode +1)))
 #+end_src
 *** Vertico
 Vertico provices a performant and extensible minibuffer-based completion framework.
 #+begin_src emacs-lisp
-  (straight-use-package
-   `(vertico :files ,(cons "extensions/*.el" straight-default-files-directive)))
-  (require 'vertico)
-  (vertico-mode +1)
-#+end_src
-
-This enables mouse support.
-#+begin_src emacs-lisp
-  (require 'vertico-mouse)
-  (vertico-mouse-mode +1)
-#+end_src
-** Modeline
-The modeline is the the bar the displays, among other things, a
-buffer's name and major mode.
-
-Emacs' default modeline is weird.  Doom Emacs provides us with an
-aesthetic alternative.
-#+begin_src emacs-lisp
-  (straight-use-package 'doom-modeline)
-  (custom-set-variables
-   '(doom-modeline-icon nil))
-  (add-hook 'emacs-startup-hook #'doom-modeline-mode)
-#+end_src
-
-Show the time and battery level on the modeline.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(display-time-mode t)
-   '(display-time-default-load-average nil)
-   '(display-time-format "%r")
-   '(display-time-interval 1)
-   '(display-battery-mode t)
-   '(battery-mode-line-format "%p%%")
-   '(battery-update-interval 1))
+  (add-to-list 'package-selected-packages 'vertico)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (vertico-mode +1)))
 #+end_src
 ** Rainbow
 Paint the background of color codes with the color they represent upon
 calling `rainbow-mode'.
 #+begin_src emacs-lisp
-  (straight-use-package 'rainbow-mode)
+  (add-to-list 'package-selected-packages 'rainbow-mode)
 #+end_src
 ** Show Paren
 This highlights matching quotes, parentheses, brackets, etc...
@@ -154,13 +105,6 @@ different tabs.  This feature seems stolen from Vim.
    '(tab-bar-mode t)
    '(tab-bar-close-button nil)
    '(tab-bar-new-button nil))
-#+end_src
-** Theme
-Emacs' default theme is blindingly bright.  Doom Emacs (once again)
-provides an aesthetic alternative.
-#+begin_src emacs-lisp
-  (straight-use-package 'doom-themes)
-  (load-theme 'doom-one t)
 #+end_src
 ** Truncate Lines
 Line wrap is weird and confusing.  Truncated lines are elephants.
@@ -204,9 +148,7 @@ LSP-capable editor.
 Eglot is a LSP client written in Elisp, bringing the power of an IDE
 to Emacs.
 #+begin_src emacs-lisp
-  (straight-use-package 'eglot)
-  (autoload 'eglot "eglot"
-    "Manage a project with a Language Server Protocol (LSP) server." t)
+  (add-to-list 'package-selected-packages 'eglot)
   (with-eval-after-load "eglot"
     (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
     (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
@@ -263,59 +205,11 @@ It's watch *scratch* buffers are made of!
     "The Org mode table editor as a minor mode for use in other modes." t)
   (add-hook 'lisp-interaction-mode-hook #'orgtbl-mode)
 #+end_src
-** Markdown
-#+begin_src emacs-lisp
-  (straight-use-package 'markdown-mode)
-  (autoload 'markdown-mode "markdown-mode"
-    "Major mode for editing Markdown files." t)
-  (add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
-#+end_src
-** OCaml
-OCaml is a funny programming language.
-#+begin_src emacs-lisp
-  (straight-use-package 'caml-mode)
-  (autoload 'caml-mode "caml"
-    "Major mode for editing OCaml code." t)
-  (add-to-list 'auto-mode-alist '("\\.ml[iylp]?$" . caml-mode))
-#+end_src
 ** Org
 Emacs' Org mode has superpowers.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(org-catch-invisible-edits 'smart))
-#+end_src
-** Pdf
-#+begin_src emacs-lisp
-  (straight-use-package 'pdf-tools)
-  (autoload 'pdf-view-mode "pdf-view")
-  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
-  (add-hook 'pdf-view-mode-hook #'pdf-isearch-minor-mode)
-#+end_src
-** Rust
-[[https://www.rust-lang.org][Rust]] is a programming language with focus on performance and memory
-safety.  It boasts a builtin project and dependency manager, and
-delightfully concise syntax.
-#+begin_src emacs-lisp
-  (straight-use-package 'rust-mode)
-  (autoload 'rust-mode "rust-mode"
-    "Major mode for Rust code." t)
-#+end_src
-
-This sets up rust-analyzer as the default lsp server for rust-mode.
-#+begin_src emacs-lisp
-  (with-eval-after-load "eglot"
-    (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
-#+end_src
-** Zig
-[[https://ziglang.org][Zig]] is an ambitious programming language with zero cost duck-typing
-and concise code.  It boasts an incredibly powerful type system and
-featureful compile-time code execution.
-#+begin_src emacs-lisp
-  (straight-use-package 'zig-mode)
-  (autoload 'zig-mode "zig-mode"
-    "A major mode for the Zig programming language." t)
-  (custom-set-variables
-   '(zig-format-on-save nil))
 #+end_src
 * Xorg Integration
 Xorg is the classic Linux display server.
@@ -332,10 +226,9 @@ Emacs in an X11 terminal emulator cannot access the clipboard by
 default.  This package detects a suitable CLI clipboard tool (such as
 the eponymous `xclip') to integrate into Emacs.
 #+begin_src emacs-lisp
-  (straight-use-package 'xclip)
+  (add-to-list 'package-selected-packages 'xclip)
   (defun faerryn/safe-xclip-mode ()
     (ignore-errors
-      (require 'xclip)
       (xclip-mode +1)))
   (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
 #+end_src
@@ -345,9 +238,7 @@ An X11 window manager is what powers most Linux desktops.
 EXWM is a window manager written in Elisp.  Lots of hacks are used to
 customize the behavior of EXWM.
 #+begin_src emacs-lisp
-  (straight-use-package 'exwm)
-  (autoload 'exwm-init "exwm"
-    "Initialize EXWM." t)
+  (add-to-list 'package-selected-packages 'exwm)
 #+end_src
 
 This defines key behaviors for EXWM.
@@ -428,29 +319,6 @@ Configure the behavior of [[help:async-shell-command]]
                '("\\`\\*Async Shell Command\\*"
                  (display-buffer-no-window)))
 #+end_src
-** Compiler Explorer
-RMSBolt is a compiler explorer inspired by [[https://godbolt.org][Godbolt]].  It allows a
-programmer to see how individual lines of code are compiled.
-#+begin_src emacs-lisp
-  (straight-use-package 'rmsbolt)
-  (autoload 'rmsbolt-mode "rmsbolt"
-    "Toggle rmsbolt-mode." t)
-  (custom-set-variables
-   '(rmsbolt-automatic-recompile nil))
-#+end_src
-
-This sets up rmsbolt on activation of the minor mode and on save.
-#+begin_src emacs-lisp
-  (defun faerryn/rmsbolt-setup-cosa ()
-    (unless (derived-mode-p 'asm-mode)
-      (if rmsbolt-mode
-          (progn
-            (unless (buffer-modified-p)
-              (rmsbolt-compile))
-            (add-hook 'after-save-hook #'rmsbolt-compile nil t))
-        (remove-hook 'after-save-hook #'rmsbolt-compile t))))
-  (add-hook 'rmsbolt-mode-hook #'faerryn/rmsbolt-setup-cosa)
-#+end_src
 ** Declutter File System
 Disable autosaves, backups, and lockfiles for file system sanity.
 #+begin_src emacs-lisp
@@ -461,11 +329,7 @@ Disable autosaves, backups, and lockfiles for file system sanity.
 #+end_src
 ** EMMS
 #+begin_src emacs-lisp
-  (straight-use-package 'emms)
-  (autoload 'emms "emms"
-    "Switch to the current emms-playlist buffer, use
-  emms-playlist-mode and query for a directory tree to add to the
-  playlist." t)
+  (add-to-list 'package-selected-packages 'emms)
   (custom-set-variables
    '(emms-source-file-default-directory "~/Music/"))
   (with-eval-after-load "emms"
@@ -488,14 +352,6 @@ For symlinks are good.
    '(find-file-visit-truename t)
    '(vc-follow-symlinks t))
 #+end_src
-** Git Client
-Magit is a very nice git client for Emacs.
-#+begin_src emacs-lisp
-  (straight-use-package 'magit)
-  (autoload 'magit-status "magit"
-    "Show the status of the current Git repository in a buffer." t)
-  (define-key (current-global-map) (kbd "C-x g") #'magit-status)
-#+end_src
 ** Tramp
 Tramp is how Emacs can access remote files as if they were local.
 
@@ -503,4 +359,9 @@ Let Tramp inherit the remote's PATH environmental variable.
 #+begin_src emacs-lisp
   (with-eval-after-load "tramp"
     (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+#+end_src
+* Epilogue
+#+begin_src emacs-lisp
+  (package-refresh-contents)
+  (package-install-selected-packages)
 #+end_src
