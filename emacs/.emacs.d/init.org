@@ -14,13 +14,18 @@ context.  This can make bugs easier to catch and improve performance.
 ** Packages
 Emacs has as package manager to install useful extensions.
 #+begin_src emacs-lisp
-  (require 'package)
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
+  (defun faerryn/package-ensure (p)
+    (unless (package-installed-p p)
+      (package-install p)))
 #+end_src
 ** Garbage Collector
 GCMH is an intelligent garbage collection scheduler for Emacs.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'gcmh)
-  (add-hook 'emacs-startup-hook #'gcmh-mode)
+  (faerryn/package-ensure 'gcmh)
+  (gcmh-mode +1)
 #+end_src
 ** Custom Symbols
 A hook that runs before the minibuffer opens.
@@ -40,18 +45,18 @@ Decluttering Emacs of frivolous things like menus and scroll bars.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(inhibit-startup-screen t)
-   '(use-dialog-box nil)
-   '(menu-bar-mode nil)
-   '(tool-bar-mode nil)
-   '(scroll-bar-mode nil)
-   '(tooltip-mode nil))
+   '(use-dialog-box nil))
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tooltip-mode -1)
 #+end_src
 ** Line Numbers
 Line numbers are crucial to understand where you are in a document.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(global-display-line-numbers-mode t)
    '(display-line-numbers-type t))
+  (global-display-line-numbers-mode +1)
 #+end_src
 ** Minibuffer Completion
 Emacs prompts for input through the minibuffer, which often includes
@@ -59,38 +64,31 @@ tab completion and other useful features.
 *** Consult
 Consult provides a collection of useful functions that make use of minibuffer completion.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'consult)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (setq completion-in-region-function #'consult-completion-in-region)))
+  (faerryn/package-ensure 'consult)
+  (setq completion-in-region-function #'consult-completion-in-region)
 #+end_src
 *** Marginalia
 Marginalia provides extra information in the "margins" during minibuffer completion.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'marginalia)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (marginalia-mode +1)))
+  (faerryn/package-ensure 'marginalia)
+  (marginalia-mode +1)
 #+end_src
 *** Vertico
 Vertico provices a performant and extensible minibuffer-based completion framework.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'vertico)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (vertico-mode +1)))
+  (faerryn/package-ensure 'vertico)
+  (vertico-mode +1)
 #+end_src
 ** Rainbow
 Paint the background of color codes with the color they represent upon
 calling `rainbow-mode'.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'rainbow-mode)
+  (faerryn/package-ensure 'rainbow-mode)
 #+end_src
 ** Show Paren
 This highlights matching quotes, parentheses, brackets, etc...
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(show-paren-mode t))
+  (show-paren-mode +1)
 #+end_src
 ** Silent Bell
 Loud bells annoy me.
@@ -103,17 +101,15 @@ The tab bar manages different buffers and window configuration in
 different tabs.  This feature seems stolen from Vim.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(tab-bar-mode t)
    '(tab-bar-close-button nil)
    '(tab-bar-new-button nil))
+  (tab-bar-mode +1)
 #+end_src
 ** Theme
 Nice themes are nice!
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'modus-themes)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (load-theme 'modus-vivendi t)))
+  (faerryn/package-ensure 'modus-themes)
+  (load-theme 'modus-vivendi t)
 #+end_src
 ** Truncate Lines
 Line wrap is weird and confusing.  Truncated lines are elephants.
@@ -125,8 +121,8 @@ Line wrap is weird and confusing.  Truncated lines are elephants.
 Display normally transparent characters.  Catch the trailing spaces.
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(global-whitespace-mode t)
    '(whitespace-style '(face tabs trailing tab-mark)))
+  (global-whitespace-mode +1)
 #+end_src
 * Text Editing
 Emacs is a text-editor, after all.
@@ -139,14 +135,12 @@ that you can define your own!
 ** Electric Pairs
 Automagically close quotes, parentheses, brackets, etc...
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(electric-pair-mode t))
+  (electric-pair-mode +1)
 #+end_src
 ** Indentation
 Indent with 2 spaces.
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(indent-tabs-mode nil))
+  (setq-default indent-tabs-mode nil)
 #+end_src
 ** LSP Client
 [[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
@@ -157,20 +151,11 @@ LSP-capable editor.
 Eglot is a LSP client written in Elisp, bringing the power of an IDE
 to Emacs.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'eglot)
+  (faerryn/package-ensure 'eglot)
   (with-eval-after-load "eglot"
     (define-key eglot-mode-map (kbd "C-c a") #'eglot-code-actions)
     (define-key eglot-mode-map (kbd "C-c r") #'eglot-rename)
     (define-key eglot-mode-map (kbd "C-c f") #'eglot-format))
-#+end_src
-
-This sets up format-on-save.
-#+begin_src emacs-lisp
-  (defun faerryn/eglot-setup-fosa ()
-    (if (eglot-managed-p)
-        (add-hook 'before-save-hook #'eglot-format nil t)
-      (remove-hook 'before-save-hook #'eglot-format t)))
-  (add-hook 'eglot-managed-mode-hook #'faerryn/eglot-setup-fosa)
 #+end_src
 ** Tab Completion
 Bring the tab completion to Emacs!
@@ -210,8 +195,7 @@ This loads up extra features for dired.
 ** Lisp Interaction
 It's watch *scratch* buffers are made of!
 #+begin_src emacs-lisp
-  (autoload 'orgtbl-mode "org-table"
-    "The Org mode table editor as a minor mode for use in other modes." t)
+  (require 'org-table)
   (add-hook 'lisp-interaction-mode-hook #'orgtbl-mode)
 #+end_src
 ** Org
@@ -235,7 +219,7 @@ Emacs in an X11 terminal emulator cannot access the clipboard by
 default.  This package detects a suitable CLI clipboard tool (such as
 the eponymous `xclip') to integrate into Emacs.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'xclip)
+  (faerryn/package-ensure 'xclip)
   (defun faerryn/safe-xclip-mode ()
     (ignore-errors
       (xclip-mode +1)))
@@ -247,7 +231,7 @@ An X11 window manager is what powers most Linux desktops.
 EXWM is a window manager written in Elisp.  Lots of hacks are used to
 customize the behavior of EXWM.
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'exwm)
+  (faerryn/package-ensure 'exwm)
 #+end_src
 
 This defines key behaviors for EXWM.
@@ -336,7 +320,7 @@ Disable autosaves, backups, and lockfiles for file system sanity.
 #+end_src
 ** EMMS
 #+begin_src emacs-lisp
-  (add-to-list 'package-selected-packages 'emms)
+  (faerryn/package-ensure 'emms)
   (custom-set-variables
    '(emms-source-file-default-directory "~/Music/"))
   (with-eval-after-load "emms"
@@ -366,10 +350,4 @@ Let Tramp inherit the remote's PATH environmental variable.
 #+begin_src emacs-lisp
   (with-eval-after-load "tramp"
     (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
-#+end_src
-* Epilogue
-Installs all listed packages.
-#+begin_src emacs-lisp
-  (package-refresh-contents)
-  (package-install-selected-packages)
 #+end_src
