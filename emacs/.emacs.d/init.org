@@ -9,7 +9,7 @@ my config to work.
 [[info:elisp#Lexical Binding][Lexical Binding]] encapsulates the scoping of variables to their
 context.  This can make bugs easier to catch and improve performance.
 #+begin_src emacs-lisp
-  ;;; config.el -*- lexical-binding: t; -*-
+  ;;; init.el -*- lexical-binding: t; -*-
 #+end_src
 ** Packages
 Emacs has as package manager to install useful extensions.
