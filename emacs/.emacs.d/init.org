@@ -173,36 +173,19 @@ LSP servers that provide completion.
     (advice-add 'c-indent-command :override #'indent-for-tab-command))
 #+end_src
 ** Dired
-Dired is the file browser in Emacs.
-
-This prettifies dired's file listing.
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(dired-listing-switches "-AFghvX --group-directories-first")
-   '(dired-guess-shell-alist-user
-     '(("\\.swf\\'" "ruffle")
-       ("\\.pdf\\'" "zathura")
-       ("\\.mp4\\'" "mpv")
-       ("\\.ogg\\'" "mpv"))))
-#+end_src
-
-This loads up extra features for dired.
+Dired is the file browser in Emacs.  Dired-x contains extra features.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(dired-x-hands-off-my-keys nil))
   (require 'dired-x)
-#+end_src
-** Lisp Interaction
-It's watch *scratch* buffers are made of!
-#+begin_src emacs-lisp
-  (require 'org-table)
-  (add-hook 'lisp-interaction-mode-hook #'orgtbl-mode)
 #+end_src
 ** Org
 Emacs' Org mode has superpowers.
 #+begin_src emacs-lisp
   (custom-set-variables
    '(org-catch-invisible-edits 'smart))
+  (require 'org-table)
+  (add-hook 'lisp-interaction-mode-hook #'orgtbl-mode)
 #+end_src
 * Xorg Integration
 Xorg is the classic Linux display server.
@@ -326,15 +309,6 @@ Disable autosaves, backups, and lockfiles for file system sanity.
   (with-eval-after-load "emms"
     (emms-all)
     (emms-default-players))
-#+end_src
-** Eshell
-Eshell is a portable, lispy shell in Emacs.  This configures aliases
-for eshell.
-#+begin_src emacs-lisp
-  (with-eval-after-load "em-alias"
-    (eshell/alias "ls" "ls -FhvX --color=auto --group-directories-first $*")
-    (eshell/alias "ll" "ls -g $*")
-    (eshell/alias "la" "ll -A $*"))
 #+end_src
 ** Follow Symlinks
 For symlinks are good.
