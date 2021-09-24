@@ -27,17 +27,6 @@ GCMH is an intelligent garbage collection scheduler for Emacs.
   (faerryn/package-ensure 'gcmh)
   (gcmh-mode +1)
 #+end_src
-** Custom Symbols
-A hook that runs before the minibuffer opens.
-#+begin_src emacs-lisp
-  (defvar faerryn/before-minibuffer-hook nil
-    "Normal hook run just before entry to minibuffer")
-  (defun faerryn/run-before-minibuffer-hooks (&rest ignored)
-    (run-hooks 'faerryn/before-minibuffer-hook))
-  (advice-add #'read-from-minibuffer :before #'faerryn/run-before-minibuffer-hooks)
-  (advice-add #'read-no-blanks-input :before #'faerryn/run-before-minibuffer-hooks)
-  (advice-add #'read-string :before #'faerryn/run-before-minibuffer-hooks)
-#+end_src
 * User Interface
 Blinging out Emacs since 2021.
 ** Declutter Widgets
@@ -100,9 +89,8 @@ Loud bells annoy me.
 The tab bar manages different buffers and window configuration in
 different tabs.  This feature seems stolen from Vim.
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(tab-bar-close-button nil)
-   '(tab-bar-new-button nil))
+  (setq tab-bar-close-button nil
+        tab-bar-new-button nil)
   (tab-bar-mode +1)
 #+end_src
 ** Theme
@@ -138,9 +126,10 @@ Automagically close quotes, parentheses, brackets, etc...
   (electric-pair-mode +1)
 #+end_src
 ** Indentation
-Indent with 2 spaces.
+Indent with spaces.
 #+begin_src emacs-lisp
-  (setq-default indent-tabs-mode nil)
+  (custom-set-variables
+   '(indent-tabs-mode nil))
 #+end_src
 ** LSP Client
 [[https://microsoft.github.io/language-server-protocol][Language server protocol]] is a protocol invovling a server generating
@@ -165,13 +154,6 @@ Bring the tab completion to Emacs!
 #+end_src
 * Major Modes
 Major modes represent filetypes in Emacs.
-** C/C++
-Bringing tab-to-complete to C/C++, which is useful when combined with
-LSP servers that provide completion.
-#+begin_src emacs-lisp
-  (with-eval-after-load "cc-mode"
-    (advice-add 'c-indent-command :override #'indent-for-tab-command))
-#+end_src
 ** Dired
 Dired is the file browser in Emacs.  Dired-x contains extra features.
 #+begin_src emacs-lisp
@@ -221,7 +203,6 @@ customize the behavior of EXWM.
 This defines key behaviors for EXWM.
 #+begin_src emacs-lisp
   (with-eval-after-load "exwm"
-    (define-key exwm-mode-map (kbd "C-c f") #'exwm-layout-toggle-fullscreen)
     (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key))
   (custom-set-variables
    '(exwm-input-prefix-keys (mapcar #'kbd '("C-c" "C-g" "C-h" "C-u" "C-x" "M-!" "M-&" "M-:" "M-x"))))
@@ -255,33 +236,6 @@ This names exwm buffers according to the X11 window class.
     (rename-buffer (concat "*EXWM " exwm-class-name "*") t))
   (add-hook 'exwm-update-class-hook #'faerryn/exwm-rename-buffer)
   (add-hook 'exwm-update-title-hook #'faerryn/exwm-rename-buffer)
-#+end_src
-
-This makes EXWM fullscreen to stay in line mode.
-#+begin_src emacs-lisp
-  (advice-add #'exwm-layout-set-fullscreen :after #'exwm-input-grab-keyboard)
-#+end_src
-
-This makes EXWM exit fullscreen whenever another buffer gains focus.
-#+begin_src emacs-lisp
-  (defun faerryn/exwm-unfullscreen ()
-    (dolist (buf (buffer-list))
-      (when-let ((id (exwm--buffer->id buf)))
-        (with-current-buffer buf
-          (exwm-layout-unset-fullscreen id)))))
-  (defun faerryn/exwm-unfullscreen-wrapper (&rest r)
-    (interactive (lambda (oldfunspec)
-                   (faerryn/exwm-unfullscreen)
-                   (advice-eval-interactive-spec oldfunspec)))
-    (faerryn/exwm-unfullscreen))
-  (defun faerryn/exwm-init-hook ()
-    (add-hook 'faerryn/before-minibuffer-hook #'faerryn/exwm-unfullscreen)
-    (add-hook 'window-state-change-hook #'faerryn/exwm-unfullscreen)
-    (advice-add #'switch-to-buffer :before #'faerryn/exwm-unfullscreen-wrapper)
-    (advice-add #'next-buffer :before #'faerryn/exwm-unfullscreen-wrapper)
-    (advice-add #'previous-buffer :before #'faerryn/exwm-unfullscreen-wrapper)
-    (advice-add #'tab-next :before #'faerryn/exwm-unfullscreen-wrapper))
-  (add-hook 'exwm-init-hook #'faerryn/exwm-init-hook)
 #+end_src
 * Sundry
 Miscellaneous items that don't fall into a broader category.
