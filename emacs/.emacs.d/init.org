@@ -18,8 +18,9 @@ Emacs has as package manager to install useful extensions.
   (unless package-archive-contents
     (package-refresh-contents))
   (defun faerryn/package-ensure (p)
+    (add-to-list 'package-selected-packages p)
     (unless (package-installed-p p)
-      (package-install p)))
+      (package-install p t)))
 #+end_src
 ** Garbage Collector
 GCMH is an intelligent garbage collection scheduler for Emacs.
