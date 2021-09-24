@@ -233,6 +233,14 @@ Disable autosaves, backups, and lockfiles for file system sanity.
    '(make-backup-files nil)
    '(create-lockfiles nil))
 #+end_src
+** Highlight VC Diff
+Diff-hl shows uncommitted changes in the buffer.
+#+begin_src emacs-lisp
+  (faerryn/package-ensure 'diff-hl)
+  (global-diff-hl-mode +1)
+  (add-hook 'diff-hl-mode-hook #'diff-hl-flydiff-mode)
+  (add-hook 'dired-mode-hook #'diff-hl-dired-mode)
+#+end_src
 ** EMMS
 #+begin_src emacs-lisp
   (faerryn/package-ensure 'emms)
