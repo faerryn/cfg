@@ -171,6 +171,10 @@ Emacs' Org mode has superpowers.
   (require 'org-table)
   (add-hook 'lisp-interaction-mode-hook #'orgtbl-mode)
 #+end_src
+** Tex
+#+begin_src emacs-lisp
+  (faerryn/package-ensure 'auctex)
+#+end_src
 * Window Manager
 EXWM is a window manager written in Elisp.  Lots of hacks are used to
 customize the behavior of EXWM.
