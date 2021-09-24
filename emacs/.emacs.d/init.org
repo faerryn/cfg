@@ -170,30 +170,7 @@ Emacs' Org mode has superpowers.
   (require 'org-table)
   (add-hook 'lisp-interaction-mode-hook #'orgtbl-mode)
 #+end_src
-* Xorg Integration
-Xorg is the classic Linux display server.
-** Terminal Emulator
-Emacs can run in a text terminal through `emacs -nw'.
-
-Text terminals sometimes support the mouse, and emacs can support text
-terminals supporting the mouse.
-#+begin_src emacs-lisp
-  (add-hook 'tty-setup-hook #'xterm-mouse-mode)
-#+end_src
-
-Emacs in an X11 terminal emulator cannot access the clipboard by
-default.  This package detects a suitable CLI clipboard tool (such as
-the eponymous `xclip') to integrate into Emacs.
-#+begin_src emacs-lisp
-  (faerryn/package-ensure 'xclip)
-  (defun faerryn/safe-xclip-mode ()
-    (ignore-errors
-      (xclip-mode +1)))
-  (add-hook 'tty-setup-hook #'faerryn/safe-xclip-mode)
-#+end_src
-** Window Manager
-An X11 window manager is what powers most Linux desktops.
-
+* Window Manager
 EXWM is a window manager written in Elisp.  Lots of hacks are used to
 customize the behavior of EXWM.
 #+begin_src emacs-lisp
